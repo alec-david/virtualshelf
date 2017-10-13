@@ -5,10 +5,7 @@ const books = (state = List(), action) => {
     case 'ADD_BOOK':
       return state.push({
         id: action.id,
-        title: action.title,
-        author: action.author,
-        rating: action.rating,
-        date: action.date
+        title: action.title
       });
     case 'DELETE_BOOK':
       return state.filter(book => book.id !== action.id);

@@ -5,19 +5,18 @@ import { createStore } from 'redux';
 import { ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import remembrApp from './reducers/index';
-import App from './containers/App';
+import App from './components/App';
 
 import './index.css';
 
 const history = createHistory();
 const store = createStore(remembrApp);
+console.log(store.getState());
 
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <div>
-        <App />
-      </div>
+      <App />
     </ConnectedRouter>
   </Provider>,
   document.getElementById('root')
