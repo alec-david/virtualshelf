@@ -4,7 +4,7 @@ import Book from './Book';
 class BookList extends Component {
   render() {
     const bookList = this.props.state.books;
-    console.log(this.props.state.books);
+    // console.log(this.props.state.books);
     return (
       <div>
         {!!bookList.size && (
