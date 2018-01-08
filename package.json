@@ -16,7 +16,8 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "next",
     "redux": "^3.7.2",
-    "redux-form": "^7.1.1"
+    "redux-form": "^7.1.1",
+    "request": "^2.83.0"
   },
   "scripts": {
     "start": "react-scripts start",
