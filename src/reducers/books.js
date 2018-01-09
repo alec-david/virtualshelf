@@ -11,7 +11,8 @@ const books = (state = List(), action) => {
         id: action.id,
         title: action.title,
         author: action.author,
-        date: action.date
+        date: action.date,
+        rating: action.rating
       });
     case 'DELETE_BOOK':
       return state.filter(book => book.id !== action.id);

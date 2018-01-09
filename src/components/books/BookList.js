@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Book from './Book';
-import { getBooks, hydrateBooks } from '../../actions/index';
+import { getBooks, hydrateBooks, deleteBook } from '../../actions/index';
 
 class BookList extends Component {
 
@@ -11,6 +11,10 @@ class BookList extends Component {
         this.props.dispatch(hydrateBooks(books));
       });
     }
+  }
+
+  delete(id) {
+    this.props.dispatch(deleteBook(id));
   }
 
   render() {
@@ -25,6 +29,7 @@ class BookList extends Component {
                   key={book.id}
                   dispatch={this.props.dispatch}
                   book={book}
+                  delete={this.delete}
                 />
               );
             })}

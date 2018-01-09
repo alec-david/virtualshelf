@@ -7,8 +7,11 @@ import AddBookForm from '../../components/books/AddBookForm';
 
 class AddBook extends Component {
   submitNewBook = book => {
-    this.props.dispatch(addBook(book));
-    this.props.reset();
+    let asyncAdd = addBook(book);
+    asyncAdd.then(bookJSON => {
+      this.props.dispatch(bookJSON);
+      this.props.reset();
+    })
   };
 
   render() {

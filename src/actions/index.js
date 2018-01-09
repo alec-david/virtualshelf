@@ -10,20 +10,22 @@ const movieURL = mySQLURL + "movies";
 const televisionURL = mySQLURL + "television";
 
 
-let nextBookId = 0;
 export const addBook = book => {
-  const bookJSON = {
-    id: nextBookId++,
-    title: book.title,
-    author: book.author,
-    date: new Date(book.date).valueOf(),
-    userId: 0,
-    rating: 10
-  };
-  postResource(bookURL, bookJSON);
-
-  bookJSON.type = 'ADD_NEW_BOOK';
-  return bookJSON;
+  return new Promise((resolve, reject) => {
+    const bookJSON = {
+      title: book.title,
+      author: book.author,
+      date: new Date(book.date).valueOf(),
+      userId: 0,
+      rating: parseInt(book.rating)
+    };
+    let asyncPost = postResource(bookURL, bookJSON);
+    asyncPost.then(id => {
+      bookJSON.id = id;
+      bookJSON.type = 'ADD_NEW_BOOK';
+      resolve(bookJSON);
+    });
+  });
 };
 
 export const getBooks = () => {
@@ -46,6 +48,23 @@ export const hydrateBooks = books => {
   };
 }
 
+export const deleteBook = id => {
+  deleteResource(id, bookURL);
+  return {
+    type: 'DELETE_BOOK',
+    id
+  }
+}
+
+function deleteResource(id, resourceURL) {
+  request({
+    url: resourceURL + '/' + id,
+    method: "DELETE",
+  }, (error, response) => {
+    console.log(response);
+  })
+}
+
 function getResource(resourceURL) {
   request
     .get(resourceURL)
@@ -58,47 +77,17 @@ function getResource(resourceURL) {
 }
 
 function postResource(resourceURL, jsonObj) {
-  request({
-    url: resourceURL,
-    method: "POST",
-    json: true,
-    body: jsonObj
-  }, (error, response, body) => {
-    console.log(response);
+  return new Promise((resolve, reject) => {
+    request({
+      url: resourceURL,
+      method: "POST",
+      json: true,
+      body: jsonObj
+    }, (error, response, body) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(response.body.id);
+    });
   });
 }
-
-/*function requestBooks(user) {
-  return {
-    type: 'REQUEST_POSTS',
-    user
-  }
-}
-
-function receiveBooks(user, json) {
-  return {
-    type: 'RECEIVE_POSTS',
-    user,
-    posts: json.data.children.map(child => child.data),
-    receivedAt: Date.now()
-  }
-}
-
-function shouldFetchBooks(state, subreddit) {
-  const book = state.postsBySubreddit[subreddit]
-  if (!posts) {
-    return true
-  } else if (posts.isFetching) {
-    return false
-  } else {
-    return posts.didInvalidate
-  }
-}
-
-export function fetchBooksIfNeeded(books) {
-  return (dispatch, getState) => {
-    if (shouldFetchPosts(getState(), books)) {
-      return dispatch(fetchPosts(books))
-    }
-  }
-}*/
