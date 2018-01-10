@@ -5,8 +5,6 @@ import VisibleBookList from '../containers/books/VisibleBookList';
 const Main = () => (
   <div>
     main
-    <AddBook />
-    <VisibleBookList />
   </div>
 );
 

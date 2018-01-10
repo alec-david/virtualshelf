@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import { Nav, Navbar, NavItem } from 'react-bootstrap';
+import { Nav, Navbar, NavItem, FormGroup, FormControl, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
-import MainPage from './MainPage';
-import BookPage from './books/BookPage';
-import MoviePage from './movies/MoviePage';
-import TelevisionPage from './television/TelevisionPage';
+import MainPage from '../MainPage';
+import BookPage from '../books/BookPage';
+import MoviePage from '../movies/MoviePage';
+import TelevisionPage from '../television/TelevisionPage';
+import ProfilePage from '../ProfilePage';
 
 class App extends Component {
   render() {
@@ -32,12 +33,9 @@ class App extends Component {
               </LinkContainer>
             </Nav>
             <Nav pullRight>
-              <NavItem eventKey={1} href="#">
-                Login
-              </NavItem>
-              <NavItem eventKey={2} href="#">
-                Sign Up
-              </NavItem>
+              <LinkContainer to="/profile">
+                <NavItem>Profile</NavItem>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -46,6 +44,7 @@ class App extends Component {
           <Route exact path="/books" component={BookPage} />
           <Route exact path="/movies" component={MoviePage} />
           <Route exact path="/television" component={TelevisionPage} />
+          <Route exact path="/profile" component={ProfilePage} />
         </div>
       </div>
     );
