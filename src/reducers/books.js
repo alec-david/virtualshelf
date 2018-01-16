@@ -1,12 +1,13 @@
 import { List } from 'immutable';
 import {
-  REQUEST_BOOKS,
-  RECEIVE_BOOKS
+  ADD_NEW_BOOK,
+  ADD_EXISTING_BOOKS,
+  DELETE_BOOK
 } from '../actions/index'
 
 const books = (state = List(), action) => {
   switch (action.type) {
-    case 'ADD_NEW_BOOK':
+    case ADD_NEW_BOOK:
       return state.push({
         id: action.id,
         title: action.title,
@@ -14,10 +15,10 @@ const books = (state = List(), action) => {
         date: action.date,
         rating: action.rating
       });
-    case 'DELETE_BOOK':
-      return state.filter(book => book.id !== action.id);
-    case 'ADD_EXISTING_BOOKS':
+    case ADD_EXISTING_BOOKS:
       return state.concat(JSON.parse(action.books));
+    case DELETE_BOOK:
+      return state.filter(book => book.id !== action.id);
     default:
       return state;
   }

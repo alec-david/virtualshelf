@@ -15,7 +15,6 @@ class VisibleBookList extends Component {
   }
 
   componentWillMount() {
-    console.log('hello');
     if (!this.props.state.books.size) {
       let getBooksAsync = getBooks();
       getBooksAsync.then(books => {

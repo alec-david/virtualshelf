@@ -1,13 +1,14 @@
 const request = require('request');
 
-export const REQUEST_BOOKS = 'REQUEST_BOOKS';
-export const RECEIVE_BOOKS = 'RECEIVE_BOOKS';
+export const ADD_NEW_BOOK = 'ADD_NEW_BOOK';
+export const ADD_EXISTING_BOOKS = 'ADD_EXISTING_BOOKS';
+export const DELETE_BOOK = 'DELETE_BOOK';
 
 const mySQLURL = "http://localhost:8080/remembr/";
-const userURL = mySQLURL + "users";
+// const userURL = mySQLURL + "users";
 const bookURL = mySQLURL + "books";
-const movieURL = mySQLURL + "movies";
-const televisionURL = mySQLURL + "television";
+// const movieURL = mySQLURL + "movies";
+// const televisionURL = mySQLURL + "television";
 
 
 export const addBook = book => {
@@ -17,7 +18,7 @@ export const addBook = book => {
       author: book.author,
       date: new Date(book.date).valueOf(),
       userId: 0,
-      rating: parseInt(book.rating)
+      rating: parseInt(book.rating, 10)
     };
     let asyncPost = postResource(bookURL, bookJSON);
     asyncPost.then(id => {
@@ -33,7 +34,8 @@ export const getBooks = () => {
     request
       .get(bookURL)
       .on('response', response => {
-        console.log(response.statusCode)
+        //console.log(response.statusCode)
+        //TODO: Handle Error
       })
       .on('data', data => {
         resolve(data.toString('utf-8'));
