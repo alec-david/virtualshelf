@@ -5,6 +5,7 @@ import { ConnectedRouter } from 'react-router-redux';
 
 import NavBarNoUser from '../components/NavBar/NavBarNoUser';
 import NavBarLoggedIn from '../components/NavBar/NavBarLoggedIn';
+import { login } from '../actions/index';
 
 const mapStateToProps = state => {
   return { state };
@@ -18,23 +19,16 @@ class NavigationBar extends Component {
     this.login = this.login.bind(this);
   }
 
-  /*componentWillMount() {
-    if (!this.props.state.books.size) {
-      let getBooksAsync = getBooks();
-      getBooksAsync.then(books => {
-        this.props.dispatch(hydrateBooks(books));
-      });
-    }
-  }*/
-
   login(email, password) {
-    console.log('loggin in boi');
+    console.log('e: ' + email + '. pw: ' + password);
+    this.props.dispatch(login(email, password));
+    //this.forceUpdate();
   }
 
   render() {
     const { user } = this.props.state;
-    console.log(user.id)
-    if (user.id === -1) {
+    console.log(user);
+    if (!user.isLoggedIn) {
       return (
         <ConnectedRouter history={history}>
           <NavBarNoUser login={this.login} />

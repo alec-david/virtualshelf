@@ -33,10 +33,24 @@ class App extends Component {
             </Nav>
             <Navbar.Form pullRight>
               <FormGroup>
-                <FormControl type="text" placeholder="Email" />
-                <FormControl type="text" placeholder="Password" />
+                <FormControl
+                  inputRef={input => { this.emailInput = input }}
+                  type="email"
+                  placeholder="Email" />
+                <FormControl
+                  inputRef={input => { this.pwInput = input }}
+                  type="password"
+                  placeholder="Password" />
               </FormGroup>{' '}
-              <Button type="submit" onClick={this.props.login}>Login/Sign up</Button>
+              <Button
+                type="submit"
+                onClick={() => this.props.login(this.emailInput.value, this.pwInput.value)}>
+                Login/Sign up
+              </Button>
+              {' '}
+              <span>G</span>
+              {' '}
+              <span>F</span>
             </Navbar.Form>
           </Navbar.Collapse>
         </Navbar>

@@ -4,12 +4,42 @@ export const ADD_NEW_BOOK = 'ADD_NEW_BOOK';
 export const ADD_EXISTING_BOOKS = 'ADD_EXISTING_BOOKS';
 export const DELETE_BOOK = 'DELETE_BOOK';
 
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
+
 const mySQLURL = "http://localhost:8080/remembr/";
 // const userURL = mySQLURL + "users";
 const bookURL = mySQLURL + "books";
 // const movieURL = mySQLURL + "movies";
 // const televisionURL = mySQLURL + "television";
 
+export const login = (username, password) => {
+  /*
+   do server stuff here
+   1. Check if username + password exists + valid -> login user
+   2. If valid username, invalid password -> Show error...
+   3. Loading animation while fetching?
+   5. ???
+   6. Profit 
+  */
+  return {
+    type: LOGIN,
+    username,
+    password
+  };
+};
+
+export const logout = () => {
+  return {
+    type: LOGOUT
+  };
+};
+
+export const signup = (username, password) => {
+  return (dispatch) => {
+
+  };
+};
 
 export const addBook = book => {
   return new Promise((resolve, reject) => {

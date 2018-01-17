@@ -4,13 +4,14 @@
 + Only show log in/sign up side of navbar if not logged in -> Have profile link instead?
 + Once login process setup, get user id working where only shows items where user id === current user id
 + Switch async promise hydrate stuff to use redux-thunk
++ Add edit functionality
 
 + General page when not logged in -> shows all recent entries (across all 3 options)
 + General page when logged in -> Shows all recent entries for current user
 + Once all that is working, implement for tv and movies.
 + Unit testing
 + Refactoring (AddBook - move constants out of container, clean up hard coded select with 10 options)
-+ Styling...
++ Styling...(Improve delete functionality)
 
 # QoL Improvements
 + Create microservice that gets cover/image for each entry (would be a good use for Go)
