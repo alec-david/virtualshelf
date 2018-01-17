@@ -7,6 +7,8 @@ import MainPage from '../MainPage';
 import BookPage from '../books/BookPage';
 import MoviePage from '../movies/MoviePage';
 import TelevisionPage from '../television/TelevisionPage';
+import LoginPage from '../LoginPage';
+import RegisterPage from '../RegisterPage';
 
 class App extends Component {
   render() {
@@ -31,27 +33,14 @@ class App extends Component {
                 <NavItem>Television</NavItem>
               </LinkContainer>
             </Nav>
-            <Navbar.Form pullRight>
-              <FormGroup>
-                <FormControl
-                  inputRef={input => { this.emailInput = input }}
-                  type="email"
-                  placeholder="Email" />
-                <FormControl
-                  inputRef={input => { this.pwInput = input }}
-                  type="password"
-                  placeholder="Password" />
-              </FormGroup>{' '}
-              <Button
-                type="submit"
-                onClick={() => this.props.login(this.emailInput.value, this.pwInput.value)}>
-                Login/Sign up
-              </Button>
-              {' '}
-              <span>G</span>
-              {' '}
-              <span>F</span>
-            </Navbar.Form>
+            <Nav pullRight>
+              <LinkContainer to="/login">
+                <NavItem>Sign In</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/register">
+                <NavItem>Sign Up</NavItem>
+              </LinkContainer>
+            </Nav>
           </Navbar.Collapse>
         </Navbar>
         <div className="routes">
@@ -59,6 +48,8 @@ class App extends Component {
           <Route exact path="/books" component={BookPage} />
           <Route exact path="/movies" component={MoviePage} />
           <Route exact path="/television" component={TelevisionPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/register" component={RegisterPage} />
         </div>
       </div>
     );
