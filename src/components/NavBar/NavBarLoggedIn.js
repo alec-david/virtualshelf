@@ -44,7 +44,10 @@ class App extends Component {
           <Route exact path="/books" component={BookPage} />
           <Route exact path="/movies" component={MoviePage} />
           <Route exact path="/television" component={TelevisionPage} />
-          <Route exact path="/profile" component={ProfilePage} />
+          {/* <Route exact path="/profile" component={ProfilePage} /> */}
+          <Route exact path="/profile" render={(props) => (
+            <ProfilePage auth={this.props.auth} />
+          )} />
         </div>
       </div>
     );

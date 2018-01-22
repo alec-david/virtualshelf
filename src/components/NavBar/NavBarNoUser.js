@@ -7,8 +7,6 @@ import MainPage from '../MainPage';
 import BookPage from '../books/BookPage';
 import MoviePage from '../movies/MoviePage';
 import TelevisionPage from '../television/TelevisionPage';
-import LoginPage from '../LoginPage';
-import RegisterPage from '../RegisterPage';
 
 class App extends Component {
   render() {
@@ -33,14 +31,9 @@ class App extends Component {
                 <NavItem>Television</NavItem>
               </LinkContainer>
             </Nav>
-            <Nav pullRight>
-              <LinkContainer to="/login">
-                <NavItem>Sign In</NavItem>
-              </LinkContainer>
-              <LinkContainer to="/register">
-                <NavItem>Sign Up</NavItem>
-              </LinkContainer>
-            </Nav>
+            <Navbar.Form pullRight>
+              <Button onClick={this.props.login}>Login</Button>
+            </Navbar.Form>
           </Navbar.Collapse>
         </Navbar>
         <div className="routes">
@@ -48,8 +41,10 @@ class App extends Component {
           <Route exact path="/books" component={BookPage} />
           <Route exact path="/movies" component={MoviePage} />
           <Route exact path="/television" component={TelevisionPage} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/register" component={RegisterPage} />
+          <Route exact path="/callback" render={(props) => {
+            this.props.authenticateUser(props);
+            return <div>Logging in....</div>
+          }} />
         </div>
       </div>
     );

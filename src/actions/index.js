@@ -13,19 +13,10 @@ const bookURL = mySQLURL + "books";
 // const movieURL = mySQLURL + "movies";
 // const televisionURL = mySQLURL + "television";
 
-export const login = (username, password) => {
-  /*
-   do server stuff here
-   1. Check if username + password exists + valid -> login user
-   2. If valid username, invalid password -> Show error...
-   3. Loading animation while fetching?
-   5. ???
-   6. Profit 
-  */
+export const login = (userInfo) => {
   return {
     type: LOGIN,
-    username,
-    password
+    ...userInfo
   };
 };
 

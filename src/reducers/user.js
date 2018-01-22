@@ -4,10 +4,10 @@ import {
 } from '../actions/index';
 
 const defaultState = {
-  isLoggedIn: false,
-  username: '',
-  password: ''
-}
+  access_token: '',
+  id_token: '',
+  expires_at: ''
+};
 
 const user = (state = defaultState, action) => {
   switch (action.type) {
@@ -17,15 +17,15 @@ const user = (state = defaultState, action) => {
       return defaultState;
     case LOGIN:
       return Object.assign({}, state, {
-        isLoggedIn: true,
-        username: action.username,
-        password: action.password
+        access_token: action.access_token,
+        id_token: action.id_token,
+        expires_at: action.expires_at
       });
     case LOGOUT:
       return Object.assign({}, state, {
-        isLoggedIn: false,
-        username: '',
-        password: ''
+        access_token: '',
+        id_token: '',
+        expires_at: ''
       });
     default:
       return state;
