@@ -7,10 +7,6 @@ import NavBarNoUser from '../components/NavBar/NavBarNoUser';
 import NavBarLoggedIn from '../components/NavBar/NavBarLoggedIn';
 import { login } from '../actions/index';
 
-import Auth from '../Auth/Auth';
-
-const auth = new Auth();
-
 const mapStateToProps = state => {
   return { state };
 };
@@ -25,17 +21,20 @@ class NavigationBar extends Component {
   }
 
   login() {
-    auth.login();
+    console.log('hello');
   }
 
   handleAuthentication = (nextState, replace) => {
-    if (/access_token|id_token|error/.test(nextState.location.hash)) {
-      auth.handleAuthentication(this.props.dispatch);
-      history.replace('/');
-    }
+    //if (/access_token|id_token|error/.test(nextState.location.hash)) {
+    //auth.handleAuthentication(this.props.dispatch);
+    //history.replace('/');
+    //}
+    console.log('authing');
   }
 
-  componentWillMount() {
+  //Do something here to check if user has already logged in
+  //Look into cookies/localStorage/whatever
+  /*componentWillMount() {
     if (localStorage.expires_at) {
       let userInfo = {
         access_token: localStorage.access_token,
@@ -45,22 +44,23 @@ class NavigationBar extends Component {
       const checkLocalStorageUser = login(userInfo);
       this.props.dispatch(checkLocalStorageUser);
     }
-  }
+  }*/
 
   render() {
     const { user } = this.props.state;
-    if (!auth.checkValidUser(user.expires_at)) {
-      return (
-        <ConnectedRouter history={history}>
-          <NavBarNoUser login={this.login} authenticateUser={this.handleAuthentication} />
-        </ConnectedRouter>
-      );
-    }
+    console.log(user);
+    //if (!auth.checkValidUser(user.expires_at)) {
     return (
       <ConnectedRouter history={history}>
-        <NavBarLoggedIn auth={auth} />
+        <NavBarNoUser login={this.login} authenticateUser={this.handleAuthentication} />
       </ConnectedRouter>
-    )
+    );
+    //}
+    // return (
+    //   <ConnectedRouter history={history}>
+    //     <NavBarLoggedIn auth={auth} />
+    //   </ConnectedRouter>
+    // )
   }
 }
 

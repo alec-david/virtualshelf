@@ -12,6 +12,7 @@
 + Create profile page -> Can change password, delete account
 + Look into caching login status so don't have to login everytime (No idea how to do this - maybe look into cookies/see if an easy solution with JWT)
   + Article on storing JWTs [HERE](https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage)
++ Add profile info to user object in state (or make separate profile object)
 + Split up profile page into container/component structure
 
 Front End Stuff

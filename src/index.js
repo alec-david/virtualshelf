@@ -7,6 +7,7 @@ import remembrApp from './reducers/index';
 import NavigationBar from './containers/NavigationBar';
 
 import './index.css';
+import 'semantic-ui-css/semantic.min.css';
 
 const store = createStore(remembrApp);
 console.log(store.getState());

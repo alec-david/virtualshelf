@@ -7,11 +7,11 @@ export const DELETE_BOOK = 'DELETE_BOOK';
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 
-const mySQLURL = "http://localhost:8080/remembr/";
-// const userURL = mySQLURL + "users";
-const bookURL = mySQLURL + "books";
-// const movieURL = mySQLURL + "movies";
-// const televisionURL = mySQLURL + "television";
+const expressURL = "http://localhost:3030/remembr/";
+// const userURL = expressURL + "users";
+const bookURL = expressURL + "books";
+// const movieURL = expressURL + "movies";
+// const televisionURL = expressURL + "television";
 
 export const login = (userInfo) => {
   return {

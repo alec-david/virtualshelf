@@ -4,9 +4,7 @@ import {
 } from '../actions/index';
 
 const defaultState = {
-  access_token: '',
-  id_token: '',
-  expires_at: ''
+  token: '',
 };
 
 const user = (state = defaultState, action) => {
@@ -17,15 +15,11 @@ const user = (state = defaultState, action) => {
       return defaultState;
     case LOGIN:
       return Object.assign({}, state, {
-        access_token: action.access_token,
-        id_token: action.id_token,
-        expires_at: action.expires_at
+        username: 'test'
       });
     case LOGOUT:
       return Object.assign({}, state, {
-        access_token: '',
-        id_token: '',
-        expires_at: ''
+        username: ''
       });
     default:
       return state;
