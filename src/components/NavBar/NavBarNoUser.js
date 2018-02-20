@@ -6,8 +6,8 @@ import MainPage from '../MainPage';
 import BookPage from '../books/BookPage';
 import MoviePage from '../movies/MoviePage';
 import TelevisionPage from '../television/TelevisionPage';
-import LoginPage from '../LoginPage';
-import RegisterPage from '../RegisterPage';
+import LoginPage from '../login/LoginPage';
+import RegisterPage from '../register/RegisterPage';
 
 class NavBarNoUser extends Component {
   state = {}

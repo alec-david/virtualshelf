@@ -6,18 +6,31 @@ export const DELETE_BOOK = 'DELETE_BOOK';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const REGISTER = 'REGISTER';
 
-const expressURL = "http://localhost:3030/remembr/";
-// const userURL = expressURL + "users";
-const bookURL = expressURL + "books";
-// const movieURL = expressURL + "movies";
-// const televisionURL = expressURL + "television";
+const expressURL = 'http://localhost:3030/remembr/';
+const userURL = expressURL + 'users';
+const registerURL = expressURL + 'users/register';
+const loginURL = expressURL + 'users/login';
+const bookURL = expressURL + 'books';
+// const movieURL = expressURL + 'movies';
+// const televisionURL = expressURL + 'television';
 
-export const login = (userInfo) => {
-  return {
-    type: LOGIN,
-    ...userInfo
-  };
+export const login = (user) => {
+  return new Promise((resolve, reject) => {
+    postUser(loginURL, user).then(result => {
+      const tokenObject = {
+        token: result,
+        type: LOGIN
+      }
+      if (!localStorage.getItem('token')) {
+        localStorage.setItem('token', result);
+      }
+      resolve(tokenObject);
+    }).catch(err => {
+      reject(err);
+    })
+  })
 };
 
 export const logout = () => {
@@ -26,10 +39,19 @@ export const logout = () => {
   };
 };
 
-export const signup = (username, password) => {
-  return (dispatch) => {
-
-  };
+export const register = user => {
+  return new Promise((resolve, reject) => {
+    postUser(registerURL, user).then(result => {
+      const tokenObj = {
+        token: result,
+        type: REGISTER
+      };
+      localStorage.setItem('token', result);
+      resolve(tokenObj);
+    }).catch(err => {
+      reject(err);
+    })
+  });
 };
 
 export const addBook = book => {
@@ -44,7 +66,7 @@ export const addBook = book => {
     let asyncPost = postResource(bookURL, bookJSON);
     asyncPost.then(id => {
       bookJSON.id = id;
-      bookJSON.type = 'ADD_NEW_BOOK';
+      bookJSON.type = ADD_NEW_BOOK;
       resolve(bookJSON);
     });
   });
@@ -66,7 +88,7 @@ export const getBooks = () => {
 
 export const hydrateBooks = books => {
   return {
-    type: 'ADD_EXISTING_BOOKS',
+    type: ADD_EXISTING_BOOKS,
     books
   };
 }
@@ -74,7 +96,7 @@ export const hydrateBooks = books => {
 export const deleteBook = id => {
   deleteResource(id, bookURL);
   return {
-    type: 'DELETE_BOOK',
+    type: DELETE_BOOK,
     id
   }
 }
@@ -111,6 +133,24 @@ function postResource(resourceURL, jsonObj) {
         reject(error);
       }
       resolve(response.body.id);
+    });
+  });
+}
+
+function postUser(registerURL, jsonObj) {
+  return new Promise((resolve, reject) => {
+    request({
+      url: registerURL,
+      method: "POST",
+      json: true,
+      body: jsonObj
+    }, (error, response, body) => {
+      if (error) {
+        reject(error);
+      } else if (response.statusCode === 400) {
+        reject(body);
+      }
+      resolve(body);
     });
   });
 }
