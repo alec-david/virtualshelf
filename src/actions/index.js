@@ -33,6 +33,13 @@ export const login = (user) => {
   })
 };
 
+export const loginToken = (token) => {
+  return {
+    token,
+    type: LOGIN
+  }
+}
+
 export const logout = () => {
   return {
     type: LOGOUT
@@ -44,7 +51,7 @@ export const register = user => {
     postUser(registerURL, user).then(result => {
       const tokenObj = {
         token: result,
-        type: REGISTER
+        type: LOGIN
       };
       localStorage.setItem('token', result);
       resolve(tokenObj);
@@ -137,10 +144,10 @@ function postResource(resourceURL, jsonObj) {
   });
 }
 
-function postUser(registerURL, jsonObj) {
+function postUser(resourceURL, jsonObj) {
   return new Promise((resolve, reject) => {
     request({
-      url: registerURL,
+      url: resourceURL,
       method: "POST",
       json: true,
       body: jsonObj

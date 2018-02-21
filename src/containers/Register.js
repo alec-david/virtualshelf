@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import RegisterForm from '../components/register/RegisterForm';
+import { connect } from 'react-redux';
 
+import RegisterForm from '../components/register/RegisterForm';
 import { register } from '../actions/index';
 
 class Register extends Component {
@@ -8,7 +9,8 @@ class Register extends Component {
     email: '',
     password: '',
     reEnterPassword: '',
-    passwordsMatch: true
+    errorMsg: '',
+    errorBody: ''
   }
 
   handleChange = (e, { name, value }) => {
@@ -21,18 +23,37 @@ class Register extends Component {
     //Check passwords here. If not matching, throw an error
     if (this.state.password !== this.state.reEnterPassword) {
       this.setState({
-        passwordsMatch: false
+        errorMsg: 'Passwords do not match',
+        password: '',
+        reEnterPassword: ''
       });
     } else {
       const userObj = {
-        username: this.state.email, 
+        username: this.state.email,
         password: this.state.password
       };
-      console.log(userObj);
-      let asyncRegister = register(userObj);
-      asyncRegister.then(token => {
-        console.log('asuh');
-        console.log(token);
+      //If passwords match, call register action
+      register(userObj).then(token => {
+        //If register successful in DB, dispatch action
+        //to update user state with token and navigate to homepage
+        this.props.dispatch(token);
+        this.props.router.history.replace('/');
+      }).catch(err => {
+        if (err.indexOf('.') !== -1) {
+          let errSplit = err.split('.');
+          this.setState({
+            errorMsg: errSplit[0],
+            errorBody: errSplit[1],
+            password: '',
+            reEnterPassword: ''
+          })
+        } else {
+          this.setState({
+            errorMsg: err,
+            password: '',
+            reEnterPassword: ''
+          })
+        }
       })
     }
   }
@@ -42,9 +63,8 @@ class Register extends Component {
       <RegisterForm
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
-        passwordsMatch={this.state.passwordsMatch} />
+        formVals={this.state} />
     )
   }
 }
-
-export default Register;
+export default connect()(Register)

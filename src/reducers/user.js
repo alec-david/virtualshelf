@@ -1,7 +1,6 @@
 import {
   LOGIN,
-  LOGOUT,
-  REGISTER
+  LOGOUT
 } from '../actions/index';
 
 const defaultState = {
@@ -10,12 +9,6 @@ const defaultState = {
 
 const user = (state = defaultState, action) => {
   switch (action.type) {
-    case REGISTER:
-      return Object.assign({}, state, {
-        token: action.token
-      })
-    case 'DELETE_USER':
-      return defaultState;
     case LOGIN:
       return Object.assign({}, state, {
         token: action.token
@@ -24,6 +17,8 @@ const user = (state = defaultState, action) => {
       return Object.assign({}, state, {
         token: ''
       });
+    case 'DELETE_USER':
+      return defaultState;
     default:
       return state;
   }

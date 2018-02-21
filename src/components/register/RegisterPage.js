@@ -1,10 +1,9 @@
 import React from 'react';
 import Register from '../../containers/Register';
 
-const RegisterPage = () => {
-
+const RegisterPage = (props) => {
   return (
-    <Register />
+    <Register router={props} />
   )
 }
 

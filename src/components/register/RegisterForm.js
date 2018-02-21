@@ -1,84 +1,93 @@
 import React from 'react';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Button, Form, Message, Container, Grid } from 'semantic-ui-react';
 
 const RegisterForm = (props) => {
-  const { handleChange, handleSubmit, passwordsMatch } = props;
+  const { handleChange, handleSubmit, formVals } = props;
 
-  if (passwordsMatch) {
+  if (!formVals.errorMsg) {
     return (
-      <Form onSubmit={() => { handleSubmit() }} >
-        <Form.Input
-          label='Email'
-          type='email'
-          width={4}
-          name='email'
-          value={props.email}
-          onChange={handleChange}
-          required
-        />
-        <Form.Input
-          label='Password'
-          type='password'
-          width={4}
-          name='password'
-          value={props.password}
-          onChange={handleChange}
-          required
-        />
-        <Form.Input
-          label='Re-enter Password'
-          type='password'
-          width={4}
-          name='reEnterPassword'
-          value={props.reEnterPassword}
-          onChange={handleChange}
-          required
-        />
-        <Button type='submit'>Register</Button>
-      </Form>
+      <Container>
+        <Grid>
+          <Grid.Row centered>
+            <Grid.Column width={6}>
+              <Form onSubmit={() => { handleSubmit() }} >
+                <Form.Input
+                  label='Email'
+                  type='email'
+                  name='email'
+                  value={formVals.email}
+                  onChange={handleChange}
+                  required
+                />
+                <Form.Input
+                  label='Password'
+                  type='password'
+                  name='password'
+                  value={formVals.password}
+                  onChange={handleChange}
+                  required
+                />
+                <Form.Input
+                  label='Re-enter Password'
+                  type='password'
+                  name='reEnterPassword'
+                  value={formVals.reEnterPassword}
+                  onChange={handleChange}
+                  required
+                />
+                <Button type='submit'>Register</Button>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     )
   } else {
     return (
-      <Form 
-        onSubmit={() => { handleSubmit() }} 
-        error
-      >
-        <Form.Input
-          label='Email'
-          type='email'
-          width={4}
-          name='email'
-          value={props.email}
-          onChange={handleChange}
-          required
-        />
-        <Form.Input
-          label='Password'
-          type='password'
-          width={4}
-          name='password'
-          value={props.password}
-          onChange={handleChange}
-          required
-        />
-        <Form.Input
-          label='Re-enter Password'
-          type='password'
-          width={4}
-          name='reEnterPassword'
-          value={props.reEnterPassword}
-          onChange={handleChange}
-          required
-        />
-        <Message
-          compact
-          error
-          header="Passwords Don't Match"
-          content='Ensure passwords match before registering.'
-        />
-        <br/>
-        <Button type='submit'>Register</Button>
-      </Form>
+      <Container>
+        <Grid>
+          <Grid.Row centered>
+            <Grid.Column width={6}>
+              <Form
+                onSubmit={() => { handleSubmit() }}
+                error
+              >
+                <Message
+                  error
+                  header={formVals.errorMsg}
+                  content={formVals.errorBody}
+                />
+                <Form.Input
+                  label='Email'
+                  type='email'
+                  name='email'
+                  value={formVals.email}
+                  onChange={handleChange}
+                  required
+                />
+                <Form.Input
+                  label='Password'
+                  type='password'
+                  name='password'
+                  value={formVals.password}
+                  onChange={handleChange}
+                  required
+                />
+                <Form.Input
+                  label='Re-enter Password'
+                  type='password'
+                  name='reEnterPassword'
+                  value={formVals.reEnterPassword}
+                  onChange={handleChange}
+                  required
+                />
+                <br />
+                <Button type='submit'>Register</Button>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     )
   }
 }

@@ -15,7 +15,7 @@ class NavBarNoUser extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render() {
-    const { activeItem } = this.state
+    const { activeItem } = this.state;
 
     return (
       <div>
@@ -61,7 +61,7 @@ class NavBarNoUser extends Component {
               active={activeItem === 'login'}
               onClick={this.handleItemClick}
               as={Link}
-              to='login'
+              to='/login'
             >
               Login
             </Menu.Item>
@@ -70,7 +70,7 @@ class NavBarNoUser extends Component {
               active={activeItem === 'register'}
               onClick={this.handleItemClick}
               as={Link}
-              to='register'
+              to='/register'
             >
               Register
             </Menu.Item>
@@ -90,47 +90,3 @@ class NavBarNoUser extends Component {
 }
 
 export default NavBarNoUser;
-
-// class NavBarNoUser extends Component {
-//   render() {
-//     return (
-//       <div>
-//         <div className="routes">
-//           <Route exact path="/" component={MainPage} />
-//           <Route exact path="/books" component={BookPage} />
-//           <Route exact path="/movies" component={MoviePage} />
-//           <Route exact path="/television" component={TelevisionPage} />
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// export default NavBarNoUser;
-
-/*
-<Navbar fluid collapseOnSelect>
-  <Navbar.Header>
-    <Navbar.Brand>
-      <Link to="/">Remembr</Link>
-    </Navbar.Brand>
-    <Navbar.Toggle />
-  </Navbar.Header>
-  <Navbar.Collapse>
-    <Nav>
-      <LinkContainer to="/books">
-        <NavItem>Books</NavItem>
-      </LinkContainer>
-      <LinkContainer to="/movies">
-        <NavItem>Movies</NavItem>
-      </LinkContainer>
-      <LinkContainer to="/television">
-        <NavItem>Television</NavItem>
-      </LinkContainer>
-    </Nav>
-    <Navbar.Form pullRight>
-      <Button onClick={this.props.login}>Login</Button>
-    </Navbar.Form>
-  </Navbar.Collapse>
-</Navbar>
-*/

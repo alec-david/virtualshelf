@@ -1,65 +1,75 @@
 import React from 'react';
-import { Button, Form, Message } from 'semantic-ui-react';
+import { Button, Form, Message, Container, Grid } from 'semantic-ui-react';
 
 const LoginForm = (props) => {
-  const { handleSubmit, handleChange, errorMsg } = props;
-  
+  const { handleSubmit, handleChange, formVals } = props;
+  const errorMsg = formVals.errorMsg
   if (!errorMsg) {
     return (
-      <Form onSubmit={() => { handleSubmit() }} >
-        <Form.Input
-          label='Email'
-          type='email'
-          width={4}
-          name='email'
-          value={props.email}
-          onChange={handleChange}
-          required
-        />
-        <Form.Input
-          label='Password'
-          type='password'
-          width={4}
-          name='password'
-          value={props.password}
-          onChange={handleChange}
-          required
-        />
-        <Button type='submit'>Login</Button>
-      </Form>
+      <Container>
+        <Grid>
+          <Grid.Row centered>
+            <Grid.Column width={6}>
+              <Form onSubmit={() => { handleSubmit() }} >
+                <Form.Input
+                  label='Email'
+                  type='email'
+                  name='email'
+                  value={formVals.email}
+                  onChange={handleChange}
+                  required
+                />
+                <Form.Input
+                  label='Password'
+                  type='password'
+                  name='password'
+                  value={formVals.password}
+                  onChange={handleChange}
+                  required
+                />
+                <Button type='submit'>Login</Button>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     )
   } else {
     return (
-      <Form 
-        onSubmit={() => { handleSubmit() }} 
-        error
-      >
-        <Message 
-          compact
-          error
-          header="Error Occurred"
-          content={errorMsg}
-        />
-        <Form.Input
-          label='Email'
-          type='email'
-          width={4}
-          name='email'
-          value={props.email}
-          onChange={handleChange}
-          required
-        />
-        <Form.Input
-          label='Password'
-          type='password'
-          width={4}
-          name='password'
-          value={props.password}
-          onChange={handleChange}
-          required
-        />
-        <Button type='submit'>Login</Button>
-      </Form>
+      <Container>
+        <Grid>
+          <Grid.Row centered>
+            <Grid.Column width={6}>
+              <Form
+                onSubmit={() => { handleSubmit() }}
+                error
+              >
+                <Message
+                  error
+                  header={errorMsg}
+                />
+                <Form.Input
+                  label='Email'
+                  type='email'
+                  name='email'
+                  value={formVals.email}
+                  onChange={handleChange}
+                  required
+                />
+                <Form.Input
+                  label='Password'
+                  type='password'
+                  name='password'
+                  value={formVals.password}
+                  onChange={handleChange}
+                  required
+                />
+                <Button type='submit'>Login</Button>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Container>
     )
   }
 }

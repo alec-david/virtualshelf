@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import LoginForm from '../components/login/LoginForm';
+import { connect } from 'react-redux';
 
+import LoginForm from '../components/login/LoginForm';
 import { login } from '../actions/index';
 
 class Login extends Component {
@@ -19,31 +20,43 @@ class Login extends Component {
 
   handleSubmit = () => {
     const userObj = {
-      username: this.state.email, 
+      username: this.state.email,
       password: this.state.password
     };
+    //Call login action with username and password
     login(userObj).then(token => {
-      console.log('Successfully logged in');
-      console.log(token);
-      //TODO
-      //redirect back to home page.
-      //Home page should now be blank and user can add stuff
+      //If successful, set user state and navigate back to home page.
+      this.props.dispatch(token);
+      this.props.router.history.replace('/');
     }).catch(err => {
-      this.setState({
-        errorMsg: err
-      })
+      //If error occurs in login, display error message to user
+
+      //If incorrect password, don't reset email
+      if (err.indexOf('password') !== -1) {
+        this.setState({
+          errorMsg: err,
+          password: ''
+        })
+      } else {
+        //If email not found, reset both
+        this.setState({
+          errorMsg: err,
+          email: '',
+          password: ''
+        })
+      }
     });
   }
 
   render() {
     return (
-      <LoginForm 
+      <LoginForm
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
-        errorMsg={this.state.errorMsg}
+        formVals={this.state}
       />
     )
   }
 }
 
-export default Login;
+export default connect()(Login);
