@@ -31,3 +31,5 @@ Front End Stuff
 + ~~Form validation (author, title, rating, date included)~~
 + ~~Delete Books (delete reflected on db as well)~~
 + ~~Only show log in/sign up side of navbar if not logged in -> Have profile link instead?~~
++ ~~on delete make user enter their password before deleting.~~
++ ~~Error display for login and register. If non matching passwords, incorrect password, email already exists~~

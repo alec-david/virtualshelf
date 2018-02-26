@@ -15,12 +15,15 @@ const history = createHistory();
 
 class NavigationBar extends Component {
 
-  //Do something here to check if user has already logged in
-  //Look into cookies/localStorage/whatever
+  //Check localStorage to see if user has already created an
+  //account. If so, log that user in.
   componentWillMount() {
     if (localStorage.token) {
-      const checkLocalStorageToken = loginToken(localStorage.token);
-      this.props.dispatch(checkLocalStorageToken);
+      loginToken(localStorage.token).then(result => {
+        this.props.dispatch(result);
+      }).catch(err => {
+        console.log(err);
+      })
     }
   }
 

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Profile from '../../containers/Profile';
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
   return (
-    <Profile />
+    <Profile router={props}/>
   )
 }
 

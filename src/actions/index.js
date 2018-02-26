@@ -1,17 +1,21 @@
 const request = require('request');
 
-export const ADD_NEW_BOOK = 'ADD_NEW_BOOK';
-export const ADD_EXISTING_BOOKS = 'ADD_EXISTING_BOOKS';
-export const DELETE_BOOK = 'DELETE_BOOK';
-
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
+
+export const ADD_NEW_BOOK = 'ADD_NEW_BOOK';
+export const ADD_EXISTING_BOOKS = 'ADD_EXISTING_BOOKS';
+export const DELETE_BOOK = 'DELETE_BOOK';
 
 const expressURL = 'http://localhost:3030/remembr/';
 const userURL = expressURL + 'users';
 const registerURL = expressURL + 'users/register';
 const loginURL = expressURL + 'users/login';
+const verifyURL = expressURL + 'users/verify';
+const deleteURL = expressURL + 'users/delete';
+const resetURL = expressURL + 'users/reset';
+
 const bookURL = expressURL + 'books';
 // const movieURL = expressURL + 'movies';
 // const televisionURL = expressURL + 'television';
@@ -21,6 +25,7 @@ export const login = (user) => {
     postUser(loginURL, user).then(result => {
       const tokenObject = {
         token: result,
+        email: user.username,
         type: LOGIN
       }
       if (!localStorage.getItem('token')) {
@@ -34,13 +39,26 @@ export const login = (user) => {
 };
 
 export const loginToken = (token) => {
-  return {
-    token,
-    type: LOGIN
+  const tokenObject = {
+    token
   }
+
+  return new Promise((resolve, reject) => {
+    postUser(verifyURL, tokenObject).then(result => {
+      const userObject = {
+        token: token,
+        email: result,
+        type: LOGIN
+      }
+      resolve(userObject);
+    }).catch(err => {
+      reject(err);
+    })
+  });
 }
 
 export const logout = () => {
+  localStorage.clear();
   return {
     type: LOGOUT
   };
@@ -51,6 +69,7 @@ export const register = user => {
     postUser(registerURL, user).then(result => {
       const tokenObj = {
         token: result,
+        email: user.username,
         type: LOGIN
       };
       localStorage.setItem('token', result);
@@ -60,6 +79,34 @@ export const register = user => {
     })
   });
 };
+
+export const resetPassword = (user) => {
+  return new Promise((resolve, reject) => {
+    updateUser(resetURL, user).then(result => {
+      const tokenObj = {
+        token: result,
+        email: user.email,
+        type: LOGIN
+      };
+      localStorage.setItem('token', result);
+      resolve(tokenObj);
+    })
+  })
+}
+
+export const deleteAccount = (user) => {
+  return new Promise((resolve, reject) => {
+    postUser(deleteURL, user).then(result => {
+      localStorage.clear();
+      const deleteAction = {
+        type: LOGOUT
+      };
+      resolve(deleteAction);
+    }).catch(err => {
+      reject(err);
+    })
+  })
+}
 
 export const addBook = book => {
   return new Promise((resolve, reject) => {
@@ -149,6 +196,24 @@ function postUser(resourceURL, jsonObj) {
     request({
       url: resourceURL,
       method: "POST",
+      json: true,
+      body: jsonObj
+    }, (error, response, body) => {
+      if (error) {
+        reject(error);
+      } else if (response.statusCode === 400) {
+        reject(body);
+      }
+      resolve(body);
+    });
+  });
+}
+
+function updateUser(resourceURL, jsonObj) {
+  return new Promise((resolve, reject) => {
+    request({
+      url: resourceURL,
+      method: "PUT",
       json: true,
       body: jsonObj
     }, (error, response, body) => {

@@ -5,20 +5,18 @@ import {
 
 const defaultState = {
   token: '',
+  email: ''
 };
 
 const user = (state = defaultState, action) => {
   switch (action.type) {
     case LOGIN:
       return Object.assign({}, state, {
-        token: action.token
+        token: action.token,
+        email: action.email
       });
     case LOGOUT:
-      return Object.assign({}, state, {
-        token: ''
-      });
-    case 'DELETE_USER':
-      return defaultState;
+      return Object.assign({}, state, defaultState);
     default:
       return state;
   }
