@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { toastr } from 'react-redux-toastr';
 import { getBooks, hydrateBooks, deleteBook } from '../../actions/index';
 
 import BookList from '../../components/books/BookList';
@@ -15,16 +16,21 @@ class VisibleBookList extends Component {
   }
 
   componentWillMount() {
+    //If books haven't been hydrated yet
     if (!this.props.state.books.size) {
-      let getBooksAsync = getBooks();
-      getBooksAsync.then(books => {
+      getBooks().then(books => {
         this.props.dispatch(hydrateBooks(books));
       });
     }
   }
 
-  delete(id) {
-    this.props.dispatch(deleteBook(id));
+  delete(id, title) {
+    deleteBook(id).then(result => {
+      this.props.dispatch(result);
+      toastr.info('Deleted.', `Removed ${title} from your books list.`)
+    }).catch(err => {
+      console.log(err);
+    })
   }
 
   render() {

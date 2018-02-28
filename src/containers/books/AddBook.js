@@ -1,70 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addBook } from '../../actions/index';
-import { reduxForm } from 'redux-form';
+import { toastr } from 'react-redux-toastr';
 
 import AddBookForm from '../../components/books/AddBookForm';
 
-const validate = values => {
-  const errors = {}
-  if (!values.title) {
-    errors.title = 'Required';
-  }
-  if (!values.author) {
-    errors.author = 'Required';
-  }
-  if (!values.date) {
-    errors.date = 'Required';
-  }
-  if (!values.rating) {
-    errors.rating = 'Required';
-  }
-  return errors;
+const defaultState = {
+  title: '',
+  author: '',
+  dateRead: '',
+  rating: 3
 }
 
-const renderInput = ({
-  input,
-  label,
-  type,
-  meta: { touched, error }
-}) => (
-    <div>
-      <label>{label}</label>
-      <div>
-        <input {...input} placeholder={label} type={type} />
-        {touched && (error && <div style={{ color: 'red' }}>{error}</div>)}
-      </div>
-    </div >
-  )
-
-const renderSelect = ({
-  input,
-  label,
-  type,
-  meta: { touched, error }
-  }) => (
-    <div>
-      <label>{label}</label>
-      <div>
-        <select {...input} placeholder={label} type={type} >
-          <option />
-          <option value='1'>1</option>
-          <option value='2'>2</option>
-          <option value='3'>3</option>
-          <option value='4'>4</option>
-          <option value='5'>5</option>
-          <option value='6'>6</option>
-          <option value='7'>7</option>
-          <option value='8'>8</option>
-          <option value='9'>9</option>
-          <option value='10'>10</option>
-        </select>
-        {touched && (error && <div style={{ color: 'red' }}>{error}</div>)}
-      </div>
-    </div >
-  )
-
 class AddBook extends Component {
+
+  state = defaultState;
+
   submitNewBook = book => {
     let asyncAdd = addBook(book);
     asyncAdd.then(bookJSON => {
@@ -73,23 +24,40 @@ class AddBook extends Component {
     })
   };
 
+  handleSubmit = () => {
+    const bookObj = {
+      ...this.state,
+      email: this.props.state.user.email
+    }
+    addBook(bookObj).then(result => {
+      this.props.dispatch(result);
+      toastr.success('Success!', `Added ${this.state.title} to your read books`);
+      this.setState({
+        ...defaultState
+      });
+    })
+  }
+
+  handleChange = (e, { name, value }) => {
+    this.setState({
+      [name]: value
+    });
+  }
+
   render() {
-    const { handleSubmit, submitting } = this.props;
     return (
       <AddBookForm
-        handleSubmit={handleSubmit}
-        submitting={submitting}
-        addNewBook={this.submitNewBook}
-        renderInput={renderInput}
-        renderSelect={renderSelect}
+        handleSubmit={this.handleSubmit}
+        handleChange={this.handleChange}
+        handleRateChange={this.handleRateChange}
+        book={this.state}
       />
     );
   }
 }
 
-AddBook = connect()(AddBook);
+const mapStateToProps = state => {
+  return { state };
+};
 
-export default reduxForm({
-  form: 'addBookForm',
-  validate
-})(AddBook);
+export default connect(mapStateToProps)(AddBook);

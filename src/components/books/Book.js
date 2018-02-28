@@ -10,7 +10,7 @@ class Book extends Component {
     const formattedDate = new Date(date_read).toLocaleDateString();
     return (
       <li>
-        {title} - {author} - {formattedDate} - {rating}/10{'  '}<span onClick={this.props.delete.bind(this, id)} style={divStyle}><b>X</b></span>
+        {title} - {author} - {formattedDate} - {rating}/5{'  '}<span onClick={this.props.delete.bind(this, id, title)} style={divStyle}><b>X</b></span>
       </li >
     );
   }

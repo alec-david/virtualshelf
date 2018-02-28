@@ -53,7 +53,7 @@ class Profile extends Component {
 
       resetPassword(userObj).then(result => {
         this.props.dispatch(result);
-        this.props.setState({
+        this.setState({
           reset: false,
           delete: false,
           oldPassword: '',
@@ -118,7 +118,7 @@ class Profile extends Component {
       )
     } else if (this.state.delete) {
       return (
-        <ProfileDelete 
+        <ProfileDelete
           email={this.props.user.email}
           password={this.state.oldPassword}
           error={this.state.error}

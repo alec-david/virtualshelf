@@ -13,3 +13,9 @@ body {
 button:disabled {
   opacity: 0.5;
 }
+
+.star-icon {
+  color: yellow;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: orange;
+}

@@ -2,8 +2,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import remembrApp from './reducers/index';
+import ReduxToastr from 'react-redux-toastr'
 
+import remembrApp from './reducers/index';
 import NavigationBar from './containers/NavigationBar';
 
 import './index.css';
@@ -14,7 +15,15 @@ console.log(store.getState());
 
 render(
   <Provider store={store}>
-    <NavigationBar />
+    <div>
+      <ReduxToastr
+        position='top-center'
+        timeOut={4000}
+        transitionIn='fadeIn'
+        transitionOut='fadeOut'
+      />
+      <NavigationBar />
+    </div>
   </Provider>,
   document.getElementById('root')
 );

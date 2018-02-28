@@ -9,18 +9,15 @@ export const ADD_EXISTING_BOOKS = 'ADD_EXISTING_BOOKS';
 export const DELETE_BOOK = 'DELETE_BOOK';
 
 const expressURL = 'http://localhost:3030/remembr/';
-const userURL = expressURL + 'users';
-const registerURL = expressURL + 'users/register';
-const loginURL = expressURL + 'users/login';
-const verifyURL = expressURL + 'users/verify';
-const deleteURL = expressURL + 'users/delete';
-const resetURL = expressURL + 'users/reset';
+const userURL = expressURL + 'users/';
 
 const bookURL = expressURL + 'books';
 // const movieURL = expressURL + 'movies';
 // const televisionURL = expressURL + 'television';
 
-export const login = (user) => {
+export const login = user => {
+  const loginURL = userURL + 'login';
+
   return new Promise((resolve, reject) => {
     postUser(loginURL, user).then(result => {
       const tokenObject = {
@@ -28,9 +25,8 @@ export const login = (user) => {
         email: user.username,
         type: LOGIN
       }
-      if (!localStorage.getItem('token')) {
-        localStorage.setItem('token', result);
-      }
+
+      localStorage.setItem('token', result);
       resolve(tokenObject);
     }).catch(err => {
       reject(err);
@@ -38,7 +34,8 @@ export const login = (user) => {
   })
 };
 
-export const loginToken = (token) => {
+export const loginToken = token => {
+  const verifyURL = userURL + 'verify';
   const tokenObject = {
     token
   }
@@ -46,7 +43,7 @@ export const loginToken = (token) => {
   return new Promise((resolve, reject) => {
     postUser(verifyURL, tokenObject).then(result => {
       const userObject = {
-        token: token,
+        token,
         email: result,
         type: LOGIN
       }
@@ -65,6 +62,8 @@ export const logout = () => {
 };
 
 export const register = user => {
+  const registerURL = userURL + 'register';
+
   return new Promise((resolve, reject) => {
     postUser(registerURL, user).then(result => {
       const tokenObj = {
@@ -80,7 +79,9 @@ export const register = user => {
   });
 };
 
-export const resetPassword = (user) => {
+export const resetPassword = user => {
+  const resetURL = userURL + 'reset';
+
   return new Promise((resolve, reject) => {
     updateUser(resetURL, user).then(result => {
       const tokenObj = {
@@ -94,7 +95,9 @@ export const resetPassword = (user) => {
   })
 }
 
-export const deleteAccount = (user) => {
+export const deleteAccount = user => {
+  const deleteURL = userURL + 'delete';
+
   return new Promise((resolve, reject) => {
     postUser(deleteURL, user).then(result => {
       localStorage.clear();
@@ -113,16 +116,18 @@ export const addBook = book => {
     const bookJSON = {
       title: book.title,
       author: book.author,
-      date: new Date(book.date).valueOf(),
-      userId: 0,
-      rating: parseInt(book.rating, 10)
+      date_read: new Date(book.dateRead).valueOf(),
+      username: book.email,
+      rating: book.rating
     };
-    let asyncPost = postResource(bookURL, bookJSON);
-    asyncPost.then(id => {
+    postResource(bookURL, bookJSON).then(id => {
+      console.log(id);
       bookJSON.id = id;
       bookJSON.type = ADD_NEW_BOOK;
       resolve(bookJSON);
-    });
+    }).catch(err => {
+      reject(err);
+    })
   });
 };
 
@@ -148,19 +153,30 @@ export const hydrateBooks = books => {
 }
 
 export const deleteBook = id => {
-  deleteResource(id, bookURL);
-  return {
-    type: DELETE_BOOK,
-    id
-  }
+  return new Promise((resolve, reject) => {
+    deleteResource(id, bookURL).then(result => {
+      const deleteObj = {
+        type: DELETE_BOOK,
+        id
+      }
+      resolve(deleteObj);
+    }).catch(err => {
+      reject(err);
+    })
+  })
 }
 
 function deleteResource(id, resourceURL) {
-  request({
-    url: resourceURL + '/' + id,
-    method: "DELETE",
-  }, (error, response) => {
-    console.log(response);
+  return new Promise((resolve, reject) => {
+    request({
+      url: resourceURL + '/' + id,
+      method: "DELETE",
+    }, (error, response) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(response);
+    })
   })
 }
 
@@ -186,7 +202,7 @@ function postResource(resourceURL, jsonObj) {
       if (error) {
         reject(error);
       }
-      resolve(response.body.id);
+      resolve(body.insertId);
     });
   });
 }
