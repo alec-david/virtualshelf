@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
+import { Button, Card, Image, Rating } from 'semantic-ui-react';
+import bookImg from '../../imgs/book.svg';
 
-var divStyle = {
-  color: 'red',
-};
+import BookCardContent from './BookCardContent';
+import BookCardButtons from './BookCardButtons';
 
 class Book extends Component {
   render() {
-    const { title, author, date_read, rating, id } = this.props.book;
-    const formattedDate = new Date(date_read).toLocaleDateString();
-    return (
-      <li>
-        {title} - {author} - {formattedDate} - {rating}/5{'  '}<span onClick={this.props.delete.bind(this, id, title)} style={divStyle}><b>X</b></span>
-      </li >
-    );
+    const { book, edit, deleteBook, user } = this.props;
+    
+    if (user.email) {
+      return (
+        <Card>
+          <Image src={bookImg} />
+          <BookCardContent book={book} />
+          <BookCardButtons edit={edit} deleteBook={deleteBook}/>
+        </Card>
+      );
+    } else {
+      return (
+        <Card>
+          <Image src={bookImg} />
+          <BookCardContent book={book} />
+        </Card>
+      );
+    }
   }
 }
 

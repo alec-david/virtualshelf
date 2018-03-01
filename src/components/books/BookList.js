@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Book from './Book';
+import BookCard from '../../containers/books/BookCard';
+import { Card } from 'semantic-ui-react';
 
 class BookList extends Component {
 
@@ -8,17 +9,18 @@ class BookList extends Component {
     return (
       <div>
         {!!bookList.size && (
-          <ul>
+          <Card.Group itemsPerRow={8}>
             {bookList.map(book => {
               return (
-                <Book
+                <BookCard
                   key={book.id}
                   book={book}
                   delete={this.props.delete}
+                  edit={this.props.edit}
                 />
               );
             })}
-          </ul>
+          </Card.Group>
         )}
       </div>
     );

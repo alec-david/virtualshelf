@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import ReduxToastr from 'react-redux-toastr'
 
 import remembrApp from './reducers/index';
-import NavigationBar from './containers/NavigationBar';
+import App from './containers/App';
 
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -22,7 +22,7 @@ render(
         transitionIn='fadeIn'
         transitionOut='fadeOut'
       />
-      <NavigationBar />
+      <App />
     </div>
   </Provider>,
   document.getElementById('root')

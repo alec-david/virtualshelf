@@ -5,7 +5,8 @@ import {
 
 const defaultState = {
   token: '',
-  email: ''
+  email: '',
+  loggingIn: true
 };
 
 const user = (state = defaultState, action) => {
@@ -13,10 +14,15 @@ const user = (state = defaultState, action) => {
     case LOGIN:
       return Object.assign({}, state, {
         token: action.token,
-        email: action.email
+        email: action.email,
+        loggingIn: false
       });
     case LOGOUT:
-      return Object.assign({}, state, defaultState);
+      return Object.assign({}, state, {
+        token: '',
+        email: '',
+        loggingIn: false
+      });
     default:
       return state;
   }

@@ -7,6 +7,8 @@ export const REGISTER = 'REGISTER';
 export const ADD_NEW_BOOK = 'ADD_NEW_BOOK';
 export const ADD_EXISTING_BOOKS = 'ADD_EXISTING_BOOKS';
 export const DELETE_BOOK = 'DELETE_BOOK';
+export const EDIT_BOOK = 'EDIT_BOOK';
+export const UPDATE_BOOK = 'UPDATE_BOOK';
 
 const expressURL = 'http://localhost:3030/remembr/';
 const userURL = expressURL + 'users/';
@@ -83,7 +85,7 @@ export const resetPassword = user => {
   const resetURL = userURL + 'reset';
 
   return new Promise((resolve, reject) => {
-    updateUser(resetURL, user).then(result => {
+    updateResource(resetURL, user).then(result => {
       const tokenObj = {
         token: result,
         email: user.email,
@@ -121,7 +123,6 @@ export const addBook = book => {
       rating: book.rating
     };
     postResource(bookURL, bookJSON).then(id => {
-      console.log(id);
       bookJSON.id = id;
       bookJSON.type = ADD_NEW_BOOK;
       resolve(bookJSON);
@@ -132,17 +133,11 @@ export const addBook = book => {
 };
 
 export const getBooks = () => {
-  return new Promise((resolve, reject) => {
-    request
-      .get(bookURL)
-      .on('response', response => {
-        //console.log(response.statusCode)
-        //TODO: Handle Error
-      })
-      .on('data', data => {
-        resolve(data.toString('utf-8'));
-      })
-  });
+  return getResource(bookURL);
+}
+
+export const getUserBooks = token => {
+  return getResource(`${bookURL}/${token}`);
 }
 
 export const hydrateBooks = books => {
@@ -150,6 +145,19 @@ export const hydrateBooks = books => {
     type: ADD_EXISTING_BOOKS,
     books
   };
+}
+
+export const updateBook = book => {
+  return new Promise((resolve, reject) => {
+    updateResource(bookURL, book).then(result => {
+      resolve({
+        ...book,
+        type: UPDATE_BOOK
+      });
+    }).catch(err => {
+      reject(err);
+    })
+  })
 }
 
 export const deleteBook = id => {
@@ -164,6 +172,13 @@ export const deleteBook = id => {
       reject(err);
     })
   })
+}
+
+export const editBook = id => {
+  return {
+    type: EDIT_BOOK,
+    id
+  }
 }
 
 function deleteResource(id, resourceURL) {
@@ -181,14 +196,17 @@ function deleteResource(id, resourceURL) {
 }
 
 function getResource(resourceURL) {
-  request
-    .get(resourceURL)
-    .on('response', response => {
-      console.log(response.statusCode)
+  return new Promise((resolve, reject) => {
+    request({
+      url: resourceURL,
+      method: "GET"
+    }, (error, response) => {
+      if (error) {
+        reject(error);
+      }
+      resolve(response);
     })
-    .on('data', data => {
-      console.log(data.toString('utf-8'));
-    })
+  })
 }
 
 function postResource(resourceURL, jsonObj) {
@@ -225,7 +243,7 @@ function postUser(resourceURL, jsonObj) {
   });
 }
 
-function updateUser(resourceURL, jsonObj) {
+function updateResource(resourceURL, jsonObj) {
   return new Promise((resolve, reject) => {
     request({
       url: resourceURL,

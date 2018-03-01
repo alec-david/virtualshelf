@@ -1,0 +1,91 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { 
+        deleteBook, 
+        editBook,
+        updateBook 
+       } from '../../actions/index';
+import { toastr } from 'react-redux-toastr';
+
+import Book from '../../components/books/Book';
+import BookEdit from '../../components/books/BookEdit';
+
+class BookCard extends Component {
+
+  state = {
+    ...this.props.book
+  }
+
+  constructor(props) {
+    super(props);
+    this.delete = this.delete.bind(this);
+    this.edit = this.edit.bind(this);
+    this.saveEdit = this.saveEdit.bind(this);
+  }
+
+  handleChange = (e, { name, value }) => {
+    this.setState({
+      [name]: value
+    });
+  }
+
+  delete() {
+    deleteBook(this.state.id).then(result => {
+      this.props.dispatch(result);
+      toastr.error('Deleted.', `Removed ${this.state.title} from your books list.`);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  edit() {
+    this.setState({
+      ...this.props.book
+    })
+    this.props.dispatch(editBook(this.state.id));
+  }
+
+  saveEdit() {
+    const token = this.props.state.user.token;
+    const editObj = {
+      ...this.state,
+      token
+    }
+
+    updateBook(editObj).then(result => {
+      this.props.dispatch(result);
+      toastr.info('Update.', `Updated ${this.state.title}.`);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  render() {
+    const { book } = this.props;
+    if (!book.edit) {
+      return (
+        <Book 
+          book={book}
+          deleteBook={this.delete}
+          edit={this.edit}
+          user={this.props.state.user}
+        />
+      );
+    } else {
+      return (
+        <BookEdit 
+          book={this.state}
+          saveEdit={this.saveEdit}
+          cancelEdit={this.edit}
+          handleChange={this.handleChange}
+        />
+      )
+    }
+  }
+}
+
+const mapStateToProps = state => {
+  return { state };
+};
+
+export default connect(mapStateToProps)(BookCard);

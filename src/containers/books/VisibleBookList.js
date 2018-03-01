@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { toastr } from 'react-redux-toastr';
-import { getBooks, hydrateBooks, deleteBook } from '../../actions/index';
+import {
+  getBooks,
+  getUserBooks,
+  hydrateBooks
+} from '../../actions/index';
 
 import BookList from '../../components/books/BookList';
 
@@ -10,32 +13,45 @@ const mapStateToProps = state => {
 };
 
 class VisibleBookList extends Component {
-  constructor(props) {
-    super(props);
-    this.delete = this.delete.bind(this);
-  }
 
   componentWillMount() {
+    const { books, user } = this.props.state;
     //If books haven't been hydrated yet
-    if (!this.props.state.books.size) {
-      getBooks().then(books => {
-        this.props.dispatch(hydrateBooks(books));
-      });
+    if (!books.size && !user.loggingIn) {
+      this.checkUserLoggedIn(books, user);
     }
   }
 
-  delete(id, title) {
-    deleteBook(id).then(result => {
-      this.props.dispatch(result);
-      toastr.info('Deleted.', `Removed ${title} from your books list.`)
-    }).catch(err => {
-      console.log(err);
-    })
+  checkUserLoggedIn(books, user) {
+    if (!user.email) {
+      this.fetchMostRecentBooks(books);
+    } else {
+      this.fetchUserBooks(books, user);
+    }
+  }
+
+  fetchMostRecentBooks(books) {
+    getBooks().then(books => {
+      this.props.dispatch(hydrateBooks(books.body));
+    });
+  }
+
+  fetchUserBooks(books, user) {
+    getUserBooks(user.token).then(books => {
+      if (!JSON.parse(books.body).length) {
+        //Show this message on screen at some point
+        console.log('No books entered yet!');
+        return;
+      }
+      this.props.dispatch(hydrateBooks(books.body));
+    });
   }
 
   render() {
     return (
-      <BookList delete={this.delete} books={this.props.state.books} />
+      <BookList
+        books={this.props.state.books}
+      />
     );
   }
 }
