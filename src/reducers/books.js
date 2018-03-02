@@ -24,6 +24,9 @@ const books = (state = List(), action) => {
     case ADD_EXISTING_BOOKS:
       return state.concat(JSON.parse(action.books));
     case DELETE_BOOK:
+      state.forEach(book => {
+        console.log(book);
+      })
       return state.filter(book => book.id !== action.id);
     case EDIT_BOOK:
       return state = state.update(

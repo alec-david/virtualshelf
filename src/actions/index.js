@@ -182,6 +182,13 @@ export const editBook = id => {
   }
 }
 
+export const hideBook = id => {
+  return {
+    type: DELETE_BOOK,
+    id
+  }
+}
+
 function deleteResource(id, resourceURL) {
   return new Promise((resolve, reject) => {
     request({

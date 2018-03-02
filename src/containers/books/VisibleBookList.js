@@ -8,11 +8,14 @@ import {
 
 import BookList from '../../components/books/BookList';
 
-const mapStateToProps = state => {
-  return { state };
-};
-
 class VisibleBookList extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      width: window.innerWidth
+    }
+  }
 
   componentWillMount() {
     const { books, user } = this.props.state;
@@ -20,7 +23,17 @@ class VisibleBookList extends Component {
     if (!books.size && !user.loggingIn) {
       this.checkUserLoggedIn(books, user);
     }
+
+    window.addEventListener('resize', this.handleWindowSizeChange);
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleWindowSizeChange);
+  }
+
+  handleWindowSizeChange = () => {
+    this.setState({ width: window.innerWidth });
+  };
 
   checkUserLoggedIn(books, user) {
     if (!user.email) {
@@ -48,12 +61,34 @@ class VisibleBookList extends Component {
   }
 
   render() {
+    const { width } = this.state;
+    let colNum;
+    if (width > 1600) {
+      colNum = 8;
+    } else if (width > 1400 && width <= 1600) {
+      colNum = 7;
+    } else if (width > 1200 && width <= 1400) {
+      colNum = 6;
+    } else if (width > 1000 && width <= 1200) {
+      colNum = 5;
+    } else if (width > 800 && width <= 1000) {
+      colNum = 4;
+    } else if (width > 600 && width <= 800) {
+      colNum = 3;
+    } else { //Mobile width
+      colNum = 1;
+    }
     return (
       <BookList
         books={this.props.state.books}
+        colNum={colNum}
       />
     );
   }
 }
+
+const mapStateToProps = state => {
+  return { state };
+};
 
 export default connect(mapStateToProps)(VisibleBookList);

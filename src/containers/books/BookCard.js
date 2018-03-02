@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { 
-        deleteBook, 
-        editBook,
-        updateBook 
-       } from '../../actions/index';
+import {
+  deleteBook,
+  editBook,
+  updateBook,
+  hideBook
+} from '../../actions/index';
 import { toastr } from 'react-redux-toastr';
 
 import Book from '../../components/books/Book';
@@ -21,12 +22,30 @@ class BookCard extends Component {
     this.delete = this.delete.bind(this);
     this.edit = this.edit.bind(this);
     this.saveEdit = this.saveEdit.bind(this);
+    this.handleSettings = this.handleSettings.bind(this);
   }
 
   handleChange = (e, { name, value }) => {
     this.setState({
       [name]: value
     });
+  }
+
+  handleSettings(e, val) {
+    switch (val.value) {
+      case 'Edit':
+        this.edit()
+        return;
+      case 'Hide':
+        this.hide();
+        return;
+      case 'Delete':
+        this.delete();
+        return;
+      default:
+        console.log('Uh oh');
+        return;
+    }
   }
 
   delete() {
@@ -36,6 +55,10 @@ class BookCard extends Component {
     }).catch(err => {
       console.log(err);
     })
+  }
+
+  hide() {
+    this.props.dispatch(hideBook(this.state.id));
   }
 
   edit() {
@@ -64,16 +87,17 @@ class BookCard extends Component {
     const { book } = this.props;
     if (!book.edit) {
       return (
-        <Book 
+        <Book
           book={book}
           deleteBook={this.delete}
           edit={this.edit}
           user={this.props.state.user}
+          handleSettings={this.handleSettings}
         />
       );
     } else {
       return (
-        <BookEdit 
+        <BookEdit
           book={this.state}
           saveEdit={this.saveEdit}
           cancelEdit={this.edit}
