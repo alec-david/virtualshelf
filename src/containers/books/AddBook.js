@@ -9,7 +9,8 @@ const defaultState = {
   title: '',
   author: '',
   dateRead: '',
-  rating: 3
+  rating: 3,
+  description: ''
 }
 
 class AddBook extends Component {
@@ -39,9 +40,11 @@ class AddBook extends Component {
   }
 
   handleChange = (e, { name, value }) => {
-    this.setState({
-      [name]: value
-    });
+    if (!value.length || value.length <= 255) {
+      this.setState({
+        [name]: value
+      });
+    }
   }
 
   render() {

@@ -18,6 +18,7 @@ const books = (state = List(), action) => {
         author: action.author,
         date_read: action.date_read,
         rating: action.rating,
+        description: action.description,
         edit: false
       });
     case ADD_EXISTING_BOOKS:
@@ -38,22 +39,23 @@ const books = (state = List(), action) => {
         }
       );
     case UPDATE_BOOK:
-    return state = state.update(
-      state.findIndex(item => {
-        return item.id === action.id;
-      }), item => {
-        const editItem = {
-          id: action.id,
-          title: action.title,
-          author: action.author,
-          date_read: action.date_read,
-          rating: action.rating,
-          edit: false
-        }
-        return editItem;
+      return state = state.update(
+        state.findIndex(item => {
+          return item.id === action.id;
+        }), item => {
+          const editItem = {
+            id: action.id,
+            title: action.title,
+            author: action.author,
+            date_read: action.date_read,
+            rating: action.rating,
+            description: action.description,
+            edit: false
+          }
+          return editItem;
 
-      }
-    );
+        }
+      );
     case LOGIN:
     case LOGOUT:
       return state = List();

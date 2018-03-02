@@ -120,7 +120,8 @@ export const addBook = book => {
       author: book.author,
       date_read: new Date(book.dateRead).valueOf(),
       username: book.email,
-      rating: book.rating
+      rating: book.rating,
+      description: book.description
     };
     postResource(bookURL, bookJSON).then(id => {
       bookJSON.id = id;

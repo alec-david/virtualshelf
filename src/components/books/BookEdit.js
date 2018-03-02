@@ -10,7 +10,7 @@ class BookEdit extends Component {
       <Card>
         <Card.Content>
           <Form>
-            <Form.Input 
+            <Form.Input
               label='Title'
               type='text'
               name='title'
@@ -25,6 +25,12 @@ class BookEdit extends Component {
               value={book.author}
               onChange={handleChange}
               required
+            />
+            <Form.TextArea
+              label='Brief Review/Description'
+              name='description'
+              value={book.description}
+              onChange={handleChange}
             />
             <Form.Input
               label='Date Read'

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Field } from 'redux-form';
 import { Button, Container, Form, Grid, Rating } from 'semantic-ui-react';
 
 const AddBookForm = (props) => {
@@ -25,6 +24,12 @@ const AddBookForm = (props) => {
                 value={book.author}
                 onChange={handleChange}
                 required
+              />
+              <Form.TextArea
+                label='Brief Review/Description'
+                name='description'
+                value={book.description}
+                onChange={handleChange}
               />
               <Form.Input
                 label='Date Read'
