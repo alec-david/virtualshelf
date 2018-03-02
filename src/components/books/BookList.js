@@ -6,10 +6,11 @@ class BookList extends Component {
 
   render() {
     const bookList = this.props.books;
+    const colNum = this.props.colNum;
     return (
       <div>
         {!!bookList.size && (
-          <Card.Group itemsPerRow={8}>
+          <Card.Group itemsPerRow={colNum}>
             {bookList.map(book => {
               return (
                 <BookCard
