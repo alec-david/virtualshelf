@@ -7,7 +7,7 @@ const AddBookForm = (props) => {
     <Container text>
       <Grid>
         <Grid.Row centered>
-          <Grid.Column width={6}>
+          <Grid.Column width={9}>
             <Form onSubmit={() => { handleSubmit(this.rating) }}>
               <Form.Input
                 label='Title'

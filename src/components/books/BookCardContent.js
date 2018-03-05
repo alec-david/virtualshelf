@@ -17,21 +17,22 @@ const BookCardContent = (props) => {
 
   let settings;
   if (email) {
-    settings = <Dropdown
-      icon='ellipsis vertical'
-      className='icon right floated'
-      style={ellipsisStyle}
-    >
-      <Dropdown.Menu>
-        {options.map(option =>
-          <Dropdown.Item
-            key={option.value}
-            onClick={handleSettings}
-            {...option}
-          />
-        )}
-      </Dropdown.Menu>
-    </Dropdown>
+    settings =
+      <Dropdown
+        icon='ellipsis vertical'
+        className='icon right floated'
+        style={ellipsisStyle}
+      >
+        <Dropdown.Menu>
+          {options.map(option =>
+            <Dropdown.Item
+              key={option.value}
+              onClick={handleSettings}
+              {...option}
+            />
+          )}
+        </Dropdown.Menu>
+      </Dropdown>
   }
 
   return (

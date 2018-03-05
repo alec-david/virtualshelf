@@ -78,33 +78,3 @@ class NavBarLoggedIn extends Component {
 }
 
 export default NavBarLoggedIn;
-
-
-/*
-<Navbar fluid collapseOnSelect>
-  <Navbar.Header>
-    <Navbar.Brand>
-      <Link to="/">Remembr</Link>
-    </Navbar.Brand>
-    <Navbar.Toggle />
-  </Navbar.Header>
-  <Navbar.Collapse>
-    <Nav>
-      <LinkContainer to="/books">
-        <NavItem>Books</NavItem>
-      </LinkContainer>
-      <LinkContainer to="/movies">
-        <NavItem>Movies</NavItem>
-      </LinkContainer>
-      <LinkContainer to="/television">
-        <NavItem>Television</NavItem>
-      </LinkContainer>
-    </Nav>
-    <Nav pullRight>
-      <LinkContainer to="/profile">
-        <NavItem>Profile</NavItem>
-      </LinkContainer>
-    </Nav>
-  </Navbar.Collapse>
-</Navbar>
-*/
