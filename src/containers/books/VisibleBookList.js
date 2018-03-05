@@ -60,21 +60,28 @@ class VisibleBookList extends Component {
     });
   }
 
+  addNewBook() {
+    console.log('oh hello');
+    //update state in this component that will update
+    //a bool to change card to add book form. Wire that up
+    //to add new book (Get rid of form for now - might add back later)
+  }
+
   render() {
     const { width } = this.state;
     let colNum;
     if (width > 1600) {
-      colNum = 8;
-    } else if (width > 1400 && width <= 1600) {
       colNum = 7;
-    } else if (width > 1200 && width <= 1400) {
+    } else if (width > 1400 && width <= 1600) {
       colNum = 6;
-    } else if (width > 1000 && width <= 1200) {
+    } else if (width > 1200 && width <= 1400) {
       colNum = 5;
-    } else if (width > 800 && width <= 1000) {
+    } else if (width > 1000 && width <= 1200) {
       colNum = 4;
-    } else if (width > 600 && width <= 800) {
+    } else if (width > 800 && width <= 1000) {
       colNum = 3;
+    } else if (width > 600 && width <= 800) {
+      colNum = 2;
     } else { //Mobile width
       colNum = 1;
     }
@@ -82,6 +89,7 @@ class VisibleBookList extends Component {
       <BookList
         books={this.props.state.books}
         colNum={colNum}
+        addBook={this.addNewBook}
       />
     );
   }

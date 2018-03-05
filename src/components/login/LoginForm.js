@@ -4,6 +4,7 @@ import { Button, Form, Message, Container, Grid } from 'semantic-ui-react';
 const LoginForm = (props) => {
   const { handleSubmit, handleChange, formVals } = props;
   const errorMsg = formVals.errorMsg
+
   if (!errorMsg) {
     return (
       <Container>
