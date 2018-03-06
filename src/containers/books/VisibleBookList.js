@@ -10,11 +10,8 @@ import BookList from '../../components/books/BookList';
 
 class VisibleBookList extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      width: window.innerWidth
-    }
+  state = {
+    width: window.innerWidth
   }
 
   componentWillMount() {
@@ -60,15 +57,9 @@ class VisibleBookList extends Component {
     });
   }
 
-  addNewBook() {
-    console.log('oh hello');
-    //update state in this component that will update
-    //a bool to change card to add book form. Wire that up
-    //to add new book (Get rid of form for now - might add back later)
-  }
-
   render() {
     const { width } = this.state;
+    
     let colNum;
     if (width > 1600) {
       colNum = 7;
@@ -89,7 +80,7 @@ class VisibleBookList extends Component {
       <BookList
         books={this.props.state.books}
         colNum={colNum}
-        addBook={this.addNewBook}
+        user={this.props.state.user}
       />
     );
   }

@@ -1,18 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Card } from 'semantic-ui-react';
 
 import BookCard from '../../containers/books/BookCard';
-import NewBookCard from './NewBookCard';
+import NewBookCard from '../../containers/books/NewBookCard';
 
 const BookList = (props) => {
-  const bookList = props.books;
+  //const bookList = props.books;
+  const { user, books } = props;
+  let addNewBook;
+  if (user.email) {
+    addNewBook = <NewBookCard />
+  }
 
   return (
     <div>
-      {!!bookList.size && (
+      {!!books.size && (
         <Card.Group itemsPerRow={props.colNum}>
-          <NewBookCard addBook={props.addBook} />
-          {bookList.map(book => {
+          {addNewBook}
+
+          {books.map(book => {
             return (
               <BookCard
                 key={book.id}

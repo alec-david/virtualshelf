@@ -5,10 +5,14 @@ const textAreaStyle = {
   fontSize: '.78571429em'
 }
 
-const BookEdit = (props) => {
-  const { book, saveEdit, cancelEdit, handleChange } = props;
-  const formDate = new Date(book.date_read).toISOString().split('T')[0];
-
+const NewBook = (props) => {
+  const { 
+    book, 
+    cancel,
+    handleChange,
+    handleSubmit
+  } = props;
+  
   return (
     <Card>
       <Card.Content>
@@ -43,7 +47,7 @@ const BookEdit = (props) => {
             type='date'
             name='dateRead'
             size='mini'
-            value={formDate}
+            value={book.dateRead}
             onChange={handleChange}
             required
           />
@@ -63,7 +67,7 @@ const BookEdit = (props) => {
           size='mini'
           floated='left'
           color='red'
-          onClick={cancelEdit.bind(this)}
+          onClick={cancel}
         >
           Cancel
         </Button>
@@ -73,13 +77,13 @@ const BookEdit = (props) => {
           size='mini'
           floated='right'
           color='green'
-          onClick={saveEdit.bind(this)}
+          onClick={handleSubmit}
         >
-          Save
+          Add
         </Button>
       </Card.Content>
     </Card>
   );
 }
 
-export default BookEdit;
+export default NewBook;

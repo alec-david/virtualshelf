@@ -114,11 +114,13 @@ export const deleteAccount = user => {
 }
 
 export const addBook = book => {
+  let date_read = new Date(book.dateRead);
+  date_read.setTime(date_read.getTime() + date_read.getTimezoneOffset()*60*1000);
   return new Promise((resolve, reject) => {
     const bookJSON = {
       title: book.title,
       author: book.author,
-      date_read: new Date(book.dateRead).valueOf(),
+      date_read: date_read.valueOf(),
       username: book.email,
       rating: book.rating,
       description: book.description

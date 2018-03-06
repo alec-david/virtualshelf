@@ -12,7 +12,7 @@ import {
 const books = (state = List(), action) => {
   switch (action.type) {
     case ADD_NEW_BOOK:
-      return state.push({
+      return state.insert(0,{
         id: action.id,
         title: action.title,
         author: action.author,
@@ -20,7 +20,7 @@ const books = (state = List(), action) => {
         rating: action.rating,
         description: action.description,
         edit: false
-      });
+      })
     case ADD_EXISTING_BOOKS:
       return state.concat(JSON.parse(action.books));
     case DELETE_BOOK:

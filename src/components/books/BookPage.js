@@ -1,5 +1,4 @@
 import React from 'react';
-import AddBook from '../../containers/books/AddBook';
 import VisibleBookList from '../../containers/books/VisibleBookList';
 import { Header, Icon } from 'semantic-ui-react';
 
@@ -12,8 +11,6 @@ const BookPage = () => (
       </Header.Content>
     </Header>
     <VisibleBookList />
-    Remembr a New Book:
-    <AddBook />
   </div>
 );
 
