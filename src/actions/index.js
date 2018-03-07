@@ -9,6 +9,7 @@ export const ADD_EXISTING_BOOKS = 'ADD_EXISTING_BOOKS';
 export const DELETE_BOOK = 'DELETE_BOOK';
 export const EDIT_BOOK = 'EDIT_BOOK';
 export const UPDATE_BOOK = 'UPDATE_BOOK';
+export const FILTER_BOOK = 'FILTER_BOOK';
 
 const expressURL = 'http://localhost:3030/remembr/';
 const userURL = expressURL + 'users/';
@@ -188,6 +189,13 @@ export const hideBook = id => {
   return {
     type: DELETE_BOOK,
     id
+  }
+}
+
+export const filterBook = filter => {
+  return {
+    type: FILTER_BOOK,
+    ...filter
   }
 }
 
