@@ -74,7 +74,7 @@ class BookCard extends Component {
       ...this.state,
       token
     }
-    
+
     updateBook(editObj).then(result => {
       this.props.dispatch(result);
       toastr.info('Update.', `Updated ${this.state.title}.`);

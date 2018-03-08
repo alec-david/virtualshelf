@@ -15,31 +15,37 @@ const options = [
 const DESC = 'DESC';
 const ASC = 'ASC';
 
+const defaultState = {
+  option: 'Filter Books',
+  filterDirection: DESC,
+  search: ''
+}
+
 class FilterBook extends Component {
 
-  state = {
-    option: 'Filter Books',
-    filterDirection: DESC,
-    search: ''
-  }
+  state = defaultState;
 
   handleFilter = (e, val) => {
     this.setState({
       option: val.text
+    }, () => {
+      this.props.dispatch(filterBook(this.state));
     })
-
-    this.props.dispatch(filterBook(this.state));
   }
 
-  handleChange = (e, {name, value}) => {
+  handleChange = (e, { name, value }) => {
     this.setState({
       [name]: value
+    }, () => {
+      this.props.dispatch(filterBook(this.state));
     })
   }
 
   toggleFilterDirection = () => {
     this.setState({
       filterDirection: (this.state.filterDirection === DESC ? ASC : DESC)
+    }, () => {
+      this.props.dispatch(filterBook(this.state));
     })
   }
 

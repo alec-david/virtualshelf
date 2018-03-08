@@ -116,7 +116,7 @@ export const deleteAccount = user => {
 
 export const addBook = book => {
   let date_read = new Date(book.dateRead);
-  date_read.setTime(date_read.getTime() + date_read.getTimezoneOffset()*60*1000);
+  date_read.setTime(date_read.getTime() + date_read.getTimezoneOffset() * 60 * 1000);
   return new Promise((resolve, reject) => {
     const bookJSON = {
       title: book.title,
@@ -152,6 +152,9 @@ export const hydrateBooks = books => {
 }
 
 export const updateBook = book => {
+  let dateRead = new Date(book.date_read);
+  dateRead.setTime(dateRead.getTime() + dateRead.getTimezoneOffset() * 60 * 1000);
+  book.date_read = dateRead.valueOf();
   return new Promise((resolve, reject) => {
     updateResource(bookURL, book).then(result => {
       resolve({

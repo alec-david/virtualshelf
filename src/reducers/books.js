@@ -10,7 +10,7 @@ import {
   LOGOUT
 } from '../actions/index';
 
-const fullBookList = List();
+let fullBookList = List();
 
 const books = (state = List(), action) => {
   switch (action.type) {
@@ -19,38 +19,31 @@ const books = (state = List(), action) => {
         ...action,
         edit: false
       }
-      fullBookList.insert(0, bookObj);
       return state.insert(0, bookObj);
     case ADD_EXISTING_BOOKS:
       const bookList = JSON.parse(action.books);
-      fullBookList.concat(bookList);
       return state.concat(bookList);
     case DELETE_BOOK:
-      fullBookList.filter(book => book.id !== action.id);
       return state.filter(book => book.id !== action.id);
     case EDIT_BOOK:
-      fullBookList = updateObject(fullBookList, action);
-      return state = updateObject(state, action);
+      return state = editObject(state, action);
     case UPDATE_BOOK:
-      return state = state.update(
-        state.findIndex(item => {
-          return item.id === action.id;
-        }), item => {
-          const editItem = {
-            id: action.id,
-            title: action.title,
-            author: action.author,
-            date_read: action.date_read,
-            rating: action.rating,
-            description: action.description,
-            edit: false
-          }
-          return editItem;
-        }
-      );
+      return state = updateObject(state, action);
     case FILTER_BOOK:
-      console.log('yuhhh');
-      return state;
+      let direction = action.filterDirection === 'DESC' ? '' : '-';
+      switch (action.option) {
+        case 'Rating':
+          direction = action.filterDirection === 'DESC' ? '-' : '';
+          return state = state.sort(sortObject(direction + 'rating'));
+        case 'Date Read':
+          return state = state.sort(sortObject(direction + 'date_read'));
+        case 'Title':
+          return state = state.sort(sortObject(direction + 'title'));
+        case 'Author':
+          return state = state.sort(sortObject(direction + 'author'));
+        default:
+          return state;
+      }
     case LOGIN:
     case LOGOUT:
       return state = List();
@@ -59,7 +52,25 @@ const books = (state = List(), action) => {
   }
 };
 
-function updateObject(list, action) {
+function filterObject(search, list) {
+  return list.filter(book => {
+    return (book.author.indexOf(search) !== -1 || book.title.indexOf(search) !== -1);
+  })
+}
+
+function sortObject(property) {
+  let sortOrder = 1;
+  if (property[0] === "-") {
+    sortOrder = -1;
+    property = property.substr(1);
+  }
+  return (a, b) => {
+    let result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+    return result * sortOrder;
+  }
+}
+
+function editObject(list, action) {
   return list.update(
     list.findIndex(item => {
       return item.id === action.id;
@@ -68,6 +79,20 @@ function updateObject(list, action) {
         ...item
       }
       editItem.edit = !editItem.edit;
+      return editItem;
+    }
+  );
+}
+
+function updateObject(list, action) {
+  return list.update(
+    list.findIndex(item => {
+      return item.id === action.id;
+    }), item => {
+      const editItem = {
+        ...action,
+        edit: false
+      }
       return editItem;
     }
   );

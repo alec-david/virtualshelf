@@ -41,7 +41,7 @@ const BookEdit = (props) => {
           <Form.Input
             label='Date Read'
             type='date'
-            name='dateRead'
+            name='date_read'
             size='mini'
             value={formDate}
             onChange={handleChange}
