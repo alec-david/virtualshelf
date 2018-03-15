@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
-import { filterBook } from '../../actions/index';
+import { filterBook, searchBook } from '../../actions/index';
 
 import FilterBookDropdown from '../../components/books/FilterBookDropdown';
 import SearchBooks from '../../components/books/SearchBooks';
@@ -33,11 +33,11 @@ class FilterBook extends Component {
     })
   }
 
-  handleChange = (e, { name, value }) => {
+  handleSearch = (e, { name, value }) => {
     this.setState({
       [name]: value
     }, () => {
-      this.props.dispatch(filterBook(this.state));
+      this.props.dispatch(searchBook(this.state));
     })
   }
 
@@ -52,14 +52,13 @@ class FilterBook extends Component {
   render() {
     return (
       <Grid verticalAlign='middle'>
-        <Grid.Row columns={2}>
-          <Grid.Column>
+        <Grid.Row columns={1}>
+          <Grid.Column >
             <SearchBooks
               search={this.state.search}
-              handleChange={this.handleChange}
+              handleSearch={this.handleSearch}
             />
-          </Grid.Column>
-          <Grid.Column textAlign='right'>
+            <br /><br />
             <FilterBookDropdown
               options={options}
               handleFilter={this.handleFilter}

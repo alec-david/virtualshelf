@@ -10,6 +10,7 @@ export const DELETE_BOOK = 'DELETE_BOOK';
 export const EDIT_BOOK = 'EDIT_BOOK';
 export const UPDATE_BOOK = 'UPDATE_BOOK';
 export const FILTER_BOOK = 'FILTER_BOOK';
+export const SEARCH_BOOK = 'SEARCH_BOOK';
 
 const expressURL = 'http://localhost:3030/remembr/';
 const userURL = expressURL + 'users/';
@@ -199,6 +200,13 @@ export const filterBook = filter => {
   return {
     type: FILTER_BOOK,
     ...filter
+  }
+}
+
+export const searchBook = search => {
+  return {
+    ...search,
+    type: SEARCH_BOOK
   }
 }
 
