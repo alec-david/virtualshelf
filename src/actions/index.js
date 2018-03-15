@@ -198,8 +198,8 @@ export const hideBook = id => {
 
 export const filterBook = filter => {
   return {
-    type: FILTER_BOOK,
-    ...filter
+    ...filter,
+    type: FILTER_BOOK
   }
 }
 
@@ -208,6 +208,19 @@ export const searchBook = search => {
     ...search,
     type: SEARCH_BOOK
   }
+}
+
+export const flagBook = id => {
+  return new Promise((resolve, reject) => {
+    updateResource(bookURL, { id }).then(result => {
+      resolve({
+        type: DELETE_BOOK,
+        id
+      });
+    }).catch(err => {
+      reject(err);
+    })
+  })
 }
 
 function deleteResource(id, resourceURL) {

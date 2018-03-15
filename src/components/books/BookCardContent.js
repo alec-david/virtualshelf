@@ -1,10 +1,15 @@
 import React from 'react';
 import { Card, Dropdown, Rating } from 'semantic-ui-react';
 
-const options = [
+const optionsLoggedIn = [
   { key: 1, text: 'Edit', value: 'Edit' },
   { key: 2, text: 'Hide', value: 'Hide' },
   { key: 3, text: 'Delete', value: 'Delete' },
+];
+
+const optionsLoggedOut = [
+  { key: 1, text: 'Hide', value: 'Hide' },
+  { key: 2, text: 'Flag', value: 'Flag' }
 ];
 
 const ellipsisStyle = {
@@ -24,7 +29,24 @@ const BookCardContent = (props) => {
         style={ellipsisStyle}
       >
         <Dropdown.Menu>
-          {options.map(option =>
+          {optionsLoggedIn.map(option =>
+            <Dropdown.Item
+              key={option.value}
+              onClick={handleSettings}
+              {...option}
+            />
+          )}
+        </Dropdown.Menu>
+      </Dropdown>
+  } else {
+    settings =
+      <Dropdown
+        icon='ellipsis vertical'
+        className='icon right floated'
+        style={ellipsisStyle}
+      >
+        <Dropdown.Menu>
+          {optionsLoggedOut.map(option =>
             <Dropdown.Item
               key={option.value}
               onClick={handleSettings}
