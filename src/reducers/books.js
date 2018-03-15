@@ -6,6 +6,7 @@ import {
   EDIT_BOOK,
   UPDATE_BOOK,
   FILTER_BOOK,
+  SEARCH_BOOK,
   LOGIN,
   LOGOUT
 } from '../actions/index';
@@ -36,6 +37,7 @@ const books = (state = List(), action) => {
           direction = action.filterDirection === 'DESC' ? '-' : '';
           return state = state.sort(sortObject(direction + 'rating'));
         case 'Date Read':
+          direction = action.filterDirection === 'DESC' ? '-' : '';
           return state = state.sort(sortObject(direction + 'date_read'));
         case 'Title':
           return state = state.sort(sortObject(direction + 'title'));
@@ -44,6 +46,11 @@ const books = (state = List(), action) => {
         default:
           return state;
       }
+    case SEARCH_BOOK:
+      if (state.size > fullBookList.size) {
+        fullBookList = state;
+      }
+      return state = filterSearch(action.search.toLowerCase(), fullBookList);
     case LOGIN:
     case LOGOUT:
       return state = List();
@@ -52,9 +59,9 @@ const books = (state = List(), action) => {
   }
 };
 
-function filterObject(search, list) {
+function filterSearch(search, list) {
   return list.filter(book => {
-    return (book.author.indexOf(search) !== -1 || book.title.indexOf(search) !== -1);
+    return (book.author.toLowerCase().indexOf(search) !== -1 || book.title.toLowerCase().indexOf(search) !== -1);
   })
 }
 

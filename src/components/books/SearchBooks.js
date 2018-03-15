@@ -3,16 +3,16 @@ import { Input } from 'semantic-ui-react';
 
 const SearchBooks = (props) => {
 
-  const { search, handleChange } = props;
+  const { search, handleSearch } = props;
 
   return (
-    <Input 
+    <Input
       icon='search'
       iconPosition='left'
       placeholder='Search books...'
       name='search'
       value={search}
-      onChange={handleChange}
+      onChange={handleSearch}
     />
   )
 }
