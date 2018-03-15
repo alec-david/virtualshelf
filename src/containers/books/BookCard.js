@@ -4,7 +4,8 @@ import {
   deleteBook,
   editBook,
   updateBook,
-  hideBook
+  hideBook,
+  flagBook
 } from '../../actions/index';
 import { toastr } from 'react-redux-toastr';
 
@@ -17,21 +18,13 @@ class BookCard extends Component {
     ...this.props.book
   }
 
-  constructor(props) {
-    super(props);
-    this.delete = this.delete.bind(this);
-    this.edit = this.edit.bind(this);
-    this.saveEdit = this.saveEdit.bind(this);
-    this.handleSettings = this.handleSettings.bind(this);
-  }
-
   handleChange = (e, { name, value }) => {
     this.setState({
       [name]: value
     });
   }
 
-  handleSettings(e, val) {
+  handleSettings = (e, val) => {
     switch (val.value) {
       case 'Edit':
         this.edit()
@@ -42,13 +35,16 @@ class BookCard extends Component {
       case 'Delete':
         this.delete();
         return;
+      case 'Flag':
+        this.flag();
+        return;
       default:
         console.log('Uh oh');
         return;
     }
   }
 
-  delete() {
+  delete = () => {
     deleteBook(this.state.id).then(result => {
       this.props.dispatch(result);
       toastr.error('Deleted.', `Removed ${this.state.title} from your books list.`);
@@ -57,18 +53,18 @@ class BookCard extends Component {
     })
   }
 
-  hide() {
+  hide = () => {
     this.props.dispatch(hideBook(this.state.id));
   }
 
-  edit() {
+  edit = () => {
     this.setState({
       ...this.props.book
     })
     this.props.dispatch(editBook(this.state.id));
   }
 
-  saveEdit() {
+  saveEdit = () => {
     const token = this.props.state.user.token;
     const editObj = {
       ...this.state,
@@ -78,6 +74,14 @@ class BookCard extends Component {
     updateBook(editObj).then(result => {
       this.props.dispatch(result);
       toastr.info('Update.', `Updated ${this.state.title}.`);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
+
+  flag = () => {
+    flagBook(this.state.id).then(result => {
+      this.props.dispatch(result);
     }).catch(err => {
       console.log(err);
     })
