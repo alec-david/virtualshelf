@@ -3,21 +3,21 @@ import { Dropdown, Icon } from 'semantic-ui-react';
 
 
 const FilterBookDropdown = (props) => {
-  const { 
+  const {
     filter,
     handleFilter,
     toggleFilterDirection,
-    options 
+    options
   } = props;
-  
+
   let filterDirection;
   if (filter.filterDirection === 'DESC') {
     filterDirection = 'chevron down';
   } else {
     filterDirection = 'chevron up';
   }
-  
-  return(
+
+  return (
     <div>
       <Dropdown
         floating
@@ -28,21 +28,23 @@ const FilterBookDropdown = (props) => {
       >
         <Dropdown.Menu>
           <Dropdown.Menu scrolling>
-            {options.map(option =>
-              <Dropdown.Item 
-                key={option.value}
-                onClick={handleFilter}
-                {...option} 
-              />
-            )}
+            {options
+              .filter(option => option.text !== filter.option)
+              .map(option =>
+                <Dropdown.Item
+                  key={option.value}
+                  onClick={handleFilter}
+                  {...option}
+                />
+              )}
           </Dropdown.Menu>
         </Dropdown.Menu>
       </Dropdown>
       {' '}
-      <Icon 
-        name={filterDirection} 
+      <Icon
+        name={filterDirection}
         onClick={toggleFilterDirection}
-        style={{cursor:'pointer'}}
+        style={{ cursor: 'pointer' }}
       />
     </div>
   );

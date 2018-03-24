@@ -16,7 +16,7 @@ const DESC = 'DESC';
 const ASC = 'ASC';
 
 const defaultState = {
-  option: 'Filter Books',
+  option: 'Date Read',
   filterDirection: DESC,
   search: ''
 }
