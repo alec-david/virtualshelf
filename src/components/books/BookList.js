@@ -5,7 +5,6 @@ import BookCard from '../../containers/books/BookCard';
 import NewBookCard from '../../containers/books/NewBookCard';
 
 const BookList = (props) => {
-  //const bookList = props.books;
   const { user, books } = props;
   let addNewBook;
   if (user.email) {

@@ -23,7 +23,8 @@ const books = (state = List(), action) => {
       return state.insert(0, bookObj);
     case ADD_EXISTING_BOOKS:
       const bookList = JSON.parse(action.books);
-      return state.concat(bookList);
+      const filterStr = '-date_read';
+      return state.concat(bookList.sort(sortObject(filterStr)));
     case DELETE_BOOK:
       return state = state.filter(book => book.id !== action.id);
     case EDIT_BOOK:
