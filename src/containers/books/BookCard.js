@@ -65,6 +65,10 @@ class BookCard extends Component {
   }
 
   saveEdit = () => {
+    if (!this.validateForm({ ...this.state })) {
+      return;
+    }
+
     const token = this.props.state.user.token;
     const editObj = {
       ...this.state,
@@ -77,6 +81,15 @@ class BookCard extends Component {
     }).catch(err => {
       console.log(err);
     })
+  }
+
+  validateForm = (book) => {
+    if (!book.author || !book.title || !book.date_read) {
+      console.log(book);
+      toastr.error('Invalid Book', 'Please fill out all required fields.');
+      return false;
+    }
+    return true;
   }
 
   flag = () => {

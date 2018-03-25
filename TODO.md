@@ -1,11 +1,9 @@
 # TODO
++ toast on login/logout.
 + Lazy loading of books (client side) (should I pull all books down and then lazily display -- research)
 + switch getBooks/getUserBooks so they return JSON object w/ type...
-+ switch async action shit to redux thunk...
-+ toast on login/logout.
 + add padding to everything (cards, search, filter - make everything pop more)
 + refactor actions into seperate actions (user, book, movie, tv)
-+ Once login process setup, get user id working where only shows items where user id === current user id
 + Switch async promise hydrate stuff to use redux-thunk
 + Display useful links in errors (ex: if registering and email exists, link to login page. If logging in and email does not exist, link to register.)
 + Create microservice that gets cover/image for each entry (would be a good use for Go)

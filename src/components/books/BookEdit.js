@@ -7,7 +7,13 @@ const textAreaStyle = {
 
 const BookEdit = (props) => {
   const { book, saveEdit, cancelEdit, handleChange } = props;
-  const formDate = new Date(book.date_read).toISOString().split('T')[0];
+  let formDate;
+  try {
+    formDate = new Date(book.date_read).toISOString().split('T')[0];
+  } catch (e) {
+    formDate = '';
+  }
+  const currentDate = new Date().toISOString().split('T')[0];
 
   return (
     <Card>
@@ -43,6 +49,7 @@ const BookEdit = (props) => {
             type='date'
             name='date_read'
             size='mini'
+            max={currentDate}
             value={formDate}
             onChange={handleChange}
             required

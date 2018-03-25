@@ -37,11 +37,14 @@ class NewBookCard extends Component {
   }
 
   handleSubmit = () => {
+    if (!this.validateForm({ ...this.state })) {
+      return;
+    }
     const bookObj = {
       ...this.state,
       email: this.props.state.user.email
     }
-    
+
     addBook(bookObj).then(result => {
       this.props.dispatch(result);
       toastr.success('Success!', `Added ${this.state.title} to your read books`);
@@ -51,6 +54,14 @@ class NewBookCard extends Component {
     })
   }
 
+  validateForm = (book) => {
+    if (!book.author || !book.title || !book.dateRead) {
+      toastr.error('Invalid Book', 'Please fill out all required fields.');
+      return false;
+    }
+    return true;
+  }
+
   handleChange = (e, { name, value }) => {
     if (!value.length || value.length <= 255) {
       this.setState({
@@ -58,14 +69,13 @@ class NewBookCard extends Component {
       });
     }
   }
-  
+
   render() {
-    
     if (!this.state.addBook) {
       return (
         <Card>
-          <Image 
-            src={plusImg} 
+          <Image
+            src={plusImg}
             onClick={this.addNewBook.bind(this)}
             style={imageStyle}
           />
@@ -78,7 +88,7 @@ class NewBookCard extends Component {
       )
     } else {
       return (
-        <NewBook 
+        <NewBook
           book={this.state}
           cancel={this.cancel}
           handleChange={this.handleChange}
