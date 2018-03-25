@@ -6,13 +6,14 @@ const textAreaStyle = {
 }
 
 const NewBook = (props) => {
-  const { 
-    book, 
+  const {
+    book,
     cancel,
     handleChange,
     handleSubmit
   } = props;
-  
+  const currentDate = new Date().toISOString().split('T')[0];
+
   return (
     <Card>
       <Card.Content>
@@ -47,10 +48,18 @@ const NewBook = (props) => {
             type='date'
             name='dateRead'
             size='mini'
+            max={currentDate}
             value={book.dateRead}
             onChange={handleChange}
             required
           />
+          {/* <DatePicker
+            selected={book.dateRead}
+            onChange={handleChange}
+            minDate={moment()}
+            maxDate={moment().add(5, "days")}
+            placeholderText="Select a date between today and 5 days in the future"
+          /> */}
           <Rating
             maxRating={5}
             icon='star'
