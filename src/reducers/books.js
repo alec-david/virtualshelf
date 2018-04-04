@@ -6,10 +6,12 @@ import {
   EDIT_BOOK,
   UPDATE_BOOK,
   FILTER_BOOK,
-  SEARCH_BOOK,
+  SEARCH_BOOK
+} from '../actions/book';
+import {
   LOGIN,
   LOGOUT
-} from '../actions/index';
+} from '../actions/user';
 
 let fullBookList = List();
 
@@ -26,7 +28,7 @@ const books = (state = List(), action) => {
       const filterStr = '-date_read';
       return state.concat(bookList.sort(sortObject(filterStr)));
     case DELETE_BOOK:
-      return state = state.filter(book => book.id !== action.id);
+      return state.filter(book => book.id !== action.id);
     case EDIT_BOOK:
       return state = editObject(state, action);
     case UPDATE_BOOK:
@@ -36,14 +38,14 @@ const books = (state = List(), action) => {
       switch (action.option) {
         case 'Rating':
           direction = action.filterDirection === 'DESC' ? '-' : '';
-          return state = state.sort(sortObject(direction + 'rating'));
+          return state.sort(sortObject(direction + 'rating'));
         case 'Date Read':
           direction = action.filterDirection === 'DESC' ? '-' : '';
-          return state = state.sort(sortObject(direction + 'date_read'));
+          return state.sort(sortObject(direction + 'date_read'));
         case 'Title':
-          return state = state.sort(sortObject(direction + 'title'));
+          return state.sort(sortObject(direction + 'title'));
         case 'Author':
-          return state = state.sort(sortObject(direction + 'author'));
+          return state.sort(sortObject(direction + 'author'));
         default:
           return state;
       }
@@ -51,10 +53,10 @@ const books = (state = List(), action) => {
       if (state.size > fullBookList.size) {
         fullBookList = state;
       }
-      return state = filterSearch(action.search.toLowerCase(), fullBookList);
+      return filterSearch(action.search.toLowerCase(), fullBookList);
     case LOGIN:
     case LOGOUT:
-      return state = List();
+      return List();
     default:
       return state;
   }

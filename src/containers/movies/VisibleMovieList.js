@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  getBooks,
-  getUserBooks,
-  hydrateBooks
-} from '../../actions/book';
+  getMovies,
+  getUserMovies,
+  hydrateMovies
+} from '../../actions/movie';
 
-import BookList from '../../components/books/BookList';
+import MovieList from '../../components/movies/MovieList';
 
-class VisibleBookList extends Component {
+class VisibleMovieList extends Component {
 
   state = {
     width: window.innerWidth
   }
 
   componentWillMount() {
-    const { books, user } = this.props.state;
-    //If books haven't been hydrated yet
-    if (!books.size && !user.loggingIn) {
-      this.checkUserLoggedIn(books, user);
+    const { movies, user } = this.props.state;
+    //If movies haven't been hydrated yet
+    if (!movies.size && !user.loggingIn) {
+      this.checkUserLoggedIn(movies, user);
     }
 
     window.addEventListener('resize', this.handleWindowSizeChange);
@@ -32,34 +32,34 @@ class VisibleBookList extends Component {
     this.setState({ width: window.innerWidth });
   };
 
-  checkUserLoggedIn(books, user) {
+  checkUserLoggedIn(movies, user) {
     if (!user.email) {
-      this.fetchMostRecentBooks(books);
+      this.fetchMostRecentMovies(movies);
     } else {
-      this.fetchUserBooks(books, user);
+      this.fetchUserMovies(movies, user);
     }
   }
 
-  fetchMostRecentBooks(books) {
-    getBooks().then(books => {
-      this.props.dispatch(hydrateBooks(books.body));
+  fetchMostRecentMovies(movies) {
+    getMovies().then(movies => {
+      this.props.dispatch(hydrateMovies(movies.body));
     });
   }
 
-  fetchUserBooks(books, user) {
-    getUserBooks(user.token).then(books => {
-      if (!JSON.parse(books.body).length) {
+  fetchUserMovies(movies, user) {
+    getUserMovies(user.token).then(movies => {
+      if (!JSON.parse(movies.body).length) {
         //Show this message on screen at some point
-        console.log('No books entered yet!');
+        console.log('No movies entered yet!');
         return;
       }
-      this.props.dispatch(hydrateBooks(books.body));
+      this.props.dispatch(hydrateMovies(movies.body));
     });
   }
 
   render() {
     const { width } = this.state;
-    
+
     let colNum;
     if (width > 1600) {
       colNum = 7;
@@ -77,8 +77,8 @@ class VisibleBookList extends Component {
       colNum = 1;
     }
     return (
-      <BookList
-        books={this.props.state.books}
+      <MovieList
+        movies={this.props.state.movies}
         colNum={colNum}
         user={this.props.state.user}
       />
@@ -90,4 +90,4 @@ const mapStateToProps = state => {
   return { state };
 };
 
-export default connect(mapStateToProps)(VisibleBookList);
+export default connect(mapStateToProps)(VisibleMovieList);

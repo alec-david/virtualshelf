@@ -1,38 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, Image } from 'semantic-ui-react';
-import { addBook } from '../../actions/book';
+import { addMovie } from '../../actions/movie';
 import { toastr } from 'react-redux-toastr';
 import plusImg from '../../imgs/plus.svg';
 
-import NewBook from '../../components/books/NewBook';
+import NewMovie from '../../components/movies/NewMovie';
 
 const imageStyle = {
   cursor: 'pointer'
 }
 
 const defaultState = {
-  addBook: false,
+  addMovie: false,
   title: '',
-  author: '',
+  director: '',
   description: '',
-  dateRead: '',
+  dateWatched: '',
   rating: 3,
 }
 
-class NewBookCard extends Component {
+class NewMovieCard extends Component {
 
   state = defaultState;
 
-  addNewBook = () => {
+  addNewMovie = () => {
     this.setState({
-      addBook: true
+      addMovie: true
     })
   }
 
   cancel = () => {
     this.setState({
-      addBook: false
+      addMovie: false
     })
   }
 
@@ -40,23 +40,23 @@ class NewBookCard extends Component {
     if (!this.validateForm({ ...this.state })) {
       return;
     }
-    const bookObj = {
+    const movieObj = {
       ...this.state,
       email: this.props.state.user.email
     }
 
-    addBook(bookObj).then(result => {
+    addMovie(movieObj).then(result => {
       this.props.dispatch(result);
-      toastr.success('Success!', `Added ${this.state.title} to your read books`);
+      toastr.success('Success!', `Added ${this.state.title} to your watched movies.`);
       this.setState({
         ...defaultState
       });
     })
   }
 
-  validateForm = (book) => {
-    if (!book.author || !book.title || !book.dateRead) {
-      toastr.error('Invalid Book', 'Please fill out all required fields.');
+  validateForm = (movie) => {
+    if (!movie.title || !movie.dateWatched) {
+      toastr.error('Invalid Movie', 'Please fill out all required fields.');
       return false;
     }
     return true;
@@ -71,25 +71,25 @@ class NewBookCard extends Component {
   }
 
   render() {
-    if (!this.state.addBook) {
+    if (!this.state.addMovie) {
       return (
         <Card>
           <Image
             src={plusImg}
-            onClick={this.addNewBook}
+            onClick={this.addNewMovie}
             style={imageStyle}
           />
           <Card.Content>
             <Card.Header>
-              Add a new book.
+              Add a new movie.
             </Card.Header>
           </Card.Content>
         </Card>
       )
     } else {
       return (
-        <NewBook
-          book={this.state}
+        <NewMovie
+          movie={this.state}
           cancel={this.cancel}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
@@ -103,4 +103,4 @@ const mapStateToProps = state => {
   return { state };
 };
 
-export default connect(mapStateToProps)(NewBookCard);
+export default connect(mapStateToProps)(NewMovieCard);

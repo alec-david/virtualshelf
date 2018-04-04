@@ -68,8 +68,8 @@ class NavBarLoggedIn extends Component {
         <div className="routes">
           <Route exact path="/" component={MainPage} />
           <Route exact path="/books" render={() => <BookPage loggedIn={true} />} />
-          <Route exact path="/movies" component={MoviePage} />
-          <Route exact path="/television" component={TelevisionPage} />
+          <Route exact path="/movies" render={() => <MoviePage loggedIn={true} />} />
+          <Route exact path="/television" render={() => <TelevisionPage loggedIn={true} />} />
           <Route exact path="/profile" component={ProfilePage} />
         </div>
       </div>
