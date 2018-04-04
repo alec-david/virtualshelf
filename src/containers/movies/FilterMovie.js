@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
-import { filterBook, searchBook } from '../../actions/book';
+import { filterMovie, searchMovie } from '../../actions/movie';
 
 import FilterBookDropdown from '../../components/books/FilterBookDropdown';
-import SearchBooks from '../../components/books/SearchBooks';
+import SearchMovies from '../../components/movies/SearchMovies';
 
 const options = [
-  { key: 'dateRead', value: 'dateRead', text: 'Date Read' },
+  { key: 'dateWatched', value: 'dateWatched', text: 'Date Watched' },
   { key: 'rating', value: 'rating', text: 'Rating' },
   { key: 'title', value: 'title', text: 'Title' },
-  { key: 'author', value: 'author', text: 'Author' },
+  { key: 'director', value: 'director', text: 'Director' },
 ];
 const DESC = 'DESC';
 const ASC = 'ASC';
 
 const defaultState = {
-  option: 'Date Read',
+  option: 'Date Watched',
   filterDirection: DESC,
   search: ''
 }
 
-class FilterBook extends Component {
+class FilterMovie extends Component {
 
   state = defaultState;
 
@@ -29,7 +29,7 @@ class FilterBook extends Component {
     this.setState({
       option: val.text
     }, () => {
-      this.props.dispatch(filterBook(this.state));
+      this.props.dispatch(filterMovie(this.state));
     })
   }
 
@@ -37,7 +37,7 @@ class FilterBook extends Component {
     this.setState({
       [name]: value
     }, () => {
-      this.props.dispatch(searchBook(this.state));
+      this.props.dispatch(searchMovie(this.state));
     })
   }
 
@@ -45,7 +45,7 @@ class FilterBook extends Component {
     this.setState({
       filterDirection: (this.state.filterDirection === DESC ? ASC : DESC)
     }, () => {
-      this.props.dispatch(filterBook(this.state));
+      this.props.dispatch(filterMovie(this.state));
     })
   }
 
@@ -54,7 +54,7 @@ class FilterBook extends Component {
       <Grid verticalAlign='middle'>
         <Grid.Row columns={1}>
           <Grid.Column >
-            <SearchBooks
+            <SearchMovies
               search={this.state.search}
               handleSearch={this.handleSearch}
             />
@@ -76,4 +76,4 @@ const mapStateToProps = state => {
   return { state };
 };
 
-export default connect(mapStateToProps)(FilterBook);
+export default connect(mapStateToProps)(FilterMovie);

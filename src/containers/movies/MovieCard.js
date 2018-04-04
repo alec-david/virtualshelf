@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
-  deleteBook,
-  editBook,
-  updateBook,
-  hideBook,
-  flagBook
-} from '../../actions/book';
+  deleteMovie,
+  editMovie,
+  updateMovie,
+  hideMovie,
+  flagMovie
+} from '../../actions/movie';
 import { toastr } from 'react-redux-toastr';
 
-import Book from '../../components/books/Book';
-import BookEdit from '../../components/books/BookEdit';
+import Movie from '../../components/movies/Movie';
+import MovieEdit from '../../components/movies/MovieEdit';
 
-class BookCard extends Component {
+class MovieCard extends Component {
 
   state = {
-    ...this.props.book
+    ...this.props.movie
   }
 
   handleChange = (e, { name, value }) => {
-    this.setState({
-      [name]: value
-    });
+    if (!value.length || value.length <= 255) {
+      this.setState({
+        [name]: value
+      });
+    }
   }
 
   handleSettings = (e, val) => {
@@ -45,23 +47,23 @@ class BookCard extends Component {
   }
 
   delete = () => {
-    deleteBook(this.state.id).then(result => {
+    deleteMovie(this.state.id).then(result => {
       this.props.dispatch(result);
-      toastr.error('Deleted.', `Removed ${this.state.title} from your books list.`);
+      toastr.error('Deleted.', `Removed ${this.state.title} from your movies list.`);
     }).catch(err => {
       console.log(err);
     })
   }
 
   hide = () => {
-    this.props.dispatch(hideBook(this.state.id));
+    this.props.dispatch(hideMovie(this.state.id));
   }
 
   edit = () => {
     this.setState({
-      ...this.props.book
+      ...this.props.movie
     })
-    this.props.dispatch(editBook(this.state.id));
+    this.props.dispatch(editMovie(this.state.id));
   }
 
   saveEdit = () => {
@@ -75,7 +77,7 @@ class BookCard extends Component {
       token
     }
 
-    updateBook(editObj).then(result => {
+    updateMovie(editObj).then(result => {
       this.props.dispatch(result);
       toastr.info('Update.', `Updated ${this.state.title}.`);
     }).catch(err => {
@@ -83,16 +85,16 @@ class BookCard extends Component {
     })
   }
 
-  validateForm = (book) => {
-    if (!book.author || !book.title || !book.date_read) {
-      toastr.error('Invalid Book', 'Please fill out all required fields.');
+  validateForm = (movie) => {
+    if (!movie.director || !movie.title || !movie.date_watched) {
+      toastr.error('Invalid Movie', 'Please fill out all required fields.');
       return false;
     }
     return true;
   }
 
   flag = () => {
-    flagBook(this.state.id).then(result => {
+    flagMovie(this.state.id).then(result => {
       this.props.dispatch(result);
     }).catch(err => {
       console.log(err);
@@ -100,19 +102,19 @@ class BookCard extends Component {
   }
 
   render() {
-    const { book } = this.props;
-    if (!book.edit) {
+    const { movie } = this.props;
+    if (!movie.edit) {
       return (
-        <Book
-          book={book}
+        <Movie
+          movie={movie}
           user={this.props.state.user}
           handleSettings={this.handleSettings}
         />
       );
     } else {
       return (
-        <BookEdit
-          book={this.state}
+        <MovieEdit
+          movie={this.state}
           saveEdit={this.saveEdit}
           cancelEdit={this.edit}
           handleChange={this.handleChange}
@@ -126,4 +128,4 @@ const mapStateToProps = state => {
   return { state };
 };
 
-export default connect(mapStateToProps)(BookCard);
+export default connect(mapStateToProps)(MovieCard);

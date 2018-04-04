@@ -79,8 +79,8 @@ class NavBarNoUser extends Component {
         <div className="routes">
           <Route exact path="/" component={MainPage} />
           <Route exact path="/books" render={() => <BookPage loggedIn={false} />} />
-          <Route exact path="/movies" component={MoviePage} />
-          <Route exact path="/television" component={TelevisionPage} />
+          <Route exact path="/movies" render={() => <MoviePage loggedIn={false} />} />
+          <Route exact path="/television" render={() => <TelevisionPage loggedIn={false} />} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
         </div>

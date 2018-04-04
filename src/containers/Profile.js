@@ -5,7 +5,7 @@ import ProfileView from '../components/profile/ProfileView';
 import ProfileDelete from '../components/profile/ProfileDelete';
 import ProfileResetPW from '../components/profile/ProfileResetPW';
 
-import { logout, deleteAccount, resetPassword } from '../actions/index';
+import { logout, deleteAccount, resetPassword } from '../actions/user';
 
 class Profile extends Component {
 

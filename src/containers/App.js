@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 
 import NavigationBar from './NavigationBar';
-import { loginToken, logout } from '../actions/index';
+import { loginToken, logout } from '../actions/user';
 
 const history = createHistory();
 

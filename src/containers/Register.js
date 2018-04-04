@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import RegisterForm from '../components/register/RegisterForm';
-import { register } from '../actions/index';
+import { register } from '../actions/user';
 
 class Register extends Component {
   state = {
