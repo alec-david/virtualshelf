@@ -12,6 +12,11 @@ import {
   LOGIN,
   LOGOUT
 } from '../actions/user';
+import {
+  sortObject,
+  editObject,
+  updateObject
+} from './index';
 
 let fullMovieList = List();
 
@@ -69,46 +74,6 @@ function filterSearch(search, list) {
       movie.title.toLowerCase().indexOf(search) !== -1
     );
   })
-}
-
-function sortObject(property) {
-  let sortOrder = 1;
-  if (property[0] === "-") {
-    sortOrder = -1;
-    property = property.substr(1);
-  }
-  return (a, b) => {
-    let result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
-    return result * sortOrder;
-  }
-}
-
-function editObject(list, action) {
-  return list.update(
-    list.findIndex(item => {
-      return item.id === action.id;
-    }), item => {
-      const editItem = {
-        ...item
-      }
-      editItem.edit = !editItem.edit;
-      return editItem;
-    }
-  );
-}
-
-function updateObject(list, action) {
-  return list.update(
-    list.findIndex(item => {
-      return item.id === action.id;
-    }), item => {
-      const editItem = {
-        ...action,
-        edit: false
-      }
-      return editItem;
-    }
-  );
 }
 
 export default movies;
