@@ -1,3 +1,14 @@
+# Refactor TODO:
+Components that can be reused across all 3:
++ SearchBooks/SearchMovies.js (just pass in type (books, movies) for placeholder text)
++ FilterBookDropdown
++ BookCardContent (at least settings part)
++ BookList (maybe - would need to check if I can pass component down dynamically -- might be more trouble then its worth) (Also pull add new logic up into visiblebooklist then can just pass that down)
++ In NewBookCard/NewMovieCard, pull plus sign component into individual component (can be reused across all 3)
++ make dateRead/date_read consistent (probably date_read since thats the db method but whatever) -- ACTUALLY => Just change to generic date so it doesn't have to be different for all 3
++ When no cards available. Display some kinda message instead of search + filter
++ Break up long strings in description
+
 # TODO
 + toast on login/logout.
 + Lazy loading of books (client side) (should I pull all books down and then lazily display -- research)
