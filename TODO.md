@@ -1,20 +1,19 @@
+#Bugs
++ When adding new card, insert where it belongs in regards to date. (most recent date should be first)
+
 # Refactor TODO:
 Components that can be reused across all 3:
-+ SearchBooks/SearchMovies.js (just pass in type (books, movies) for placeholder text)
-+ FilterBookDropdown
-+ BookCardContent (at least settings part)
 + BookList (maybe - would need to check if I can pass component down dynamically -- might be more trouble then its worth) (Also pull add new logic up into visiblebooklist then can just pass that down)
-+ In NewBookCard/NewMovieCard, pull plus sign component into individual component (can be reused across all 3)
 + make dateRead/date_read consistent (probably date_read since thats the db method but whatever) -- ACTUALLY => Just change to generic date so it doesn't have to be different for all 3
 + When no cards available. Display some kinda message instead of search + filter
 + Break up long strings in description
 
 # TODO
++ When adding new card, insert where it belongs in regards to date. (most recent date should be first)
 + toast on login/logout.
 + Lazy loading of books (client side) (should I pull all books down and then lazily display -- research)
 + switch getBooks/getUserBooks so they return JSON object w/ type...
 + add padding to everything (cards, search, filter - make everything pop more)
-+ refactor actions into seperate actions (user, book, movie, tv)
 + Switch async promise hydrate stuff to use redux-thunk
 + Display useful links in errors (ex: if registering and email exists, link to login page. If logging in and email does not exist, link to register.)
 + Create microservice that gets cover/image for each entry (would be a good use for Go)
@@ -28,6 +27,10 @@ Components that can be reused across all 3:
 + Styling...
 
 # Completed
++ ~~refactor actions into seperate actions (user, book, movie, tv)~~
++ ~~CardContent - pull settings into individual component~~
++ ~~FilterBookDropdown -> FilterDropdown~~
++ ~~SearchBooks/SearchMovies.js (just pass in type (books, movies) for placeholder text)~~
 + ~~Switch default filter to date read~~
 + ~~Don't show current filter in dropdown~~
 + ~~add settings options for logged out users. They can 'Hide' or 'Flag' (if offensive/bad content). Add flagged boolean to db. Don't display to all if flagged == T.~~

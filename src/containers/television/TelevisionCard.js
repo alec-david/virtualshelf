@@ -79,7 +79,7 @@ class TelevisionCard extends Component {
 
     updateTelevision(editObj).then(result => {
       this.props.dispatch(result);
-      toastr.info('Update.', `Updated ${this.state.title}.`);
+      toastr.info('Successful Update', `Updated ${this.state.title}.`);
     }).catch(err => {
       console.log(err);
     })
