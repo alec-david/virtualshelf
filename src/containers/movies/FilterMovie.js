@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
 import { filterMovie, searchMovie } from '../../actions/movie';
 
-import FilterBookDropdown from '../../components/books/FilterBookDropdown';
-import SearchMovies from '../../components/movies/SearchMovies';
+import FilterDropdown from '../../components/util/FilterDropdown';
+import Search from '../../components/util/Search';
 
 const options = [
   { key: 'dateWatched', value: 'dateWatched', text: 'Date Watched' },
@@ -50,20 +50,23 @@ class FilterMovie extends Component {
   }
 
   render() {
+    const filterDirection = this.state.filterDirection === 'DESC' ? 'chevron down' : 'chevron up';
     return (
       <Grid verticalAlign='middle'>
         <Grid.Row columns={1}>
           <Grid.Column >
-            <SearchMovies
+            <Search
               search={this.state.search}
               handleSearch={this.handleSearch}
+              placeholder='Search Movies...'
             />
             <br /><br />
-            <FilterBookDropdown
+            <FilterDropdown
               options={options}
               handleFilter={this.handleFilter}
               filter={this.state}
               toggleFilterDirection={this.toggleFilterDirection}
+              filterDirection={filterDirection}
             />
           </Grid.Column>
         </Grid.Row>

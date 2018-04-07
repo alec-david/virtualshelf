@@ -1,15 +1,19 @@
 import React from 'react';
 import { Input } from 'semantic-ui-react';
 
-const SearchMovies = (props) => {
+const Search = (props) => {
 
-  const { search, handleSearch } = props;
+  const {
+    search,
+    handleSearch,
+    placeholder
+  } = props;
 
   return (
     <Input
       icon='search'
       iconPosition='left'
-      placeholder='Search movies...'
+      placeholder={placeholder}
       name='search'
       value={search}
       onChange={handleSearch}
@@ -17,4 +21,4 @@ const SearchMovies = (props) => {
   )
 }
 
-export default SearchMovies;
+export default Search;

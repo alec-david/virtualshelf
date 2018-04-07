@@ -13,6 +13,9 @@ const TelevisionEdit = (props) => {
   } catch (e) {
     formDate = '';
   }
+  if (!television.episode) {
+    television.episode = '';
+  }
   const currentDate = new Date().toISOString().split('T')[0];
 
   return (
@@ -31,7 +34,7 @@ const TelevisionEdit = (props) => {
           <Form.Group widths='equal'>
             <Form.Input
               label='Season'
-              type='text'
+              type='number'
               name='season'
               size='mini'
               value={television.season}
@@ -41,7 +44,7 @@ const TelevisionEdit = (props) => {
             />
             <Form.Input
               label='Episode'
-              type='text'
+              type='number'
               name='episode'
               size='mini'
               value={television.episode}
