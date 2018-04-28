@@ -21,8 +21,6 @@ const MovieList = (props) => {
             <MovieCard
               key={movie.id}
               movie={movie}
-              delete={props.delete}
-              edit={props.edit}
             />
           );
         })}

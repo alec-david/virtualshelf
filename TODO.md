@@ -1,7 +1,7 @@
-#Bugs
-+ When adding new card, insert where it belongs in regards to date. (most recent date should be first)
-
 # Refactor TODO:
++ Pull dynamic colNum calculation into method in VisibleXList
++ Bug - items keep on loading when you go to that screen. Prevent loading once initial load done.
++ Add Search and filter to main page...
 Components that can be reused across all 3:
 + BookList (maybe - would need to check if I can pass component down dynamically -- might be more trouble then its worth) (Also pull add new logic up into visiblebooklist then can just pass that down)
 + make dateRead/date_read consistent (probably date_read since thats the db method but whatever) -- ACTUALLY => Just change to generic date so it doesn't have to be different for all 3
@@ -9,6 +9,7 @@ Components that can be reused across all 3:
 + Break up long strings in description
 
 # TODO
++ Add Dynamic resizing of nav bar -> Should turn into hamburger menu for small screens.
 + When adding new card, insert where it belongs in regards to date. (most recent date should be first)
 + toast on login/logout.
 + Lazy loading of books (client side) (should I pull all books down and then lazily display -- research)
@@ -21,7 +22,6 @@ Components that can be reused across all 3:
 # Front End Stuff
 + General page when not logged in -> shows all recent entries (across all 3 options)
 + General page when logged in -> Shows all recent entries for current user
-+ Once all that is working, implement for tv and movies.
 + Unit testing
 + Refactoring (AddBook - move constants out of container)
 + Styling...

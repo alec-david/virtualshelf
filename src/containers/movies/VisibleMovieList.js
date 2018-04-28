@@ -5,6 +5,7 @@ import {
   getUserMovies,
   hydrateMovies
 } from '../../actions/movie';
+import { setHydratedMoviesFlag } from '../../actions/user';
 
 import MovieList from '../../components/movies/MovieList';
 
@@ -17,7 +18,7 @@ class VisibleMovieList extends Component {
   componentWillMount() {
     const { movies, user } = this.props.state;
     //If movies haven't been hydrated yet
-    if (!movies.size && !user.loggingIn) {
+    if (!movies.size && !user.hydratedMovies) {
       this.checkUserLoggedIn(movies, user);
     }
 
@@ -43,6 +44,8 @@ class VisibleMovieList extends Component {
   fetchMostRecentMovies(movies) {
     getMovies().then(movies => {
       this.props.dispatch(hydrateMovies(movies.body));
+    }).then(() => {
+      this.props.dispatch(setHydratedMoviesFlag());
     });
   }
 
@@ -54,6 +57,8 @@ class VisibleMovieList extends Component {
         return;
       }
       this.props.dispatch(hydrateMovies(movies.body));
+    }).then(() => {
+      this.props.dispatch(setHydratedMoviesFlag());
     });
   }
 
