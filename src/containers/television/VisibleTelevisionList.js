@@ -5,6 +5,7 @@ import {
   getUserTelevision,
   hydrateTelevision
 } from '../../actions/television';
+import { setHydratedTelevisionFlag } from '../../actions/user';
 
 import TelevisionList from '../../components/television/TelevisionList';
 
@@ -17,7 +18,7 @@ class VisibleTelevisionList extends Component {
   componentWillMount() {
     const { television, user } = this.props.state;
     //If television haven't been hydrated yet
-    if (!television.size && !user.loggingIn) {
+    if (!user.loggingIn && !user.hydratedTelevision) {
       this.checkUserLoggedIn(television, user);
     }
 
@@ -34,15 +35,17 @@ class VisibleTelevisionList extends Component {
 
   checkUserLoggedIn(television, user) {
     if (!user.email) {
-      this.fetchMostRecentTelevision(television);
+      this.fetchAllTelevision(television);
     } else {
       this.fetchUserTelevision(television, user);
     }
   }
 
-  fetchMostRecentTelevision(television) {
+  fetchAllTelevision(television) {
     getTelevision().then(television => {
       this.props.dispatch(hydrateTelevision(television.body));
+    }).then(() => {
+      this.props.dispatch(setHydratedTelevisionFlag());
     });
   }
 
@@ -54,6 +57,8 @@ class VisibleTelevisionList extends Component {
         return;
       }
       this.props.dispatch(hydrateTelevision(television.body));
+    }).then(() => {
+      this.props.dispatch(setHydratedTelevisionFlag());
     });
   }
 

@@ -6,6 +6,10 @@ import {
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
+export const HYDRATED_ALL = 'HYDRATED_ALL';
+export const HYDRATED_BOOKS = 'HYDRATED_BOOKS';
+export const HYDRATED_MOVIES = 'HYDRATED_MOVIES';
+export const HYDRATED_TELEVISION = 'HYDRATED_TELEVISION';
 
 const expressURL = 'http://localhost:3030/remembr';
 const userURL = `${expressURL}/users/`;
@@ -104,4 +108,28 @@ export const deleteAccount = user => {
       reject(err);
     })
   })
+}
+
+export const setHydratedAllFlag = () => {
+  return {
+    type: HYDRATED_ALL
+  };
+}
+
+export const setHydratedBooksFlag = () => {
+  return {
+    type: HYDRATED_BOOKS
+  }
+}
+
+export const setHydratedMoviesFlag = () => {
+  return {
+    type: HYDRATED_MOVIES
+  }
+}
+
+export const setHydratedTelevisionFlag = () => {
+  return {
+    type: HYDRATED_TELEVISION
+  }
 }

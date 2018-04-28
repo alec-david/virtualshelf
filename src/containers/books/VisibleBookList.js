@@ -5,6 +5,7 @@ import {
   getUserBooks,
   hydrateBooks
 } from '../../actions/book';
+import { setHydratedBooksFlag } from '../../actions/user';
 
 import BookList from '../../components/books/BookList';
 
@@ -17,7 +18,7 @@ class VisibleBookList extends Component {
   componentWillMount() {
     const { books, user } = this.props.state;
     //If books haven't been hydrated yet
-    if (!books.size && !user.loggingIn) {
+    if (!user.loggingIn && !user.hydratedBooks) {
       this.checkUserLoggedIn(books, user);
     }
 
@@ -43,6 +44,8 @@ class VisibleBookList extends Component {
   fetchMostRecentBooks(books) {
     getBooks().then(books => {
       this.props.dispatch(hydrateBooks(books.body));
+    }).then(() => {
+      this.props.dispatch(setHydratedBooksFlag());
     });
   }
 
@@ -54,12 +57,14 @@ class VisibleBookList extends Component {
         return;
       }
       this.props.dispatch(hydrateBooks(books.body));
+    }).then(() => {
+      this.props.dispatch(setHydratedBooksFlag());
     });
   }
 
   render() {
     const { width } = this.state;
-    
+
     let colNum;
     if (width > 1600) {
       colNum = 7;

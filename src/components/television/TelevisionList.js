@@ -21,8 +21,6 @@ const TelevisionList = (props) => {
             <TelevisionCard
               key={television.id}
               television={television}
-              delete={props.delete}
-              edit={props.edit}
             />
           );
         })}

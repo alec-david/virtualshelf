@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react'
 
-import MainPage from '../MainPage';
+import MainPage from '../main/MainPage';
 import BookPage from '../books/BookPage';
 import MoviePage from '../movies/MoviePage';
 import TelevisionPage from '../television/TelevisionPage';

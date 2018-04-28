@@ -13,22 +13,18 @@ const BookList = (props) => {
 
   return (
     <div>
-      {!!books.size && (
-        <Card.Group itemsPerRow={props.colNum}>
-          {addNewBook}
+      <Card.Group itemsPerRow={props.colNum}>
+        {addNewBook}
 
-          {books.map(book => {
-            return (
-              <BookCard
-                key={book.id}
-                book={book}
-                delete={props.delete}
-                edit={props.edit}
-              />
-            );
-          })}
-        </Card.Group>
-      )}
+        {books.map(book => {
+          return (
+            <BookCard
+              key={book.id}
+              book={book}
+            />
+          );
+        })}
+      </Card.Group>
     </div>
   );
 }
