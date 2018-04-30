@@ -9,7 +9,7 @@ const BookEdit = (props) => {
   const { book, saveEdit, cancelEdit, handleChange } = props;
   let formDate;
   try {
-    formDate = new Date(book.date_read).toISOString().split('T')[0];
+    formDate = new Date(book.date).toISOString().split('T')[0];
   } catch (e) {
     formDate = '';
   }
@@ -47,7 +47,7 @@ const BookEdit = (props) => {
           <Form.Input
             label='Date Read'
             type='date'
-            name='date_read'
+            name='date'
             size='mini'
             max={currentDate}
             value={formDate}

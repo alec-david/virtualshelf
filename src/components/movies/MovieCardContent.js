@@ -5,7 +5,8 @@ import CardSettings from '../util/CardSettings';
 
 const MovieCardContent = (props) => {
   const { movie, handleSettings, email } = props;
-  const formattedDate = new Date(movie.date_watched).toLocaleDateString();
+  // console.log(movie);
+  const formattedDate = new Date(movie.date).toLocaleDateString();
 
   return (
     <Card.Content>

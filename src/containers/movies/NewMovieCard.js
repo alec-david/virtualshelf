@@ -16,7 +16,7 @@ const defaultState = {
   title: '',
   director: '',
   description: '',
-  dateWatched: '',
+  date: '',
   rating: 3,
 }
 
@@ -55,7 +55,8 @@ class NewMovieCard extends Component {
   }
 
   validateForm = (movie) => {
-    if (!movie.title || !movie.dateWatched) {
+    console.log(movie);
+    if (!movie.title || !movie.date) {
       toastr.error('Invalid Movie', 'Please fill out all required fields.');
       return false;
     }

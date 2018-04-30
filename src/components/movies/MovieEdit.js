@@ -9,7 +9,7 @@ const MovieEdit = (props) => {
   const { movie, saveEdit, cancelEdit, handleChange } = props;
   let formDate;
   try {
-    formDate = new Date(movie.date_watched).toISOString().split('T')[0];
+    formDate = new Date(movie.date).toISOString().split('T')[0];
   } catch (e) {
     formDate = '';
   }
@@ -47,7 +47,7 @@ const MovieEdit = (props) => {
           <Form.Input
             label='Date Watched'
             type='date'
-            name='date_watched'
+            name='date'
             size='mini'
             max={currentDate}
             value={formDate}

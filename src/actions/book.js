@@ -17,13 +17,13 @@ const expressURL = 'http://localhost:3030/remembr';
 const bookURL = `${expressURL}/books`;
 
 export const addBook = book => {
-  let date_read = new Date(book.dateRead);
+  let date_read = new Date(book.date);
   date_read.setTime(date_read.getTime() + date_read.getTimezoneOffset() * 60 * 1000);
   return new Promise((resolve, reject) => {
     const bookJSON = {
       title: book.title,
       author: book.author,
-      date_read: date_read.valueOf(),
+      date: date_read.valueOf(),
       username: book.email,
       rating: book.rating,
       description: book.description
@@ -54,9 +54,9 @@ export const hydrateBooks = books => {
 }
 
 export const updateBook = book => {
-  let dateRead = new Date(book.date_read);
-  dateRead.setTime(dateRead.getTime() + dateRead.getTimezoneOffset() * 60 * 1000);
-  book.date_read = dateRead.valueOf();
+  let date_read = new Date(book.date);
+  date_read.setTime(date_read.getTime() + date_read.getTimezoneOffset() * 60 * 1000);
+  book.date = date_read.valueOf();
   return new Promise((resolve, reject) => {
     updateResource(bookURL, book).then(result => {
       resolve({

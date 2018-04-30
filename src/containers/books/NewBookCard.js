@@ -16,7 +16,7 @@ const defaultState = {
   title: '',
   author: '',
   description: '',
-  dateRead: '',
+  date: '',
   rating: 3,
 }
 
@@ -55,7 +55,7 @@ class NewBookCard extends Component {
   }
 
   validateForm = (book) => {
-    if (!book.author || !book.title || !book.dateRead) {
+    if (!book.author || !book.title || !book.date) {
       toastr.error('Invalid Book', 'Please fill out all required fields.');
       return false;
     }

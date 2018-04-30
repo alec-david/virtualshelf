@@ -30,7 +30,7 @@ const books = (state = List(), action) => {
       return state.insert(0, bookObj);
     case ADD_EXISTING_BOOKS:
       const bookList = JSON.parse(action.books);
-      const filterStr = '-date_read';
+      const filterStr = '-date';
       return state.concat(bookList.sort(sortObject(filterStr)));
     case DELETE_BOOK:
       return state.filter(book => book.id !== action.id);
@@ -40,20 +40,11 @@ const books = (state = List(), action) => {
       return state = updateObject(state, action);
     case FILTER_BOOK:
       let direction = action.filterDirection === 'DESC' ? '' : '-';
-      switch (action.option) {
-        case 'Rating':
-          direction = action.filterDirection === 'DESC' ? '-' : '';
-          return state.sort(sortObject(direction + 'rating'));
-        case 'Date Read':
-          direction = action.filterDirection === 'DESC' ? '-' : '';
-          return state.sort(sortObject(direction + 'date_read'));
-        case 'Title':
-          return state.sort(sortObject(direction + 'title'));
-        case 'Author':
-          return state.sort(sortObject(direction + 'author'));
-        default:
-          return state;
-      }
+      const option = action.option;
+      if (option === 'rating' || option === 'date') {
+        direction = action.filterDirection === 'DESC' ? '-' : '';
+      } 
+      return state.sort(sortObject(direction + option));
     case SEARCH_BOOK:
       if (state.size > fullBookList.size) {
         fullBookList = state;

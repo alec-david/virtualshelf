@@ -17,7 +17,7 @@ const FilterDropdown = (props) => {
         floating
         labeled
         button
-        text={filter.option}
+        text={filter.optionText}
         icon={null}
       >
         <Dropdown.Menu>

@@ -9,7 +9,7 @@ const TelevisionEdit = (props) => {
   const { television, saveEdit, cancelEdit, handleChange } = props;
   let formDate;
   try {
-    formDate = new Date(television.date_watched).toISOString().split('T')[0];
+    formDate = new Date(television.date).toISOString().split('T')[0];
   } catch (e) {
     formDate = '';
   }
@@ -62,7 +62,7 @@ const TelevisionEdit = (props) => {
           <Form.Input
             label='Date Watched'
             type='date'
-            name='date_watched'
+            name='date'
             size='mini'
             max={currentDate}
             value={formDate}

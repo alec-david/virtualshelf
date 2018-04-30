@@ -17,13 +17,13 @@ const expressURL = 'http://localhost:3030/remembr';
 const movieURL = `${expressURL}/movies`;
 
 export const addMovie = movie => {
-  let date_watched = new Date(movie.dateWatched);
+  let date_watched = new Date(movie.date);
   date_watched.setTime(date_watched.getTime() + date_watched.getTimezoneOffset() * 60 * 1000);
   return new Promise((resolve, reject) => {
     const movieJSON = {
       title: movie.title,
       director: movie.director,
-      date_watched: date_watched.valueOf(),
+      date: date_watched.valueOf(),
       username: movie.email,
       rating: movie.rating,
       description: movie.description
@@ -54,9 +54,9 @@ export const hydrateMovies = movies => {
 }
 
 export const updateMovie = movie => {
-  let dateWatched = new Date(movie.date_watched);
-  dateWatched.setTime(dateWatched.getTime() + dateWatched.getTimezoneOffset() * 60 * 1000);
-  movie.date_watched = dateWatched.valueOf();
+  let date_watched = new Date(movie.date);
+  date_watched.setTime(date_watched.getTime() + date_watched.getTimezoneOffset() * 60 * 1000);
+  movie.date = date_watched.valueOf();
   return new Promise((resolve, reject) => {
     updateResource(movieURL, movie).then(result => {
       resolve({

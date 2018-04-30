@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import books from './books';
 import movies from './movies';
 import television from './television';
+import items from './items';
 import user from './user';
 import { reducer as reduxFormReducer } from 'redux-form';
 import { reducer as toastrReducer } from 'react-redux-toastr'
@@ -10,6 +11,7 @@ const remembrApp = combineReducers({
   books,
   movies,
   television,
+  items,
   user,
   form: reduxFormReducer,
   toastr: toastrReducer
@@ -21,6 +23,7 @@ export const sortObject = property => {
     sortOrder = -1;
     property = property.substr(1);
   }
+  console.log(property);
   return (a, b) => {
     let result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
     return result * sortOrder;

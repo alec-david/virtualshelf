@@ -45,10 +45,10 @@ const NewMovie = (props) => {
           <Form.Input
             label='Date Watched'
             type='date'
-            name='dateWatched'
+            name='date'
             size='mini'
             max={currentDate}
-            value={movie.dateWatched}
+            value={movie.date}
             onChange={handleChange}
             required
           />

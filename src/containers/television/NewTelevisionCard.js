@@ -17,7 +17,7 @@ const defaultState = {
   season: '',
   episode: '',
   description: '',
-  dateWatched: '',
+  date: '',
   rating: 3,
 }
 
@@ -56,7 +56,7 @@ class NewTelevisionCard extends Component {
   }
 
   validateForm = (television) => {
-    if (!television.title || !television.dateWatched) {
+    if (!television.title || !television.date) {
       toastr.error('Invalid Television', 'Please fill out all required fields.');
       return false;
     }
