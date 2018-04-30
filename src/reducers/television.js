@@ -30,7 +30,7 @@ const television = (state = List(), action) => {
       return state.insert(0, televisionObj);
     case ADD_EXISTING_TELEVISION:
       const televisionList = JSON.parse(action.television);
-      const filterStr = '-date_read';
+      const filterStr = '-date';
       return state.concat(televisionList.sort(sortObject(filterStr)));
     case DELETE_TELEVISION:
       return state.filter(television => television.id !== action.id);
@@ -40,18 +40,11 @@ const television = (state = List(), action) => {
       return state = updateObject(state, action);
     case FILTER_TELEVISION:
       let direction = action.filterDirection === 'DESC' ? '' : '-';
-      switch (action.option) {
-        case 'Rating':
-          direction = action.filterDirection === 'DESC' ? '-' : '';
-          return state.sort(sortObject(direction + 'rating'));
-        case 'Date Watched':
-          direction = action.filterDirection === 'DESC' ? '-' : '';
-          return state.sort(sortObject(direction + 'date_watched'));
-        case 'Title':
-          return state.sort(sortObject(direction + 'title'));
-        default:
-          return state;
-      }
+      const option = action.option;
+      if (option === 'rating' || option === 'date') {
+        direction = action.filterDirection === 'DESC' ? '-' : '';
+      } 
+      return state.sort(sortObject(direction + option));
     case SEARCH_TELEVISION:
       if (state.size > fullTelevisionList.size) {
         fullTelevisionList = state;

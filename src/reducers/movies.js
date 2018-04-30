@@ -30,7 +30,7 @@ const movies = (state = List(), action) => {
       return state.insert(0, movieObj);
     case ADD_EXISTING_MOVIES:
       const movieList = JSON.parse(action.movies);
-      const filterStr = '-date_read';
+      const filterStr = '-date';
       return state.concat(movieList.sort(sortObject(filterStr)));
     case DELETE_MOVIE:
       return state.filter(movie => movie.id !== action.id);
@@ -40,20 +40,11 @@ const movies = (state = List(), action) => {
       return state = updateObject(state, action);
     case FILTER_MOVIE:
       let direction = action.filterDirection === 'DESC' ? '' : '-';
-      switch (action.option) {
-        case 'Rating':
-          direction = action.filterDirection === 'DESC' ? '-' : '';
-          return state.sort(sortObject(direction + 'rating'));
-        case 'Date Watched':
-          direction = action.filterDirection === 'DESC' ? '-' : '';
-          return state.sort(sortObject(direction + 'date_watched'));
-        case 'Title':
-          return state.sort(sortObject(direction + 'title'));
-        case 'Director':
-          return state.sort(sortObject(direction + 'director'));
-        default:
-          return state;
+      const option = action.option;
+      if (option === 'rating' || option === 'date') {
+        direction = action.filterDirection === 'DESC' ? '-' : '';
       }
+      return state.sort(sortObject(direction + option));
     case SEARCH_MOVIE:
       if (state.size > fullMovieList.size) {
         fullMovieList = state;

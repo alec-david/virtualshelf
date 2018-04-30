@@ -5,7 +5,7 @@ import CardSettings from '../util/CardSettings';
 
 const TelevisionCardContent = (props) => {
   const { television, handleSettings, email } = props;
-  const formattedDate = new Date(television.date_watched).toLocaleDateString();
+  const formattedDate = new Date(television.date).toLocaleDateString();
   const episodeStr = television.episode ? `Episode ${television.episode}` : '';
   return (
     <Card.Content>

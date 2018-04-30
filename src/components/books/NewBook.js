@@ -46,20 +46,13 @@ const NewBook = (props) => {
           <Form.Input
             label='Date Read'
             type='date'
-            name='dateRead'
+            name='date'
             size='mini'
             max={currentDate}
-            value={book.dateRead}
+            value={book.date}
             onChange={handleChange}
             required
           />
-          {/* <DatePicker
-            selected={book.dateRead}
-            onChange={handleChange}
-            minDate={moment()}
-            maxDate={moment().add(5, "days")}
-            placeholderText="Select a date between today and 5 days in the future"
-          /> */}
           <Rating
             maxRating={5}
             icon='star'

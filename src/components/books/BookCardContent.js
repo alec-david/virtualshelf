@@ -5,7 +5,7 @@ import CardSettings from '../util/CardSettings';
 
 const BookCardContent = (props) => {
   const { book, handleSettings, email } = props;
-  const formattedDate = new Date(book.date_read).toLocaleDateString();
+  const formattedDate = new Date(book.date).toLocaleDateString();
 
   return (
     <Card.Content>

@@ -86,7 +86,7 @@ class TelevisionCard extends Component {
   }
 
   validateForm = (television) => {
-    if (!television.title || !television.date_watched || !television.season) {
+    if (!television.title || !television.date || !television.season) {
       toastr.error('Invalid Television', 'Please fill out all required fields.');
       return false;
     }

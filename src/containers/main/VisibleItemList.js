@@ -125,8 +125,59 @@ class VisibleItemList extends Component {
   }
 
   combineItems = () => {
-    const { books, movies, television } = this.props.state;
-    return books.concat(movies).concat(television);
+    const { books, movies, television, user, items } = this.props.state;
+
+    if (user.hydratedBooks && user.hydratedMovies && user.hydratedTelevision) {
+      let sortedList = new List();
+      let ptrArr = [0,0,0];
+      while (ptrArr[0] < books.size ||
+             ptrArr[1] < movies.size ||
+             ptrArr[2] < television.size) {
+        const objArr = [books.get(ptrArr[0]), movies.get(ptrArr[1]), television.get(ptrArr[2])];
+        let directionFlag = items.direction === 'DESC';
+        if (items.filter === 'title') {
+          directionFlag = !directionFlag;
+        }
+        const index = this.minMaxObject(objArr, items.filter, directionFlag);
+        sortedList = sortedList.push(objArr[index]);
+        ptrArr[index]++;
+      }
+  
+      return sortedList;
+    }
+    return [];
+  }
+
+  //maxFlag = false => return min object
+  //maxFlag = true => return max object
+  minMaxObject = (arr, prop, maxFlag) => {
+    let index = -1;
+    let val = '';
+    for (let i = 0; i < arr.length; i++) {
+      if (i === arr.length - 1) {
+        return i;
+      }
+      if (arr[i]) {
+        index = i;
+        val = arr[i][prop];
+        break;
+      }
+    }
+
+    for (let i = index + 1; i < arr.length; i++) {
+      if (!maxFlag) {
+        if (arr[i] && arr[i][prop] < val) {
+          index = i;
+          val = arr[i][prop];
+        }
+      } else {
+        if (arr[i] && arr[i][prop] > val) {
+          index = i;
+          val = arr[i][prop];
+        }
+      }
+    }
+    return index;
   }
 
   render() {

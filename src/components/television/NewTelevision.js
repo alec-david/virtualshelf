@@ -58,10 +58,10 @@ const NewTelevision = (props) => {
           <Form.Input
             label='Date Watched'
             type='date'
-            name='dateWatched'
+            name='date'
             size='mini'
             max={currentDate}
-            value={television.dateWatched}
+            value={television.date}
             onChange={handleChange}
             required
           />

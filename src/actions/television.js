@@ -17,12 +17,12 @@ const expressURL = 'http://localhost:3030/remembr';
 const televisionURL = `${expressURL}/television`;
 
 export const addTelevision = television => {
-  let date_watched = new Date(television.dateWatched);
+  let date_watched = new Date(television.date);
   date_watched.setTime(date_watched.getTime() + date_watched.getTimezoneOffset() * 60 * 1000);
   return new Promise((resolve, reject) => {
     const televisionJSON = {
       ...television,
-      date_watched: date_watched.valueOf(),
+      date: date_watched.valueOf(),
       username: television.email
     };
     postResource(televisionURL, televisionJSON).then(result => {
@@ -51,9 +51,9 @@ export const hydrateTelevision = television => {
 }
 
 export const updateTelevision = television => {
-  let dateWatched = new Date(television.date_watched);
-  dateWatched.setTime(dateWatched.getTime() + dateWatched.getTimezoneOffset() * 60 * 1000);
-  television.date_watched = dateWatched.valueOf();
+  let date_watched = new Date(television.date);
+  date_watched.setTime(date_watched.getTime() + date_watched.getTimezoneOffset() * 60 * 1000);
+  television.date = date_watched.valueOf();
   return new Promise((resolve, reject) => {
     updateResource(televisionURL, television).then(result => {
       resolve({

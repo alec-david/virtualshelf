@@ -84,7 +84,7 @@ class BookCard extends Component {
   }
 
   validateForm = (book) => {
-    if (!book.author || !book.title || !book.date_read) {
+    if (!book.author || !book.title || !book.date) {
       toastr.error('Invalid Book', 'Please fill out all required fields.');
       return false;
     }
