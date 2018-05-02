@@ -27,6 +27,7 @@ export const addTelevision = television => {
     };
     postResource(televisionURL, televisionJSON).then(result => {
       televisionJSON.id = result.insertId;
+      televisionJSON.image_url = result.image_url;
       televisionJSON.type = ADD_NEW_TELEVISION;
       resolve(televisionJSON);
     }).catch(err => {
@@ -56,8 +57,10 @@ export const updateTelevision = television => {
   television.date = date_watched.valueOf();
   return new Promise((resolve, reject) => {
     updateResource(televisionURL, television).then(result => {
+      console.log(result);
       resolve({
         ...television,
+        image_url: result.image_url,
         type: UPDATE_TELEVISION
       });
     }).catch(err => {

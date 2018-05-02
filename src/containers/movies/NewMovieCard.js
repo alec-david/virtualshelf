@@ -55,7 +55,6 @@ class NewMovieCard extends Component {
   }
 
   validateForm = (movie) => {
-    console.log(movie);
     if (!movie.title || !movie.date) {
       toastr.error('Invalid Movie', 'Please fill out all required fields.');
       return false;

@@ -9,7 +9,9 @@ const Book = (props) => {
 
   return (
     <Card>
-      <Image src={bookImg} />
+      <Image
+        src={book.image_url ? book.image_url : bookImg}
+      />
       <BookCardContent
         book={book}
         handleSettings={handleSettings}

@@ -62,29 +62,31 @@ class VisibleTelevisionList extends Component {
     });
   }
 
-  render() {
+  getNumberOfColumns = () => {
     const { width } = this.state;
 
-    let colNum;
     if (width > 1600) {
-      colNum = 7;
+      return 7;
     } else if (width > 1400 && width <= 1600) {
-      colNum = 6;
+      return 6;
     } else if (width > 1200 && width <= 1400) {
-      colNum = 5;
+      return 5;
     } else if (width > 1000 && width <= 1200) {
-      colNum = 4;
+      return 4;
     } else if (width > 800 && width <= 1000) {
-      colNum = 3;
+      return 3;
     } else if (width > 600 && width <= 800) {
-      colNum = 2;
+      return 2;
     } else { //Mobile width
-      colNum = 1;
+      return 1;
     }
+  }
+
+  render() {
     return (
       <TelevisionList
         television={this.props.state.television}
-        colNum={colNum}
+        colNum={this.getNumberOfColumns()}
         user={this.props.state.user}
       />
     );
