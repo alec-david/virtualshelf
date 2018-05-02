@@ -9,7 +9,9 @@ const Television = (props) => {
 
   return (
     <Card>
-      <Image src={televisionImg} />
+      <Image
+        src={television.image_url ? television.image_url : televisionImg}
+      />
       <TelevisionCardContent
         television={television}
         handleSettings={handleSettings}

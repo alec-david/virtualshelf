@@ -37,13 +37,14 @@ const books = (state = List(), action) => {
     case EDIT_BOOK:
       return state = editObject(state, action);
     case UPDATE_BOOK:
+      console.log(action);
       return state = updateObject(state, action);
     case FILTER_BOOK:
       let direction = action.filterDirection === 'DESC' ? '' : '-';
       const option = action.option;
       if (option === 'rating' || option === 'date') {
         direction = action.filterDirection === 'DESC' ? '-' : '';
-      } 
+      }
       return state.sort(sortObject(direction + option));
     case SEARCH_BOOK:
       if (state.size > fullBookList.size) {

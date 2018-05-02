@@ -19,3 +19,8 @@ button:disabled {
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: orange;
 }
+
+/* .ui.card>.image, .ui.cards>.card>.image {
+  height: 200px;
+  width: 400px;
+} */

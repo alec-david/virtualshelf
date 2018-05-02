@@ -29,7 +29,7 @@ class VisibleItemList extends Component {
 
   componentWillMount() {
     const { user } = this.props.state;
-    if (!user.loggingIn && 
+    if (!user.loggingIn &&
       (!user.hydratedBooks || !user.hydratedMovies || !user.hydratedTelevision)
     ) {
       this.checkUserLoggedIn(user);
@@ -104,35 +104,15 @@ class VisibleItemList extends Component {
     });
   }
 
-  calculateNumberofColumns = (width) => {
-    let colNum;
-    if (width > 1600) {
-      colNum = 7;
-    } else if (width > 1400 && width <= 1600) {
-      colNum = 6;
-    } else if (width > 1200 && width <= 1400) {
-      colNum = 5;
-    } else if (width > 1000 && width <= 1200) {
-      colNum = 4;
-    } else if (width > 800 && width <= 1000) {
-      colNum = 3;
-    } else if (width > 600 && width <= 800) {
-      colNum = 2;
-    } else { //Mobile width
-      colNum = 1;
-    }
-    return colNum;
-  }
-
   combineItems = () => {
     const { books, movies, television, user, items } = this.props.state;
 
     if (user.hydratedBooks && user.hydratedMovies && user.hydratedTelevision) {
       let sortedList = new List();
-      let ptrArr = [0,0,0];
+      let ptrArr = [0, 0, 0];
       while (ptrArr[0] < books.size ||
-             ptrArr[1] < movies.size ||
-             ptrArr[2] < television.size) {
+        ptrArr[1] < movies.size ||
+        ptrArr[2] < television.size) {
         const objArr = [books.get(ptrArr[0]), movies.get(ptrArr[1]), television.get(ptrArr[2])];
         let directionFlag = items.direction === 'DESC';
         if (items.filter === 'title') {
@@ -142,7 +122,7 @@ class VisibleItemList extends Component {
         sortedList = sortedList.push(objArr[index]);
         ptrArr[index]++;
       }
-  
+
       return sortedList;
     }
     return [];
@@ -180,14 +160,31 @@ class VisibleItemList extends Component {
     return index;
   }
 
-  render() {
+  getNumberOfColumns = () => {
     const { width } = this.state;
-    const colNum = this.calculateNumberofColumns(width);
 
+    if (width > 1600) {
+      return 7;
+    } else if (width > 1400 && width <= 1600) {
+      return 6;
+    } else if (width > 1200 && width <= 1400) {
+      return 5;
+    } else if (width > 1000 && width <= 1200) {
+      return 4;
+    } else if (width > 800 && width <= 1000) {
+      return 3;
+    } else if (width > 600 && width <= 800) {
+      return 2;
+    } else { //Mobile width
+      return 1;
+    }
+  }
+
+  render() {
     return (
       <ItemList
         items={this.combineItems()}
-        colNum={colNum}
+        colNum={this.getNumberOfColumns()}
         user={this.props.state.user}
       />
     );

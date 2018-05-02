@@ -53,10 +53,12 @@ class FilterBook extends Component {
   }
 
   componentDidMount = () => {
-    const item = this.props.state.items;
-    if (item.filter !== defaultSearchFilter.filter ||
-      item.direction !== defaultSearchFilter.filterDirection ||
-      item.search !== defaultSearchFilter.search) {
+    const { items, user } = this.props.state;
+
+    if (user.hydratedBooks &&
+      (items.filter !== defaultSearchFilter.filter ||
+        items.direction !== defaultSearchFilter.filterDirection ||
+        items.search !== defaultSearchFilter.search)) {
 
       this.dispatchFilterAction();
       this.dispatchSearchAction();

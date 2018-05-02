@@ -30,6 +30,7 @@ export const addBook = book => {
     };
     postResource(bookURL, bookJSON).then(result => {
       bookJSON.id = result.insertId;
+      bookJSON.image_url = result.image_url;
       bookJSON.type = ADD_NEW_BOOK;
       resolve(bookJSON);
     }).catch(err => {
@@ -61,6 +62,7 @@ export const updateBook = book => {
     updateResource(bookURL, book).then(result => {
       resolve({
         ...book,
+        image_url: result.image_url,
         type: UPDATE_BOOK
       });
     }).catch(err => {

@@ -9,7 +9,9 @@ const Movie = (props) => {
 
   return (
     <Card>
-      <Image src={movieImg} />
+      <Image
+        src={movie.image_url ? movie.image_url : movieImg}
+      />
       <MovieCardContent
         movie={movie}
         handleSettings={handleSettings}

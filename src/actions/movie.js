@@ -30,6 +30,7 @@ export const addMovie = movie => {
     };
     postResource(movieURL, movieJSON).then(result => {
       movieJSON.id = result.insertId;
+      movieJSON.image_url = result.image_url;
       movieJSON.type = ADD_NEW_MOVIE;
       resolve(movieJSON);
     }).catch(err => {
@@ -58,9 +59,12 @@ export const updateMovie = movie => {
   date_watched.setTime(date_watched.getTime() + date_watched.getTimezoneOffset() * 60 * 1000);
   movie.date = date_watched.valueOf();
   return new Promise((resolve, reject) => {
+    console.log('yoo');
     updateResource(movieURL, movie).then(result => {
+      console.log('hello');
       resolve({
         ...movie,
+        image_url: result.image_url,
         type: UPDATE_MOVIE
       });
     }).catch(err => {

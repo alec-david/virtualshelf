@@ -2,20 +2,18 @@
 + Bug in title/author/director sort caused by comparing lowercase/uppercase (normalize strings before sorting)
 
 # Refactor TODO:
-+ Pull dynamic colNum calculation into method in VisibleXList
 Components that can be reused across all 3:
-+ BookList (maybe - would need to check if I can pass component down dynamically -- might be more trouble then its worth) (Also pull add new logic up into visiblebooklist then can just pass that down)
-+ When no cards available. Display some kinda message instead of search + filter
 + Break up long strings in description (on card)
 + switch getBooks/getUserBooks so they return JSON object w/ type...
-+ AddBook - move constants out of container
 
 # TODO
-+ Reduce number of calls to reducers when loading/reloading lists of items
-+ Clear Search on page change (or maintain it)
++ when initially loading movies, sort is run twice. Figure out why (occasionally causes bug. Books and tv only run once)
++ add basic check when image_url found that url contains words in title at least. would prevent bleh blehington returning that guy lol
++ remove fields param from controllers in express.
++ Add a message saying all cover images taken from Wikipedia.
 + When no cards available. Display some kinda message instead of search + filter
 + Add Dynamic resizing of nav bar -> Should turn into hamburger menu for small screens.
-+ When adding new card, insert where it belongs in regards to date. (most recent date should be first)
++ When adding new card, insert where it belongs in regards to current filter (date, title, etc)
 + toast on login/logout.
 + Lazy loading of items (client side) (should I pull all books down and then lazily display -- research)
 + Switch async promise hydrate stuff to use redux-thunk
@@ -29,6 +27,8 @@ Components that can be reused across all 3:
 + Styling...
 
 # Completed
++ ~~Pull dynamic colNum calculation into method in VisibleXList~~
++ ~~Clear Search on page change~~
 + ~~Change dateRead/date_read and dateWatched/date_watched to generic date. Update express and db to accept this param~~
 + ~~Add Search and filter to main page~~
 + ~~General page when not logged in -> shows all recent entries (across all 3 options)~~
