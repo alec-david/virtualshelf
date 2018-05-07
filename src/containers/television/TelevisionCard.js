@@ -13,23 +13,22 @@ import Television from '../../components/television/Television';
 import TelevisionEdit from '../../components/television/TelevisionEdit';
 
 class TelevisionCard extends Component {
-
   state = {
     ...this.props.television
-  }
+  };
 
   handleChange = (e, { name, value }) => {
-    if (!value.length || value.length <= 255) {
+    if (name === 'rating' || value.length < 256) {
       this.setState({
         [name]: value
       });
     }
-  }
+  };
 
   handleSettings = (e, val) => {
     switch (val.value) {
       case 'Edit':
-        this.edit()
+        this.edit();
         return;
       case 'Hide':
         this.hide();
@@ -44,27 +43,29 @@ class TelevisionCard extends Component {
         console.log('Uh oh');
         return;
     }
-  }
+  };
 
   delete = () => {
-    deleteTelevision(this.state.id).then(result => {
-      this.props.dispatch(result);
-      toastr.error('Deleted.', `Removed ${this.state.title} from your television list.`);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    deleteTelevision(this.state.id)
+      .then(result => {
+        this.props.dispatch(result);
+        toastr.error('Deleted.', `Removed ${this.state.title} from your television list.`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   hide = () => {
     this.props.dispatch(hideTelevision(this.state.id));
-  }
+  };
 
   edit = () => {
     this.setState({
       ...this.props.television
-    })
+    });
     this.props.dispatch(editTelevision(this.state.id));
-  }
+  };
 
   saveEdit = () => {
     if (!this.validateForm({ ...this.state })) {
@@ -75,31 +76,35 @@ class TelevisionCard extends Component {
     const editObj = {
       ...this.state,
       token
-    }
+    };
 
-    updateTelevision(editObj).then(result => {
-      this.props.dispatch(result);
-      toastr.info('Successful Update', `Updated ${this.state.title}.`);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    updateTelevision(editObj)
+      .then(result => {
+        this.props.dispatch(result);
+        toastr.info('Successful Update', `Updated ${this.state.title}.`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
-  validateForm = (television) => {
+  validateForm = television => {
     if (!television.title || !television.date || !television.season) {
       toastr.error('Invalid Television', 'Please fill out all required fields.');
       return false;
     }
     return true;
-  }
+  };
 
   flag = () => {
-    flagTelevision(this.state.id).then(result => {
-      this.props.dispatch(result);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    flagTelevision(this.state.id)
+      .then(result => {
+        this.props.dispatch(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   render() {
     const { television } = this.props;
@@ -119,7 +124,7 @@ class TelevisionCard extends Component {
           cancelEdit={this.edit}
           handleChange={this.handleChange}
         />
-      )
+      );
     }
   }
 }

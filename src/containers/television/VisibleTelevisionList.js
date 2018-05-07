@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  getTelevision,
-  getUserTelevision,
-  hydrateTelevision
-} from '../../actions/television';
+import { getTelevision, getUserTelevision, hydrateTelevision } from '../../actions/television';
 import { setHydratedTelevisionFlag } from '../../actions/user';
 
 import TelevisionList from '../../components/television/TelevisionList';
 
 class VisibleTelevisionList extends Component {
-
   state = {
     width: window.innerWidth
-  }
+  };
 
   componentWillMount() {
     const { television, user } = this.props.state;
@@ -42,24 +37,28 @@ class VisibleTelevisionList extends Component {
   }
 
   fetchAllTelevision(television) {
-    getTelevision().then(television => {
-      this.props.dispatch(hydrateTelevision(television.body));
-    }).then(() => {
-      this.props.dispatch(setHydratedTelevisionFlag());
-    });
+    getTelevision()
+      .then(television => {
+        this.props.dispatch(hydrateTelevision(television.body));
+      })
+      .then(() => {
+        this.props.dispatch(setHydratedTelevisionFlag());
+      });
   }
 
   fetchUserTelevision(television, user) {
-    getUserTelevision(user.token).then(television => {
-      if (!JSON.parse(television.body).length) {
-        //Show this message on screen at some point
-        console.log('No television entered yet!');
-        return;
-      }
-      this.props.dispatch(hydrateTelevision(television.body));
-    }).then(() => {
-      this.props.dispatch(setHydratedTelevisionFlag());
-    });
+    getUserTelevision(user.token)
+      .then(television => {
+        if (!JSON.parse(television.body).length) {
+          //Show this message on screen at some point
+          console.log('No television entered yet!');
+          return;
+        }
+        this.props.dispatch(hydrateTelevision(television.body));
+      })
+      .then(() => {
+        this.props.dispatch(setHydratedTelevisionFlag());
+      });
   }
 
   getNumberOfColumns = () => {
@@ -77,15 +76,16 @@ class VisibleTelevisionList extends Component {
       return 3;
     } else if (width > 600 && width <= 800) {
       return 2;
-    } else { //Mobile width
+    } else {
+      //Mobile width
       return 1;
     }
-  }
+  };
 
   render() {
     return (
       <TelevisionList
-        television={this.props.state.television}
+        television={this.props.state.television.list}
         colNum={this.getNumberOfColumns()}
         user={this.props.state.user}
       />

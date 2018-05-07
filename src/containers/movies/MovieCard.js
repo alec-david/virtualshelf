@@ -1,35 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  deleteMovie,
-  editMovie,
-  updateMovie,
-  hideMovie,
-  flagMovie
-} from '../../actions/movie';
+import { deleteMovie, editMovie, updateMovie, hideMovie, flagMovie } from '../../actions/movie';
 import { toastr } from 'react-redux-toastr';
 
 import Movie from '../../components/movies/Movie';
 import MovieEdit from '../../components/movies/MovieEdit';
 
 class MovieCard extends Component {
-
   state = {
     ...this.props.movie
-  }
+  };
 
   handleChange = (e, { name, value }) => {
-    if (!value.length || value.length <= 255) {
+    if (name === 'rating' || value.length < 256) {
       this.setState({
         [name]: value
       });
     }
-  }
+  };
 
   handleSettings = (e, val) => {
     switch (val.value) {
       case 'Edit':
-        this.edit()
+        this.edit();
         return;
       case 'Hide':
         this.hide();
@@ -44,27 +37,29 @@ class MovieCard extends Component {
         console.log('Uh oh');
         return;
     }
-  }
+  };
 
   delete = () => {
-    deleteMovie(this.state.id).then(result => {
-      this.props.dispatch(result);
-      toastr.error('Deleted.', `Removed ${this.state.title} from your movies list.`);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    deleteMovie(this.state.id)
+      .then(result => {
+        this.props.dispatch(result);
+        toastr.error('Deleted.', `Removed ${this.state.title} from your movies list.`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   hide = () => {
     this.props.dispatch(hideMovie(this.state.id));
-  }
+  };
 
   edit = () => {
     this.setState({
       ...this.props.movie
-    })
+    });
     this.props.dispatch(editMovie(this.state.id));
-  }
+  };
 
   saveEdit = () => {
     if (!this.validateForm({ ...this.state })) {
@@ -75,42 +70,42 @@ class MovieCard extends Component {
     const editObj = {
       ...this.state,
       token
-    }
+    };
 
-    updateMovie(editObj).then(result => {
-      this.props.dispatch(result);
-      toastr.info('Update.', `Updated ${this.state.title}.`);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    updateMovie(editObj)
+      .then(result => {
+        this.props.dispatch(result);
+        toastr.info('Update.', `Updated ${this.state.title}.`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
-  validateForm = (movie) => {
+  validateForm = movie => {
     if (!movie.director || !movie.title || !movie.date) {
       toastr.error('Invalid Movie', 'Please fill out all required fields.');
       return false;
     }
     return true;
-  }
+  };
 
   flag = () => {
-    flagMovie(this.state.id).then(result => {
-      this.props.dispatch(result);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    flagMovie(this.state.id)
+      .then(result => {
+        this.props.dispatch(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   render() {
     const { movie } = this.props;
-    
+
     if (!movie.edit) {
       return (
-        <Movie
-          movie={movie}
-          user={this.props.state.user}
-          handleSettings={this.handleSettings}
-        />
+        <Movie movie={movie} user={this.props.state.user} handleSettings={this.handleSettings} />
       );
     } else {
       return (
@@ -120,7 +115,7 @@ class MovieCard extends Component {
           cancelEdit={this.edit}
           handleChange={this.handleChange}
         />
-      )
+      );
     }
   }
 }

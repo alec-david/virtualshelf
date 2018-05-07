@@ -1,33 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  deleteBook,
-  editBook,
-  updateBook,
-  hideBook,
-  flagBook
-} from '../../actions/book';
+import { deleteBook, editBook, updateBook, hideBook, flagBook } from '../../actions/book';
 import { toastr } from 'react-redux-toastr';
 
 import Book from '../../components/books/Book';
 import BookEdit from '../../components/books/BookEdit';
 
 class BookCard extends Component {
-
   state = {
     ...this.props.book
-  }
+  };
 
   handleChange = (e, { name, value }) => {
-    this.setState({
-      [name]: value
-    });
-  }
+    if (name === 'rating' || value.length < 256) {
+      this.setState({
+        [name]: value
+      });
+    }
+  };
 
   handleSettings = (e, val) => {
     switch (val.value) {
       case 'Edit':
-        this.edit()
+        this.edit();
         return;
       case 'Hide':
         this.hide();
@@ -42,27 +37,29 @@ class BookCard extends Component {
         console.log('Uh oh');
         return;
     }
-  }
+  };
 
   delete = () => {
-    deleteBook(this.state.id).then(result => {
-      this.props.dispatch(result);
-      toastr.error('Deleted.', `Removed ${this.state.title} from your books list.`);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    deleteBook(this.state.id)
+      .then(result => {
+        this.props.dispatch(result);
+        toastr.error('Deleted.', `Removed ${this.state.title} from your books list.`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   hide = () => {
     this.props.dispatch(hideBook(this.state.id));
-  }
+  };
 
   edit = () => {
     this.setState({
       ...this.props.book
-    })
+    });
     this.props.dispatch(editBook(this.state.id));
-  }
+  };
 
   saveEdit = () => {
     if (!this.validateForm({ ...this.state })) {
@@ -73,42 +70,40 @@ class BookCard extends Component {
     const editObj = {
       ...this.state,
       token
-    }
+    };
 
-    updateBook(editObj).then(result => {
-      this.props.dispatch(result);
-      toastr.info('Update.', `Updated ${this.state.title}.`);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    updateBook(editObj)
+      .then(result => {
+        this.props.dispatch(result);
+        toastr.info('Update.', `Updated ${this.state.title}.`);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
-  validateForm = (book) => {
+  validateForm = book => {
     if (!book.author || !book.title || !book.date) {
       toastr.error('Invalid Book', 'Please fill out all required fields.');
       return false;
     }
     return true;
-  }
+  };
 
   flag = () => {
-    flagBook(this.state.id).then(result => {
-      this.props.dispatch(result);
-    }).catch(err => {
-      console.log(err);
-    })
-  }
+    flagBook(this.state.id)
+      .then(result => {
+        this.props.dispatch(result);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   render() {
     const { book } = this.props;
     if (!book.edit) {
-      return (
-        <Book
-          book={book}
-          user={this.props.state.user}
-          handleSettings={this.handleSettings}
-        />
-      );
+      return <Book book={book} user={this.props.state.user} handleSettings={this.handleSettings} />;
     } else {
       return (
         <BookEdit
@@ -117,7 +112,7 @@ class BookCard extends Component {
           cancelEdit={this.edit}
           handleChange={this.handleChange}
         />
-      )
+      );
     }
   }
 }

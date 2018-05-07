@@ -11,92 +11,92 @@ const options = [
   { key: 'date', value: 'date', text: 'Date Watched' },
   { key: 'rating', value: 'rating', text: 'Rating' },
   { key: 'title', value: 'title', text: 'Title' },
-  { key: 'director', value: 'director', text: 'Director' },
+  { key: 'director', value: 'director', text: 'Director' }
 ];
 const DESC = 'DESC';
 const ASC = 'ASC';
 
-const defaultState = {
-  option: 'date',
-  optionText: 'Date Watched',
-  filterDirection: DESC,
-  search: ''
-}
-
 class FilterMovie extends Component {
-
-  state = defaultState;
-
   handleFilter = (e, val) => {
-    this.setState({
+    const filterObj = {
       option: val.value,
-      optionText: val.text
-    }, () => {
-      this.dispatchFilterAction();
-    })
-  }
+      optionText: val.text,
+      filterDirection: this.props.state.movies.filterDirection
+    };
+    this.dispatchFilterAction(filterObj);
+  };
 
   handleSearch = (e, { name, value }) => {
-    this.setState({
-      [name]: value
-    }, () => {
-      this.dispatchSearchAction();
-    })
-  }
+    this.dispatchSearchAction(value);
+  };
 
   toggleFilterDirection = () => {
-    this.setState({
-      filterDirection: (this.state.filterDirection === DESC ? ASC : DESC)
-    }, () => {
-      this.dispatchFilterAction();
-    })
-  }
+    const direction = this.props.state.movies.filterDirection;
+    const filterObj = {
+      ...this.props.state.movies,
+      filterDirection: direction === DESC ? ASC : DESC
+    };
+    this.dispatchFilterAction(filterObj);
+  };
 
   componentDidMount = () => {
     const { items, user } = this.props.state;
 
-    if (user.hydratedMovies &&
-      (items.filter !== defaultSearchFilter.filter ||
+    if (
+      user.hydratedMovies &&
+      (items.filter !== defaultSearchFilter.option ||
         items.direction !== defaultSearchFilter.filterDirection ||
-        items.search !== defaultSearchFilter.search)) {
-      this.dispatchFilterAction();
-      this.dispatchSearchAction();
+        items.search !== defaultSearchFilter.search)
+    ) {
+      defaultSearchFilter.optionText = 'Date Watched';
+      this.dispatchFilterAction(defaultSearchFilter);
+      this.dispatchSearchAction('');
     }
-  }
+  };
 
-  dispatchFilterAction = () => {
-    this.props.dispatch(filterMovie(this.state));
-    this.props.dispatch(filterItem(this.state));
-  }
+  dispatchFilterAction = filterObj => {
+    this.props.dispatch(filterMovie(filterObj));
+    this.props.dispatch(filterItem(filterObj));
+  };
 
-  dispatchSearchAction = () => {
-    this.props.dispatch(searchMovie(this.state));
-    this.props.dispatch(searchItem(this.state));
-  }
+  dispatchSearchAction = search => {
+    this.props.dispatch(searchMovie({ search }));
+    this.props.dispatch(searchItem({ search }));
+  };
+
+  moviesExist = () => {
+    const { user, movies } = this.props.state;
+    return user.hydratedMovies && movies.movieCount;
+  };
 
   render() {
-    const filterDirection = this.state.filterDirection === 'DESC' ? 'chevron down' : 'chevron up';
-    return (
-      <Grid verticalAlign='middle'>
-        <Grid.Row columns={1}>
-          <Grid.Column >
-            <Search
-              search={this.state.search}
-              handleSearch={this.handleSearch}
-              placeholder='Search Movies...'
-            />
-            <br /><br />
-            <FilterDropdown
-              options={options}
-              handleFilter={this.handleFilter}
-              filter={this.state}
-              toggleFilterDirection={this.toggleFilterDirection}
-              filterDirection={filterDirection}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    )
+    const { movies } = this.props.state;
+    const filterDirection = movies.filterDirection === 'DESC' ? 'chevron down' : 'chevron up';
+    if (this.moviesExist()) {
+      return (
+        <Grid verticalAlign="middle">
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <Search
+                search={movies.search}
+                handleSearch={this.handleSearch}
+                placeholder="Search Movies..."
+              />
+              <br />
+              <br />
+              <FilterDropdown
+                options={options}
+                handleFilter={this.handleFilter}
+                filter={movies}
+                toggleFilterDirection={this.toggleFilterDirection}
+                filterDirection={filterDirection}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      );
+    }
+    return <div />;
   }
 }
 

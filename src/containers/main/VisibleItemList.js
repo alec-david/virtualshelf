@@ -1,35 +1,24 @@
 import React, { Component } from 'react';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
-import {
-  getBooks,
-  getUserBooks,
-  hydrateBooks
-} from '../../actions/book';
-import {
-  getMovies,
-  getUserMovies,
-  hydrateMovies
-} from '../../actions/movie';
-import {
-  getTelevision,
-  getUserTelevision,
-  hydrateTelevision
-} from '../../actions/television';
+import { getBooks, getUserBooks, hydrateBooks } from '../../actions/book';
+import { getMovies, getUserMovies, hydrateMovies } from '../../actions/movie';
+import { getTelevision, getUserTelevision, hydrateTelevision } from '../../actions/television';
 import { setHydratedAllFlag } from '../../actions/user';
 
 import ItemList from '../../components/main/ItemList';
+import NoItemMessage from '../../components/main/NoItemMessage';
 
 class VisibleItemList extends Component {
-
   state = {
     width: window.innerWidth,
     allItems: List()
-  }
+  };
 
   componentWillMount() {
     const { user } = this.props.state;
-    if (!user.loggingIn &&
+    if (
+      !user.loggingIn &&
       (!user.hydratedBooks || !user.hydratedMovies || !user.hydratedTelevision)
     ) {
       this.checkUserLoggedIn(user);
@@ -70,13 +59,15 @@ class VisibleItemList extends Component {
       dispatchArr.push(hydrateTelevision);
     }
 
-    Promise.all(promiseArr).then(result => {
-      for (let i = 0; i < result.length; i++) {
-        this.props.dispatch(dispatchArr[i](result[i].body));
-      }
-    }).then(() => {
-      this.props.dispatch(setHydratedAllFlag());
-    });
+    Promise.all(promiseArr)
+      .then(result => {
+        for (let i = 0; i < result.length; i++) {
+          this.props.dispatch(dispatchArr[i](result[i].body));
+        }
+      })
+      .then(() => {
+        this.props.dispatch(setHydratedAllFlag());
+      });
   }
 
   fetchUserItems(user) {
@@ -95,13 +86,15 @@ class VisibleItemList extends Component {
       dispatchArr.push(hydrateTelevision);
     }
 
-    Promise.all(promiseArr).then(result => {
-      for (let i = 0; i < result.length; i++) {
-        this.props.dispatch(dispatchArr[i](result[i].body));
-      }
-    }).then(() => {
-      this.props.dispatch(setHydratedAllFlag());
-    });
+    Promise.all(promiseArr)
+      .then(result => {
+        for (let i = 0; i < result.length; i++) {
+          this.props.dispatch(dispatchArr[i](result[i].body));
+        }
+      })
+      .then(() => {
+        this.props.dispatch(setHydratedAllFlag());
+      });
   }
 
   combineItems = () => {
@@ -110,10 +103,16 @@ class VisibleItemList extends Component {
     if (user.hydratedBooks && user.hydratedMovies && user.hydratedTelevision) {
       let sortedList = new List();
       let ptrArr = [0, 0, 0];
-      while (ptrArr[0] < books.size ||
-        ptrArr[1] < movies.size ||
-        ptrArr[2] < television.size) {
-        const objArr = [books.get(ptrArr[0]), movies.get(ptrArr[1]), television.get(ptrArr[2])];
+      while (
+        ptrArr[0] < books.list.size ||
+        ptrArr[1] < movies.list.size ||
+        ptrArr[2] < television.list.size
+      ) {
+        const objArr = [
+          books.list.get(ptrArr[0]),
+          movies.list.get(ptrArr[1]),
+          television.list.get(ptrArr[2])
+        ];
         let directionFlag = items.direction === 'DESC';
         if (items.filter === 'title') {
           directionFlag = !directionFlag;
@@ -126,7 +125,7 @@ class VisibleItemList extends Component {
       return sortedList;
     }
     return [];
-  }
+  };
 
   //maxFlag = false => return min object
   //maxFlag = true => return max object
@@ -158,7 +157,7 @@ class VisibleItemList extends Component {
       }
     }
     return index;
-  }
+  };
 
   getNumberOfColumns = () => {
     const { width } = this.state;
@@ -175,19 +174,28 @@ class VisibleItemList extends Component {
       return 3;
     } else if (width > 600 && width <= 800) {
       return 2;
-    } else { //Mobile width
+    } else {
+      //Mobile width
       return 1;
     }
-  }
+  };
 
   render() {
-    return (
-      <ItemList
-        items={this.combineItems()}
-        colNum={this.getNumberOfColumns()}
-        user={this.props.state.user}
-      />
-    );
+    const items = this.combineItems();
+    const { user } = this.props.state;
+    if (user.hydratedBooks && user.hydratedMovies && user.hydratedTelevision) {
+      if (items === undefined || items.size === 0) {
+        return <NoItemMessage />;
+      }
+      return (
+        <ItemList
+          items={this.combineItems()}
+          colNum={this.getNumberOfColumns()}
+          user={this.props.state.user}
+        />
+      );
+    }
+    return <div />;
   }
 }
 

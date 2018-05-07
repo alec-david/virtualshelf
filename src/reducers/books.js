@@ -8,52 +8,75 @@ import {
   FILTER_BOOK,
   SEARCH_BOOK
 } from '../actions/book';
-import {
-  LOGIN,
-  LOGOUT
-} from '../actions/user';
-import {
-  sortObject,
-  editObject,
-  updateObject
-} from './index';
+import { LOGIN, LOGOUT } from '../actions/user';
+import { binarySearch, sortObject, editObject, updateObject } from './index';
+
+const DESC = 'DESC';
 
 let fullBookList = List();
 
-const books = (state = List(), action) => {
+const defaultState = {
+  list: List(),
+  bookCount: 0,
+  option: 'date',
+  optionText: 'Date Read',
+  filterDirection: DESC,
+  search: ''
+};
+
+const books = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_NEW_BOOK:
       const bookObj = {
         ...action,
         edit: false
-      }
-      return state.insert(0, bookObj);
+      };
+      const insertIndex = binarySearch(state, bookObj);
+      return Object.assign({}, state, {
+        list: state.list.insert(insertIndex, bookObj),
+        bookCount: state.bookCount + 1
+      });
     case ADD_EXISTING_BOOKS:
       const bookList = JSON.parse(action.books);
       const filterStr = '-date';
-      return state.concat(bookList.sort(sortObject(filterStr)));
+      return Object.assign({}, state, {
+        list: state.list.concat(bookList.sort(sortObject(filterStr))),
+        bookCount: bookList.length
+      });
     case DELETE_BOOK:
-      return state.filter(book => book.id !== action.id);
+      return Object.assign({}, state, {
+        list: state.list.filter(book => book.id !== action.id),
+        bookCount: state.bookCount - 1
+      });
     case EDIT_BOOK:
-      return state = editObject(state, action);
+      return Object.assign({}, state, {
+        list: editObject(state.list, action)
+      });
     case UPDATE_BOOK:
-      console.log(action);
-      return state = updateObject(state, action);
+      return Object.assign({}, state, {
+        list: updateObject(state.list, action)
+      });
     case FILTER_BOOK:
-      let direction = action.filterDirection === 'DESC' ? '' : '-';
+      let direction = action.filterDirection === DESC ? '' : '-';
       const option = action.option;
       if (option === 'rating' || option === 'date') {
-        direction = action.filterDirection === 'DESC' ? '-' : '';
+        direction = action.filterDirection === DESC ? '-' : '';
       }
-      return state.sort(sortObject(direction + option));
+      return Object.assign({}, state, {
+        ...action,
+        list: state.list.sort(sortObject(direction + option))
+      });
     case SEARCH_BOOK:
-      if (state.size > fullBookList.size) {
-        fullBookList = state;
+      if (state.list.size > fullBookList.size) {
+        fullBookList = state.list;
       }
-      return filterSearch(action.search.toLowerCase(), fullBookList);
+      return Object.assign({}, state, {
+        search: action.search,
+        list: filterSearch(action.search.toLowerCase(), fullBookList)
+      });
     case LOGIN:
     case LOGOUT:
-      return List();
+      return defaultState;
     default:
       return state;
   }
@@ -61,8 +84,11 @@ const books = (state = List(), action) => {
 
 function filterSearch(search, list) {
   return list.filter(book => {
-    return (book.author.toLowerCase().indexOf(search) !== -1 || book.title.toLowerCase().indexOf(search) !== -1);
-  })
+    return (
+      book.author.toLowerCase().indexOf(search) !== -1 ||
+      book.title.toLowerCase().indexOf(search) !== -1
+    );
+  });
 }
 
 export default books;

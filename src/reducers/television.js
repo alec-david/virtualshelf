@@ -8,51 +8,75 @@ import {
   FILTER_TELEVISION,
   SEARCH_TELEVISION
 } from '../actions/television';
-import {
-  LOGIN,
-  LOGOUT
-} from '../actions/user';
-import {
-  sortObject,
-  editObject,
-  updateObject
-} from './index';
+import { LOGIN, LOGOUT } from '../actions/user';
+import { binarySearch, sortObject, editObject, updateObject } from './index';
+
+const DESC = 'DESC';
 
 let fullTelevisionList = List();
 
-const television = (state = List(), action) => {
+const defaultState = {
+  list: List(),
+  televisionCount: 0,
+  option: 'date',
+  optionText: 'Date Watched',
+  filterDirection: DESC,
+  search: ''
+};
+
+const television = (state = defaultState, action) => {
   switch (action.type) {
     case ADD_NEW_TELEVISION:
       const televisionObj = {
         ...action,
         edit: false
       };
-      return state.insert(0, televisionObj);
+      const insertIndex = binarySearch(state, televisionObj);
+      return Object.assign({}, state, {
+        list: state.list.insert(insertIndex, televisionObj),
+        televisionCount: state.televisionCount + 1
+      });
     case ADD_EXISTING_TELEVISION:
       const televisionList = JSON.parse(action.television);
       const filterStr = '-date';
-      return state.concat(televisionList.sort(sortObject(filterStr)));
+      return Object.assign({}, state, {
+        list: state.list.concat(televisionList.sort(sortObject(filterStr))),
+        televisionCount: televisionList.length
+      });
     case DELETE_TELEVISION:
-      return state.filter(television => television.id !== action.id);
+      return Object.assign({}, state, {
+        list: state.list.filter(television => television.id !== action.id),
+        televisionCount: state.televisionCount - 1
+      });
     case EDIT_TELEVISION:
-      return state = editObject(state, action);
+      return Object.assign({}, state, {
+        list: editObject(state.list, action)
+      });
     case UPDATE_TELEVISION:
-      return state = updateObject(state, action);
+      return Object.assign({}, state, {
+        list: updateObject(state.list, action)
+      });
     case FILTER_TELEVISION:
       let direction = action.filterDirection === 'DESC' ? '' : '-';
       const option = action.option;
       if (option === 'rating' || option === 'date') {
         direction = action.filterDirection === 'DESC' ? '-' : '';
-      } 
-      return state.sort(sortObject(direction + option));
-    case SEARCH_TELEVISION:
-      if (state.size > fullTelevisionList.size) {
-        fullTelevisionList = state;
       }
-      return filterSearch(action.search.toLowerCase(), fullTelevisionList);
+      return Object.assign({}, state, {
+        ...action,
+        list: state.list.sort(sortObject(direction + option))
+      });
+    case SEARCH_TELEVISION:
+      if (state.list.size > fullTelevisionList.size) {
+        fullTelevisionList = state.list;
+      }
+      return Object.assign({}, state, {
+        search: action.search,
+        list: filterSearch(action.search.toLowerCase(), fullTelevisionList)
+      });
     case LOGIN:
     case LOGOUT:
-      return List();
+      return defaultState;
     default:
       return state;
   }
@@ -60,8 +84,8 @@ const television = (state = List(), action) => {
 
 function filterSearch(search, list) {
   return list.filter(television => {
-    return (television.title.toLowerCase().indexOf(search) !== -1);
-  })
+    return television.title.toLowerCase().indexOf(search) !== -1;
+  });
 }
 
 export default television;
