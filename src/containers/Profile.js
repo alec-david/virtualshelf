@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { toastr } from 'react-redux-toastr';
 
 import ProfileView from '../components/profile/ProfileView';
 import ProfileDelete from '../components/profile/ProfileDelete';
@@ -8,7 +9,6 @@ import ProfileResetPW from '../components/profile/ProfileResetPW';
 import { logout, deleteAccount, resetPassword } from '../actions/user';
 
 class Profile extends Component {
-
   state = {
     reset: false,
     delete: false,
@@ -16,25 +16,26 @@ class Profile extends Component {
     newPassword: '',
     reEnterNewPassword: '',
     error: ''
-  }
+  };
 
   handleChange = (e, { name, value }) => {
     this.setState({
       [name]: value
     });
-  }
+  };
 
   logout = () => {
     this.props.dispatch(logout());
     this.props.router.history.replace('/');
-  }
+    toastr.info('Logged out.');
+  };
 
   updatePassword = () => {
     this.setState({
       reset: true,
       oldPassword: ''
     });
-  }
+  };
 
   resetPassword = () => {
     if (this.state.newPassword !== this.state.reEnterNewPassword) {
@@ -49,52 +50,58 @@ class Profile extends Component {
         email: this.props.user.email,
         oldPassword: this.state.oldPassword,
         newPassword: this.state.newPassword
-      }
+      };
 
-      resetPassword(userObj).then(result => {
-        this.props.dispatch(result);
-        this.setState({
-          reset: false,
-          delete: false,
-          oldPassword: '',
-          newPassword: '',
-          reEnterNewPassword: '',
-          error: ''
+      resetPassword(userObj)
+        .then(result => {
+          this.props.dispatch(result);
+          this.setState({
+            reset: false,
+            delete: false,
+            oldPassword: '',
+            newPassword: '',
+            reEnterNewPassword: '',
+            error: ''
+          });
+          toastr.success('Success', 'Updated Password');
         })
-      }).catch(err => {
-        this.setState({
-          error: err,
-          oldPassword: '',
-          newPassword: '',
-          reEnterNewPassword: ''
-        })
-      })
+        .catch(err => {
+          this.setState({
+            error: err,
+            oldPassword: '',
+            newPassword: '',
+            reEnterNewPassword: ''
+          });
+        });
     }
-  }
+  };
 
   deleteAccount = () => {
     this.setState({
       delete: true
     });
-  }
+  };
 
   confirmDelete = () => {
     const userObj = {
       email: this.props.user.email,
       password: this.state.oldPassword
-    }
+    };
 
-    deleteAccount(userObj).then(result => {
-      this.props.dispatch(result);
-      this.props.router.history.replace('/');
-    }).catch(err => {
-      this.setState({
-        error: err
+    deleteAccount(userObj)
+      .then(result => {
+        this.props.dispatch(result);
+        this.props.router.history.replace('/');
+        toastr.error('Success', 'Deleted Account');
+      })
+      .catch(err => {
+        this.setState({
+          error: err
+        });
       });
-    })
-  }
+  };
 
-  cancel = (name) => {
+  cancel = name => {
     this.setState({
       [name]: false,
       oldPassword: '',
@@ -102,8 +109,7 @@ class Profile extends Component {
       reEnterNewPassword: '',
       error: ''
     });
-  }
-
+  };
 
   render() {
     if (this.state.reset) {
@@ -115,7 +121,7 @@ class Profile extends Component {
           resetPassword={this.resetPassword}
           cancel={this.cancel}
         />
-      )
+      );
     } else if (this.state.delete) {
       return (
         <ProfileDelete
@@ -126,7 +132,7 @@ class Profile extends Component {
           confirmDelete={this.confirmDelete}
           cancel={this.cancel}
         />
-      )
+      );
     }
     return (
       <ProfileView
@@ -135,14 +141,14 @@ class Profile extends Component {
         updatePassword={this.updatePassword}
         deleteAccount={this.deleteAccount}
       />
-    )
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
     user: state.user
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(Profile)
+export default connect(mapStateToProps)(Profile);

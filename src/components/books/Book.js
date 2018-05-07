@@ -7,10 +7,16 @@ import BookCardContent from './BookCardContent';
 const Book = (props) => {
   const { book, user, handleSettings } = props;
 
+  const bleh = {
+    height: 300 + 'px'
+  }
   return (
     <Card>
       <Image
         src={book.image_url ? book.image_url : bookImg}
+        style={bleh}
+        centered={true}
+        title={book.image_url}
       />
       <BookCardContent
         book={book}

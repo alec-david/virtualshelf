@@ -6,12 +6,11 @@ import VisibleItemList from '../../containers/main/VisibleItemList';
 
 const Main = () => (
   <div>
-    <Header as='h1'>
-      <Header.Content>
-        Remembr
-      </Header.Content>
+    <Header as="h1">
+      <Header.Content>Remembr</Header.Content>
     </Header>
     <FilterMain />
+    <br />
     <VisibleItemList />
   </div>
 );

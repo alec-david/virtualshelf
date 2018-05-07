@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  getBooks,
-  getUserBooks,
-  hydrateBooks
-} from '../../actions/book';
+import { getBooks, getUserBooks, hydrateBooks } from '../../actions/book';
 import { setHydratedBooksFlag } from '../../actions/user';
 
 import BookList from '../../components/books/BookList';
 
 class VisibleBookList extends Component {
-
   state = {
     width: window.innerWidth
-  }
+  };
 
   componentWillMount() {
     const { books, user } = this.props.state;
@@ -42,24 +37,28 @@ class VisibleBookList extends Component {
   }
 
   fetchMostRecentBooks(books) {
-    getBooks().then(books => {
-      this.props.dispatch(hydrateBooks(books.body));
-    }).then(() => {
-      this.props.dispatch(setHydratedBooksFlag());
-    });
+    getBooks()
+      .then(books => {
+        this.props.dispatch(hydrateBooks(books.body));
+      })
+      .then(() => {
+        this.props.dispatch(setHydratedBooksFlag());
+      });
   }
 
   fetchUserBooks(books, user) {
-    getUserBooks(user.token).then(books => {
-      if (!JSON.parse(books.body).length) {
-        //Show this message on screen at some point
-        console.log('No books entered yet!');
-        return;
-      }
-      this.props.dispatch(hydrateBooks(books.body));
-    }).then(() => {
-      this.props.dispatch(setHydratedBooksFlag());
-    });
+    getUserBooks(user.token)
+      .then(books => {
+        if (!JSON.parse(books.body).length) {
+          //Show this message on screen at some point
+          console.log('No books entered yet!');
+          return;
+        }
+        this.props.dispatch(hydrateBooks(books.body));
+      })
+      .then(() => {
+        this.props.dispatch(setHydratedBooksFlag());
+      });
   }
 
   getNumberOfColumns = () => {
@@ -77,15 +76,16 @@ class VisibleBookList extends Component {
       return 3;
     } else if (width > 600 && width <= 800) {
       return 2;
-    } else { //Mobile width
+    } else {
+      //Mobile width
       return 1;
     }
-  }
+  };
 
   render() {
     return (
       <BookList
-        books={this.props.state.books}
+        books={this.props.state.books.list}
         colNum={this.getNumberOfColumns()}
         user={this.props.state.user}
       />

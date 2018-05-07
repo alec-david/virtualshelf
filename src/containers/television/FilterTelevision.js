@@ -15,88 +15,87 @@ const options = [
 const DESC = 'DESC';
 const ASC = 'ASC';
 
-const defaultState = {
-  option: 'date',
-  optionText: 'Date Watched',
-  filterDirection: DESC,
-  search: ''
-}
-
 class FilterTelevision extends Component {
-
-  state = defaultState;
-
   handleFilter = (e, val) => {
-    this.setState({
+    const filterObj = {
       option: val.value,
-      optionText: val.text
-    }, () => {
-      this.dispatchFilterAction();
-    })
-  }
+      optionText: val.text,
+      filterDirection: this.props.state.television.filterDirection
+    };
+    this.dispatchFilterAction(filterObj);
+  };
 
   handleSearch = (e, { name, value }) => {
-    this.setState({
-      [name]: value
-    }, () => {
-      this.dispatchSearchAction();
-    })
-  }
+    this.dispatchSearchAction(value);
+  };
 
   toggleFilterDirection = () => {
-    this.setState({
-      filterDirection: (this.state.filterDirection === DESC ? ASC : DESC)
-    }, () => {
-      this.dispatchFilterAction();
-    })
-  }
+    const direction = this.props.state.television.filterDirection;
+    const filterObj = {
+      ...this.props.state.television,
+      filterDirection: direction === DESC ? ASC : DESC
+    };
+    this.dispatchFilterAction(filterObj);
+  };
 
   componentDidMount = () => {
     const { items, user } = this.props.state;
 
-    if (user.hydratedTelevision &&
-      (items.filter !== defaultSearchFilter.filter ||
+    if (
+      user.hydratedTelevision &&
+      (items.filter !== defaultSearchFilter.option ||
         items.direction !== defaultSearchFilter.filterDirection ||
-        items.search !== defaultSearchFilter.search)) {
-
-      this.dispatchFilterAction();
-      this.dispatchSearchAction();
+        items.search !== defaultSearchFilter.search)
+    ) {
+      defaultSearchFilter.optionText = 'Date Watched';
+      this.dispatchFilterAction(defaultSearchFilter);
+      this.dispatchSearchAction('');
     }
-  }
+  };
 
-  dispatchFilterAction = () => {
-    this.props.dispatch(filterTelevision(this.state));
-    this.props.dispatch(filterItem(this.state));
-  }
+  dispatchFilterAction = filterObj => {
+    this.props.dispatch(filterTelevision(filterObj));
+    this.props.dispatch(filterItem(filterObj));
+  };
 
-  dispatchSearchAction = () => {
-    this.props.dispatch(searchTelevision(this.state));
-    this.props.dispatch(searchItem(this.state));
-  }
+  dispatchSearchAction = search => {
+    this.props.dispatch(searchTelevision({ search }));
+    this.props.dispatch(searchItem({ search }));
+  };
+
+  televisionExist = () => {
+    const { user, television } = this.props.state;
+    return user.hydratedTelevision && television.televisionCount;
+  };
 
   render() {
-    const filterDirection = this.state.filterDirection === 'DESC' ? 'chevron down' : 'chevron up';
-    return (
-      <Grid verticalAlign='middle'>
-        <Grid.Row columns={1}>
-          <Grid.Column >
-            <Search
-              search={this.state.search}
-              handleSearch={this.handleSearch}
-              placeholder='Search television...'
-            />
-            <br /><br />
-            <FilterDropdown
-              options={options}
-              handleFilter={this.handleFilter}
-              filter={this.state}
-              toggleFilterDirection={this.toggleFilterDirection}
-              filterDirection={filterDirection}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    )
+    const { television } = this.props.state;
+    const filterDirection = television.filterDirection === 'DESC' ? 'chevron down' : 'chevron up';
+    if (this.televisionExist()) {
+      return (
+        <Grid verticalAlign="middle">
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <Search
+                search={television.search}
+                handleSearch={this.handleSearch}
+                placeholder="Search television..."
+              />
+              <br />
+              <br />
+              <FilterDropdown
+                options={options}
+                handleFilter={this.handleFilter}
+                filter={television}
+                toggleFilterDirection={this.toggleFilterDirection}
+                filterDirection={filterDirection}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      );
+    }
+    return <div />;
   }
 }
 

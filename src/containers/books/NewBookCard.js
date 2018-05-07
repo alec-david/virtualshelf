@@ -8,7 +8,8 @@ import plusImg from '../../imgs/plus.svg';
 import NewBook from '../../components/books/NewBook';
 
 const imageStyle = {
-  cursor: 'pointer'
+  cursor: 'pointer',
+  height: 300 + 'px'
 }
 
 const defaultState = {

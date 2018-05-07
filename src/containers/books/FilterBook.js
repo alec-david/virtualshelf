@@ -11,93 +11,91 @@ const options = [
   { key: 'date', value: 'date', text: 'Date Read' },
   { key: 'rating', value: 'rating', text: 'Rating' },
   { key: 'title', value: 'title', text: 'Title' },
-  { key: 'author', value: 'author', text: 'Author' },
+  { key: 'author', value: 'author', text: 'Author' }
 ];
 const DESC = 'DESC';
 const ASC = 'ASC';
 
-const defaultState = {
-  option: 'date',
-  optionText: 'Date Read',
-  filterDirection: DESC,
-  search: ''
-}
-
 class FilterBook extends Component {
-
-  state = defaultState;
-
   handleFilter = (e, val) => {
-    this.setState({
+    const filterObj = {
       option: val.value,
-      optionText: val.text
-    }, () => {
-      this.dispatchFilterAction();
-    })
-  }
+      optionText: val.text,
+      filterDirection: this.props.state.books.filterDirection
+    };
+    this.dispatchFilterAction(filterObj);
+  };
 
   handleSearch = (e, { name, value }) => {
-    this.setState({
-      [name]: value
-    }, () => {
-      this.dispatchSearchAction();
-    })
-  }
+    this.dispatchSearchAction(value);
+  };
 
   toggleFilterDirection = () => {
-    this.setState({
-      filterDirection: (this.state.filterDirection === DESC ? ASC : DESC)
-    }, () => {
-      this.dispatchFilterAction();
-    })
-  }
+    const direction = this.props.state.books.filterDirection;
+    const filterObj = {
+      ...this.props.state.books,
+      filterDirection: direction === DESC ? ASC : DESC
+    };
+    this.dispatchFilterAction(filterObj);
+  };
 
   componentDidMount = () => {
     const { items, user } = this.props.state;
-
-    if (user.hydratedBooks &&
-      (items.filter !== defaultSearchFilter.filter ||
+    if (
+      user.hydratedBooks &&
+      (items.filter !== defaultSearchFilter.option ||
         items.direction !== defaultSearchFilter.filterDirection ||
-        items.search !== defaultSearchFilter.search)) {
-
-      this.dispatchFilterAction();
-      this.dispatchSearchAction();
+        items.search !== defaultSearchFilter.search)
+    ) {
+      defaultSearchFilter.optionText = 'Date Read';
+      this.dispatchFilterAction(defaultSearchFilter);
+      this.dispatchSearchAction('');
     }
-  }
+  };
 
-  dispatchFilterAction = () => {
-    this.props.dispatch(filterBook(this.state));
-    this.props.dispatch(filterItem(this.state));
-  }
+  dispatchFilterAction = filterObj => {
+    this.props.dispatch(filterBook(filterObj));
+    this.props.dispatch(filterItem(filterObj));
+  };
 
-  dispatchSearchAction = () => {
-    this.props.dispatch(searchBook(this.state));
-    this.props.dispatch(searchItem(this.state));
-  }
+  dispatchSearchAction = search => {
+    this.props.dispatch(searchBook({ search }));
+    this.props.dispatch(searchItem({ search }));
+  };
+
+  booksExist = () => {
+    const { user, books } = this.props.state;
+    return user.hydratedBooks && books.bookCount;
+  };
 
   render() {
-    const filterDirection = this.state.filterDirection === 'DESC' ? 'chevron down' : 'chevron up';
-    return (
-      <Grid verticalAlign='middle'>
-        <Grid.Row columns={1}>
-          <Grid.Column >
-            <Search
-              search={this.state.search}
-              handleSearch={this.handleSearch}
-              placeholder='Search books...'
-            />
-            <br /><br />
-            <FilterDropdown
-              options={options}
-              handleFilter={this.handleFilter}
-              filter={this.state}
-              toggleFilterDirection={this.toggleFilterDirection}
-              filterDirection={filterDirection}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    )
+    const { books } = this.props.state;
+    const filterDirection = books.filterDirection === 'DESC' ? 'chevron down' : 'chevron up';
+    if (this.booksExist()) {
+      return (
+        <Grid verticalAlign="middle">
+          <Grid.Row columns={1}>
+            <Grid.Column>
+              <Search
+                search={books.search}
+                handleSearch={this.handleSearch}
+                placeholder="Search books..."
+              />
+              <br />
+              <br />
+              <FilterDropdown
+                options={options}
+                handleFilter={this.handleFilter}
+                filter={books}
+                toggleFilterDirection={this.toggleFilterDirection}
+                filterDirection={filterDirection}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      );
+    }
+    return <div />;
   }
 }
 

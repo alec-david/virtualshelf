@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  getMovies,
-  getUserMovies,
-  hydrateMovies
-} from '../../actions/movie';
+import { getMovies, getUserMovies, hydrateMovies } from '../../actions/movie';
 import { setHydratedMoviesFlag } from '../../actions/user';
 
 import MovieList from '../../components/movies/MovieList';
 
 class VisibleMovieList extends Component {
-
   state = {
     width: window.innerWidth
-  }
+  };
 
   componentWillMount() {
     const { movies, user } = this.props.state;
     //If movies haven't been hydrated yet
-    if (!movies.size && !user.hydratedMovies) {
+    if (!user.loggingIn && !user.hydratedMovies) {
       this.checkUserLoggedIn(movies, user);
     }
 
@@ -42,24 +37,28 @@ class VisibleMovieList extends Component {
   }
 
   fetchMostRecentMovies(movies) {
-    getMovies().then(movies => {
-      this.props.dispatch(hydrateMovies(movies.body));
-    }).then(() => {
-      this.props.dispatch(setHydratedMoviesFlag());
-    });
+    getMovies()
+      .then(movies => {
+        this.props.dispatch(hydrateMovies(movies.body));
+      })
+      .then(() => {
+        this.props.dispatch(setHydratedMoviesFlag());
+      });
   }
 
   fetchUserMovies(movies, user) {
-    getUserMovies(user.token).then(movies => {
-      if (!JSON.parse(movies.body).length) {
-        //Show this message on screen at some point
-        console.log('No movies entered yet!');
-        return;
-      }
-      this.props.dispatch(hydrateMovies(movies.body));
-    }).then(() => {
-      this.props.dispatch(setHydratedMoviesFlag());
-    });
+    getUserMovies(user.token)
+      .then(movies => {
+        if (!JSON.parse(movies.body).length) {
+          //Show this message on screen at some point
+          console.log('No movies entered yet!');
+          return;
+        }
+        this.props.dispatch(hydrateMovies(movies.body));
+      })
+      .then(() => {
+        this.props.dispatch(setHydratedMoviesFlag());
+      });
   }
 
   getNumberOfColumns = () => {
@@ -77,15 +76,16 @@ class VisibleMovieList extends Component {
       return 3;
     } else if (width > 600 && width <= 800) {
       return 2;
-    } else { //Mobile width
+    } else {
+      //Mobile width
       return 1;
     }
-  }
+  };
 
   render() {
     return (
       <MovieList
-        movies={this.props.state.movies}
+        movies={this.props.state.movies.list}
         colNum={this.getNumberOfColumns()}
         user={this.props.state.user}
       />
