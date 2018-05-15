@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react';
 
 import MainPage from '../main/MainPage';
 import BookPage from '../books/BookPage';
@@ -8,11 +8,13 @@ import MoviePage from '../movies/MoviePage';
 import TelevisionPage from '../television/TelevisionPage';
 import LoginPage from '../login/LoginPage';
 import RegisterPage from '../register/RegisterPage';
+import ResetPasswordPage from '../resetPassword/ResetPasswordPage';
+import VerifyPage from '../VerifyPage';
 
 class NavBarNoUser extends Component {
-  state = {}
+  state = {};
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
     const { activeItem } = this.state;
@@ -20,57 +22,52 @@ class NavBarNoUser extends Component {
     return (
       <div>
         <Menu stackable>
-          <Menu.Item header
-            name='remembr'
-            onClick={this.handleItemClick}
-            as={Link}
-            to='/'
-          >
+          <Menu.Item header name="remembr" onClick={this.handleItemClick} as={Link} to="/">
             Remembr
           </Menu.Item>
           <Menu.Item
-            name='books'
+            name="books"
             active={activeItem === 'books'}
             onClick={this.handleItemClick}
             as={Link}
-            to='/books'
+            to="/books"
           >
             Books
           </Menu.Item>
           <Menu.Item
-            name='movies'
+            name="movies"
             active={activeItem === 'movies'}
             onClick={this.handleItemClick}
             as={Link}
-            to='/movies'
+            to="/movies"
           >
             Movies
           </Menu.Item>
           <Menu.Item
-            name='television'
+            name="television"
             active={activeItem === 'television'}
             onClick={this.handleItemClick}
             as={Link}
-            to='/television'
+            to="/television"
           >
             Television
           </Menu.Item>
-          <Menu.Menu position='right'>
+          <Menu.Menu position="right">
             <Menu.Item
-              name='login'
+              name="login"
               active={activeItem === 'login'}
               onClick={this.handleItemClick}
               as={Link}
-              to='/login'
+              to="/login"
             >
               Login
             </Menu.Item>
             <Menu.Item
-              name='register'
+              name="register"
               active={activeItem === 'register'}
               onClick={this.handleItemClick}
               as={Link}
-              to='/register'
+              to="/register"
             >
               Register
             </Menu.Item>
@@ -83,9 +80,11 @@ class NavBarNoUser extends Component {
           <Route exact path="/television" render={() => <TelevisionPage loggedIn={false} />} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/reset_password" component={ResetPasswordPage} />
+          <Route exact path="/verify" component={VerifyPage} />
         </div>
       </div>
-    )
+    );
   }
 }
 
