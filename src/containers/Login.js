@@ -51,11 +51,16 @@ class Login extends Component {
       });
   };
 
+  forgotPassword = () => {
+    this.props.router.history.replace('/reset_password');
+  };
+
   render() {
     return (
       <LoginForm
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
+        forgotPassword={this.forgotPassword}
         formVals={this.state}
       />
     );

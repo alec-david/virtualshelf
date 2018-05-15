@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Form, Message, Container, Grid } from 'semantic-ui-react';
 
-const LoginForm = props => {
-  const { handleSubmit, handleChange, forgotPassword, formVals } = props;
+const ResetPasswordForm = props => {
+  const { handleSubmit, handleChange, formVals } = props;
 
   const inputs = (
     <div>
@@ -14,18 +14,7 @@ const LoginForm = props => {
         onChange={handleChange}
         required
       />
-      <Form.Input
-        label="Password"
-        type="password"
-        name="password"
-        value={formVals.password}
-        onChange={handleChange}
-        required
-      />
-      <Button type="submit">Login</Button>
-      <Button onClick={forgotPassword} floated="right" basic={true}>
-        Forgot Password?
-      </Button>
+      <Button type="submit">Send Password Reset Email</Button>
     </div>
   );
 
@@ -60,4 +49,4 @@ const LoginForm = props => {
   );
 };
 
-export default LoginForm;
+export default ResetPasswordForm;

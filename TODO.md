@@ -5,6 +5,9 @@
 
 # TODO
 
+* Add password/email validation
+* When deleting account, add option to delete all items as well
+* auto focus on text boxes when applicable (deleteing, creating, resetting, etc)
 * Add Dynamic resizing of nav bar -> Should turn into hamburger menu for small screens.
 * Lazy loading of items (client side) (should I pull all books down and then lazily display -- research)
 * Switch async promise hydrate stuff to use redux-thunk
