@@ -1,4 +1,4 @@
-import { postResource, updateResource } from './index';
+import { getResource, postResource, updateResource } from './index';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -85,15 +85,38 @@ export const resetPassword = user => {
   const resetURL = userURL + 'reset';
 
   return new Promise((resolve, reject) => {
-    updateResource(resetURL, user).then(result => {
-      const tokenObj = {
-        token: result,
-        email: user.email,
-        type: LOGIN
-      };
-      localStorage.setItem('token', result);
-      resolve(tokenObj);
-    });
+    updateResource(resetURL, user)
+      .then(result => {
+        const tokenObj = {
+          token: result.token,
+          email: result.email,
+          type: LOGIN
+        };
+        localStorage.setItem('token', result.token);
+        resolve(tokenObj);
+      })
+      .catch(err => {
+        reject(err);
+      });
+  });
+};
+
+export const resetPasswordEmail = email => {
+  const resetURL = `${userURL}reset?email=${email}`;
+  return getResource(resetURL);
+};
+
+export const resetPasswordFromEmail = (token, password) => {
+  const resetURL = userURL + 'resetEmail';
+
+  return new Promise((resolve, reject) => {
+    updateResource(resetURL, { token, password })
+      .then(result => {
+        resolve(result);
+      })
+      .catch(err => {
+        reject(err);
+      });
   });
 };
 

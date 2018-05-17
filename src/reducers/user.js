@@ -13,7 +13,8 @@ const defaultState = {
   loggingIn: true,
   hydratedBooks: false,
   hydratedMovies: false,
-  hydratedTelevision: false
+  hydratedTelevision: false,
+  verified: false
 };
 
 const user = (state = defaultState, action) => {

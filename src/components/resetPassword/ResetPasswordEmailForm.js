@@ -1,28 +1,20 @@
 import React from 'react';
 import { Button, Form, Message, Container, Grid } from 'semantic-ui-react';
 
-const ResetPasswordForm = props => {
+const ResetPasswordEmailForm = props => {
   const { handleSubmit, handleChange, formVals } = props;
 
   const inputs = (
     <div>
       <Form.Input
-        label="New Password"
-        type="password"
-        name="newPassword"
-        value={formVals.newPassword}
+        label="Email"
+        type="email"
+        name="email"
+        value={formVals.email}
         onChange={handleChange}
         required
       />
-      <Form.Input
-        label="Re-enter New Password"
-        type="password"
-        name="reEnterPassword"
-        value={formVals.reEnterPassword}
-        onChange={handleChange}
-        required
-      />
-      <Button type="submit">Reset Password</Button>
+      <Button type="submit">Send Password Reset Email</Button>
     </div>
   );
 
@@ -57,4 +49,4 @@ const ResetPasswordForm = props => {
   );
 };
 
-export default ResetPasswordForm;
+export default ResetPasswordEmailForm;

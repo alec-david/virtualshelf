@@ -8,6 +8,7 @@ import MoviePage from '../movies/MoviePage';
 import TelevisionPage from '../television/TelevisionPage';
 import ProfilePage from '../profile/ProfilePage';
 import VerifyPage from '../VerifyPage';
+import ResetPasswordPage from '../resetPassword/ResetPasswordPage';
 
 class NavBarLoggedIn extends Component {
   state = {};
@@ -68,6 +69,7 @@ class NavBarLoggedIn extends Component {
           <Route exact path="/television" render={() => <TelevisionPage loggedIn={true} />} />
           <Route exact path="/profile" component={ProfilePage} />
           <Route exact path="/verify" component={VerifyPage} />
+          <Route exact path="/reset_password" component={ResetPasswordPage} />
         </div>
       </div>
     );
