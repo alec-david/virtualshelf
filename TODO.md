@@ -5,14 +5,18 @@
 
 # TODO
 
-* Add password/email validation
+* return verified field from backend. Set in user store.
+  * display verified checkbox on profile.
+  * for unverified users, show a box to resend verification email.
+* Add some type of time limit on password reset token
+* Clicking Profile should always link back to default profile page
+* Look into not sending password to backend. (Encrypt first)
+* Add password/email validation (password should be at least x chars)
 * When deleting account, add option to delete all items as well
-* auto focus on text boxes when applicable (deleteing, creating, resetting, etc)
+* auto focus on text boxes when applicable (deleteing, creating, resetting, etc) and have enter hit button
 * Add Dynamic resizing of nav bar -> Should turn into hamburger menu for small screens.
 * Lazy loading of items (client side) (should I pull all books down and then lazily display -- research)
-* Switch async promise hydrate stuff to use redux-thunk
 * Display useful links in errors (ex: if registering and email exists, link to login page. If logging in and email does not exist, link to register.)
-* Add email confirmation (mailgun). Then add reset password link. Read up on SMTP
 * Unit testing
 
 # Front End Stuff
@@ -22,8 +26,17 @@
 * Get rid of inline styles
 * Styling...
 
+# Stretch TODOs
+
+* add option to browse all items when logged in
+* Switch add item to pop up in center and have larger text boxes
+* add option to upload own image
+* oAuth login with google/fb/twitter/github etc logins
+* Switch async promise hydrate stuff to use redux-thunk
+
 # Completed
 
+* ~~Add email confirmation (mailgun). Then add reset password link. Read up on SMTP~~
 * ~~When adding new card, insert where it belongs in regards to current filter (date, title, etc)~~
 * ~~toast on login/logout~~
 * ~~When no cards available. Display some kinda message instead of search + filter~~

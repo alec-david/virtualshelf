@@ -45,35 +45,35 @@ class Profile extends Component {
         newPassword: '',
         reEnterNewPassword: ''
       });
-    } else {
-      const userObj = {
-        email: this.props.user.email,
-        oldPassword: this.state.oldPassword,
-        newPassword: this.state.newPassword
-      };
-
-      resetPassword(userObj)
-        .then(result => {
-          this.props.dispatch(result);
-          this.setState({
-            reset: false,
-            delete: false,
-            oldPassword: '',
-            newPassword: '',
-            reEnterNewPassword: '',
-            error: ''
-          });
-          toastr.success('Success', 'Updated Password');
-        })
-        .catch(err => {
-          this.setState({
-            error: err,
-            oldPassword: '',
-            newPassword: '',
-            reEnterNewPassword: ''
-          });
-        });
+      return;
     }
+    const userObj = {
+      token: this.props.user.token,
+      oldPassword: this.state.oldPassword,
+      newPassword: this.state.newPassword
+    };
+
+    resetPassword(userObj)
+      .then(result => {
+        this.props.dispatch(result);
+        this.setState({
+          reset: false,
+          delete: false,
+          oldPassword: '',
+          newPassword: '',
+          reEnterNewPassword: '',
+          error: ''
+        });
+        toastr.success('Success', 'Updated Password');
+      })
+      .catch(err => {
+        this.setState({
+          error: err,
+          oldPassword: '',
+          newPassword: '',
+          reEnterNewPassword: ''
+        });
+      });
   };
 
   deleteAccount = () => {
@@ -112,6 +112,7 @@ class Profile extends Component {
   };
 
   render() {
+    console.log(this.props.user);
     if (this.state.reset) {
       return (
         <ProfileResetPW
