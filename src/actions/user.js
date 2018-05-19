@@ -1,4 +1,4 @@
-import { getResource, postResource, updateResource } from './index';
+import { getResource, postResource, updateResource, deleteResourceWithBody } from './index';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -17,14 +17,9 @@ export const login = user => {
   return new Promise((resolve, reject) => {
     postResource(loginURL, user)
       .then(result => {
-        const tokenObject = {
-          token: result,
-          email: user.username,
-          type: LOGIN
-        };
-
-        localStorage.setItem('token', result);
-        resolve(tokenObject);
+        result.type = LOGIN;
+        localStorage.setItem('token', result.token);
+        resolve(result);
       })
       .catch(err => {
         reject(err);
@@ -34,19 +29,12 @@ export const login = user => {
 
 export const loginToken = token => {
   const verifyURL = userURL + 'verify';
-  const tokenObject = {
-    token
-  };
 
   return new Promise((resolve, reject) => {
-    postResource(verifyURL, tokenObject)
+    postResource(verifyURL, { token })
       .then(result => {
-        const userObject = {
-          token,
-          email: result,
-          type: LOGIN
-        };
-        resolve(userObject);
+        result.type = LOGIN;
+        resolve(result);
       })
       .catch(err => {
         reject(err);
@@ -124,7 +112,7 @@ export const deleteAccount = user => {
   const deleteURL = userURL + 'delete';
 
   return new Promise((resolve, reject) => {
-    postResource(deleteURL, user)
+    deleteResourceWithBody(deleteURL, user)
       .then(result => {
         localStorage.clear();
         const deleteAction = {
@@ -150,6 +138,11 @@ export const verifyEmailWithToken = token => {
         reject(err);
       });
   });
+};
+
+export const resendVerifyEmail = token => {
+  const verifyURL = `${userURL}verifyEmail?token=${token}`;
+  return getResource(verifyURL);
 };
 
 export const setHydratedAllFlag = () => {

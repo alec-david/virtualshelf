@@ -11,34 +11,43 @@ class Register extends Component {
     reEnterPassword: '',
     errorMsg: '',
     errorBody: ''
-  }
+  };
 
   handleChange = (e, { name, value }) => {
     this.setState({
       [name]: value
     });
-  }
+  };
 
   handleSubmit = () => {
-    //Check passwords here. If not matching, throw an error
-    if (this.state.password !== this.state.reEnterPassword) {
+    if (this.state.password.length < 8) {
+      this.setState({
+        errorMsg: 'Password must be at least 8 characters',
+        password: '',
+        reEnterPassword: ''
+      });
+      return;
+    } else if (this.state.password !== this.state.reEnterPassword) {
       this.setState({
         errorMsg: 'Passwords do not match',
         password: '',
         reEnterPassword: ''
       });
-    } else {
-      const userObj = {
-        username: this.state.email,
-        password: this.state.password
-      };
-      //If passwords match, call register action
-      register(userObj).then(token => {
+      return;
+    }
+    const userObj = {
+      username: this.state.email,
+      password: this.state.password
+    };
+    //If passwords match, call register action
+    register(userObj)
+      .then(token => {
         //If register successful in DB, dispatch action
         //to update user state with token and navigate to homepage
         this.props.dispatch(token);
         this.props.router.history.replace('/');
-      }).catch(err => {
+      })
+      .catch(err => {
         if (err.indexOf('.') !== -1) {
           let errSplit = err.split('.');
           this.setState({
@@ -46,25 +55,25 @@ class Register extends Component {
             errorBody: errSplit[1],
             password: '',
             reEnterPassword: ''
-          })
+          });
         } else {
           this.setState({
             errorMsg: err,
             password: '',
             reEnterPassword: ''
-          })
+          });
         }
-      })
-    }
-  }
+      });
+  };
 
   render() {
     return (
       <RegisterForm
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
-        formVals={this.state} />
-    )
+        formVals={this.state}
+      />
+    );
   }
 }
-export default connect()(Register)
+export default connect()(Register);

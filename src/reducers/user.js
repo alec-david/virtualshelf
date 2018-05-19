@@ -24,6 +24,7 @@ const user = (state = defaultState, action) => {
         token: action.token,
         email: action.email,
         loggingIn: false,
+        verified: action.verified ? true : false,
         hydratedBooks: false,
         hydratedMovies: false,
         hydratedTelevision: false
@@ -32,6 +33,7 @@ const user = (state = defaultState, action) => {
       return Object.assign({}, state, {
         token: '',
         email: '',
+        verified: false,
         loggingIn: false,
         hydratedBooks: false,
         hydratedMovies: false,

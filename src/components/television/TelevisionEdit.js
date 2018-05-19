@@ -3,9 +3,9 @@ import { Button, Card, Form, Rating } from 'semantic-ui-react';
 
 const textAreaStyle = {
   fontSize: '.78571429em'
-}
+};
 
-const TelevisionEdit = (props) => {
+const TelevisionEdit = props => {
   const { television, saveEdit, cancelEdit, handleChange } = props;
   let formDate;
   try {
@@ -23,47 +23,48 @@ const TelevisionEdit = (props) => {
       <Card.Content>
         <Form>
           <Form.Input
-            label='Title'
-            type='text'
-            name='title'
-            size='mini'
+            label="Title"
+            type="text"
+            name="title"
+            size="mini"
             value={television.title}
             onChange={handleChange}
+            autoFocus={true}
             required
           />
-          <Form.Group widths='equal'>
+          <Form.Group widths="equal">
             <Form.Input
-              label='Season'
-              type='number'
-              name='season'
-              size='mini'
+              label="Season"
+              type="number"
+              name="season"
+              size="mini"
               value={television.season}
               onChange={handleChange}
               required
               fluid
             />
             <Form.Input
-              label='Episode'
-              type='number'
-              name='episode'
-              size='mini'
+              label="Episode"
+              type="number"
+              name="episode"
+              size="mini"
               value={television.episode}
               onChange={handleChange}
               fluid
             />
           </Form.Group>
           <Form.TextArea
-            label='Brief Review/Description'
-            name='description'
+            label="Brief Review/Description"
+            name="description"
             style={textAreaStyle}
             value={television.description}
             onChange={handleChange}
           />
           <Form.Input
-            label='Date Watched'
-            type='date'
-            name='date'
-            size='mini'
+            label="Date Watched"
+            type="date"
+            name="date"
+            size="mini"
             max={currentDate}
             value={formDate}
             onChange={handleChange}
@@ -71,10 +72,12 @@ const TelevisionEdit = (props) => {
           />
           <Rating
             maxRating={5}
-            icon='star'
-            size='large'
+            icon="star"
+            size="large"
             rating={television.rating}
-            onRate={(e, vals) => { handleChange(e, { name: 'rating', value: vals.rating }) }}
+            onRate={(e, vals) => {
+              handleChange(e, { name: 'rating', value: vals.rating });
+            }}
           />
         </Form>
       </Card.Content>
@@ -82,9 +85,9 @@ const TelevisionEdit = (props) => {
         <Button
           basic
           compact
-          size='mini'
-          floated='left'
-          color='red'
+          size="mini"
+          floated="left"
+          color="red"
           onClick={cancelEdit.bind(this)}
         >
           Cancel
@@ -92,9 +95,9 @@ const TelevisionEdit = (props) => {
         <Button
           basic
           compact
-          size='mini'
-          floated='right'
-          color='green'
+          size="mini"
+          floated="right"
+          color="green"
           onClick={saveEdit.bind(this)}
         >
           Save
@@ -102,6 +105,6 @@ const TelevisionEdit = (props) => {
       </Card.Content>
     </Card>
   );
-}
+};
 
 export default TelevisionEdit;

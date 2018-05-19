@@ -33,9 +33,8 @@ class Login extends Component {
       })
       .catch(err => {
         //If error occurs in login, display error message to user
-
         //If incorrect password, don't reset email
-        if (err.indexOf('password') !== -1) {
+        if (err.toLowerCase().indexOf('password') !== -1) {
           this.setState({
             errorMsg: err,
             password: ''

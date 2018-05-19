@@ -3,9 +3,9 @@ import { Button, Card, Form, Rating } from 'semantic-ui-react';
 
 const textAreaStyle = {
   fontSize: '.78571429em'
-}
+};
 
-const MovieEdit = (props) => {
+const MovieEdit = props => {
   const { movie, saveEdit, cancelEdit, handleChange } = props;
   let formDate;
   try {
@@ -20,35 +20,36 @@ const MovieEdit = (props) => {
       <Card.Content>
         <Form>
           <Form.Input
-            label='Title'
-            type='text'
-            name='title'
-            size='mini'
+            label="Title"
+            type="text"
+            name="title"
+            size="mini"
             value={movie.title}
             onChange={handleChange}
+            autoFocus={true}
             required
           />
           <Form.Input
-            label='Director'
-            type='text'
-            name='director'
-            size='mini'
+            label="Director"
+            type="text"
+            name="director"
+            size="mini"
             value={movie.director}
             onChange={handleChange}
             required
           />
           <Form.TextArea
-            label='Brief Review/Description'
-            name='description'
+            label="Brief Review/Description"
+            name="description"
             style={textAreaStyle}
             value={movie.description}
             onChange={handleChange}
           />
           <Form.Input
-            label='Date Watched'
-            type='date'
-            name='date'
-            size='mini'
+            label="Date Watched"
+            type="date"
+            name="date"
+            size="mini"
             max={currentDate}
             value={formDate}
             onChange={handleChange}
@@ -56,10 +57,12 @@ const MovieEdit = (props) => {
           />
           <Rating
             maxRating={5}
-            icon='star'
-            size='large'
+            icon="star"
+            size="large"
             rating={movie.rating}
-            onRate={(e, vals) => { handleChange(e, { name: 'rating', value: vals.rating }) }}
+            onRate={(e, vals) => {
+              handleChange(e, { name: 'rating', value: vals.rating });
+            }}
           />
         </Form>
       </Card.Content>
@@ -67,9 +70,9 @@ const MovieEdit = (props) => {
         <Button
           basic
           compact
-          size='mini'
-          floated='left'
-          color='red'
+          size="mini"
+          floated="left"
+          color="red"
           onClick={cancelEdit.bind(this)}
         >
           Cancel
@@ -77,9 +80,9 @@ const MovieEdit = (props) => {
         <Button
           basic
           compact
-          size='mini'
-          floated='right'
-          color='green'
+          size="mini"
+          floated="right"
+          color="green"
           onClick={saveEdit.bind(this)}
         >
           Save
@@ -87,6 +90,6 @@ const MovieEdit = (props) => {
       </Card.Content>
     </Card>
   );
-}
+};
 
 export default MovieEdit;

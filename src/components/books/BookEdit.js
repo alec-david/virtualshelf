@@ -3,9 +3,9 @@ import { Button, Card, Form, Rating } from 'semantic-ui-react';
 
 const textAreaStyle = {
   fontSize: '.78571429em'
-}
+};
 
-const BookEdit = (props) => {
+const BookEdit = props => {
   const { book, saveEdit, cancelEdit, handleChange } = props;
   let formDate;
   try {
@@ -20,35 +20,36 @@ const BookEdit = (props) => {
       <Card.Content>
         <Form>
           <Form.Input
-            label='Title'
-            type='text'
-            name='title'
-            size='mini'
+            label="Title"
+            type="text"
+            name="title"
+            size="mini"
             value={book.title}
             onChange={handleChange}
+            autoFocus={true}
             required
           />
           <Form.Input
-            label='Author'
-            type='text'
-            name='author'
-            size='mini'
+            label="Author"
+            type="text"
+            name="author"
+            size="mini"
             value={book.author}
             onChange={handleChange}
             required
           />
           <Form.TextArea
-            label='Brief Review/Description'
-            name='description'
+            label="Brief Review/Description"
+            name="description"
             style={textAreaStyle}
             value={book.description}
             onChange={handleChange}
           />
           <Form.Input
-            label='Date Read'
-            type='date'
-            name='date'
-            size='mini'
+            label="Date Read"
+            type="date"
+            name="date"
+            size="mini"
             max={currentDate}
             value={formDate}
             onChange={handleChange}
@@ -56,10 +57,12 @@ const BookEdit = (props) => {
           />
           <Rating
             maxRating={5}
-            icon='star'
-            size='large'
+            icon="star"
+            size="large"
             rating={book.rating}
-            onRate={(e, vals) => { handleChange(e, { name: 'rating', value: vals.rating }) }}
+            onRate={(e, vals) => {
+              handleChange(e, { name: 'rating', value: vals.rating });
+            }}
           />
         </Form>
       </Card.Content>
@@ -67,9 +70,9 @@ const BookEdit = (props) => {
         <Button
           basic
           compact
-          size='mini'
-          floated='left'
-          color='red'
+          size="mini"
+          floated="left"
+          color="red"
           onClick={cancelEdit.bind(this)}
         >
           Cancel
@@ -77,9 +80,9 @@ const BookEdit = (props) => {
         <Button
           basic
           compact
-          size='mini'
-          floated='right'
-          color='green'
+          size="mini"
+          floated="right"
+          color="green"
           onClick={saveEdit.bind(this)}
         >
           Save
@@ -87,6 +90,6 @@ const BookEdit = (props) => {
       </Card.Content>
     </Card>
   );
-}
+};
 
 export default BookEdit;

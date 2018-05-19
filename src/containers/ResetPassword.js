@@ -38,10 +38,17 @@ class ResetPassword extends Component {
   };
 
   handlePasswordSubmit = () => {
-    if (this.state.newPassword !== this.state.reEnterPassword) {
+    if (this.state.newPassword.length < 8) {
       this.setState({
-        reEnterPassword: '',
-        errorMsg: 'Passwords do not match'
+        errorMsg: 'Password must be at least 8 characters',
+        newPassword: '',
+        reEnterPassword: ''
+      });
+      return;
+    } else if (this.state.newPassword !== this.state.reEnterPassword) {
+      this.setState({
+        errorMsg: 'Passwords do not match',
+        reEnterPassword: ''
       });
       return;
     }

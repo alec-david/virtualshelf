@@ -36,6 +36,25 @@ export const deleteResource = (id, resourceURL) => {
   });
 };
 
+export const deleteResourceWithBody = (resourceURL, jsonObj) => {
+  return new Promise((resolve, reject) => {
+    request(
+      {
+        url: resourceURL,
+        method: 'DELETE',
+        json: true,
+        body: jsonObj
+      },
+      (error, response) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(response);
+      }
+    );
+  });
+};
+
 export const postResource = (resourceURL, jsonObj) => {
   return new Promise((resolve, reject) => {
     request(
