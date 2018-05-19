@@ -6,7 +6,7 @@ import MovieCard from '../../containers/movies/MovieCard';
 import TelevisionCard from '../../containers/television/TelevisionCard';
 
 const ItemList = props => {
-  const { user, items } = props;
+  const { items } = props;
   let cardId = 0;
 
   return (

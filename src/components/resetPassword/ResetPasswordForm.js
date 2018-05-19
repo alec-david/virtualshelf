@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Message, Container, Grid } from 'semantic-ui-react';
+import { Button, Form, Message, Container, Grid, Icon } from 'semantic-ui-react';
 
 const ResetPasswordForm = props => {
   const { handleSubmit, handleChange, formVals } = props;
@@ -12,6 +12,7 @@ const ResetPasswordForm = props => {
         name="newPassword"
         value={formVals.newPassword}
         onChange={handleChange}
+        autoFocus={true}
         required
       />
       <Form.Input
@@ -46,11 +47,34 @@ const ResetPasswordForm = props => {
     </Form>
   );
 
+  const criteriaIcon =
+    formVals.newPassword.length < 8 ? (
+      <div>
+        <Icon name="x" color="red" />
+        <span>Password must be at least 8 characters</span>
+      </div>
+    ) : (
+      <Icon name="check circle" color="green" />
+    );
+
+  const pwMatchIcon =
+    formVals.reEnterPassword.length < 8 ? (
+      <div />
+    ) : formVals.password === formVals.reEnterPassword ? (
+      <Icon name="check circle" color="green" />
+    ) : (
+      <Icon name="x" color="red" />
+    );
+
   return (
     <Container>
       <Grid>
         <Grid.Row centered>
           <Grid.Column width={6}>{form}</Grid.Column>
+          <Grid.Column width={2}>
+            <div>{criteriaIcon}</div>
+            <div>{pwMatchIcon}</div>
+          </Grid.Column>
         </Grid.Row>
       </Grid>
     </Container>

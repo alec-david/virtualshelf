@@ -5,22 +5,20 @@
 
 # TODO
 
-* return verified field from backend. Set in user store.
-  * display verified checkbox on profile.
-  * for unverified users, show a box to resend verification email.
 * Add some type of time limit on password reset token
-* Clicking Profile should always link back to default profile page
 * Look into not sending password to backend. (Encrypt first)
-* Add password/email validation (password should be at least x chars)
-* When deleting account, add option to delete all items as well
-* auto focus on text boxes when applicable (deleteing, creating, resetting, etc) and have enter hit button
 * Add Dynamic resizing of nav bar -> Should turn into hamburger menu for small screens.
 * Lazy loading of items (client side) (should I pull all books down and then lazily display -- research)
 * Display useful links in errors (ex: if registering and email exists, link to login page. If logging in and email does not exist, link to register.)
 * Unit testing
+* tweak movie and tv searching. Not very accurate
+* add search to main screen when not logged in
+* add title tag to images for books/tv
 
 # Front End Stuff
 
+* Style password validation o RegisterForm, ResetPasswordForm, ProfileResetPW
+* Look at https://codepen.io/voltron2112/pen/gpNopN for styling tips
 * add padding to everything (cards, search, filter - make everything pop more)
 * Item on right of screen has dropdown menu cut off on settings click
 * Get rid of inline styles
@@ -33,9 +31,18 @@
 * add option to upload own image
 * oAuth login with google/fb/twitter/github etc logins
 * Switch async promise hydrate stuff to use redux-thunk
+* Realllllly strech -> use brain.js to train neural network on books/ratings/users. Have that recommend other books
 
 # Completed
 
+* ~~When deleting account, add option to delete all items as well~~
+* ~~Add password/email validation (password should be at least x chars). Validate that passwords match and meet criteria client side~~
+* ~~refactor registerForm, ProfileDelete, ProfileResetPW (DRY) (look at ResetPasswordForm)~~
+* ~~auto focus on text boxes when applicable (deleting, creating, resetting, etc) and have enter hit button~~
+* ~~Clicking Profile should always link back to default profile page~~
+* ~~return verified field from backend. Set in user store.~~
+  * ~~display verified checkbox on profile.~~
+  * ~~for unverified users, show a button to resend verification email.~~
 * ~~Add email confirmation (mailgun). Then add reset password link. Read up on SMTP~~
 * ~~When adding new card, insert where it belongs in regards to current filter (date, title, etc)~~
 * ~~toast on login/logout~~

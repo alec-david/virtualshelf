@@ -6,12 +6,13 @@ import ProfileView from '../components/profile/ProfileView';
 import ProfileDelete from '../components/profile/ProfileDelete';
 import ProfileResetPW from '../components/profile/ProfileResetPW';
 
-import { logout, deleteAccount, resetPassword } from '../actions/user';
+import { logout, deleteAccount, resetPassword, resendVerifyEmail } from '../actions/user';
 
 class Profile extends Component {
   state = {
     reset: false,
     delete: false,
+    deleteItems: false,
     oldPassword: '',
     newPassword: '',
     reEnterNewPassword: '',
@@ -24,6 +25,12 @@ class Profile extends Component {
     });
   };
 
+  toggleDeleteItems = () => {
+    this.setState({
+      deleteItems: !this.state.deleteItems
+    });
+  };
+
   logout = () => {
     this.props.dispatch(logout());
     this.props.router.history.replace('/');
@@ -32,16 +39,23 @@ class Profile extends Component {
 
   updatePassword = () => {
     this.setState({
+      error: '',
       reset: true,
       oldPassword: ''
     });
   };
 
   resetPassword = () => {
-    if (this.state.newPassword !== this.state.reEnterNewPassword) {
+    if (this.state.password.newPassword < 8) {
+      this.setState({
+        errorMsg: 'New password must be at least 8 characters',
+        newPassword: '',
+        reEnterNewPassword: ''
+      });
+      return;
+    } else if (this.state.newPassword !== this.state.reEnterNewPassword) {
       this.setState({
         error: 'Passwords do not match.',
-        oldPassword: '',
         newPassword: '',
         reEnterNewPassword: ''
       });
@@ -78,14 +92,16 @@ class Profile extends Component {
 
   deleteAccount = () => {
     this.setState({
+      error: '',
       delete: true
     });
   };
 
-  confirmDelete = () => {
+  confirmDelete = e => {
     const userObj = {
       email: this.props.user.email,
-      password: this.state.oldPassword
+      password: this.state.oldPassword,
+      deleteItems: this.state.deleteItems
     };
 
     deleteAccount(userObj)
@@ -96,7 +112,8 @@ class Profile extends Component {
       })
       .catch(err => {
         this.setState({
-          error: err
+          error: err,
+          oldPassword: ''
         });
       });
   };
@@ -111,12 +128,29 @@ class Profile extends Component {
     });
   };
 
+  resendVerificationEmail = () => {
+    resendVerifyEmail(this.props.user.token);
+  };
+
+  componentDidUpdate(_, prevState) {
+    if (prevState === this.state) {
+      this.setState({
+        reset: false,
+        delete: false,
+        oldPassword: '',
+        newPassword: '',
+        reEnterNewPassword: '',
+        error: ''
+      });
+    }
+  }
+
   render() {
-    console.log(this.props.user);
+    const { user } = this.props;
     if (this.state.reset) {
       return (
         <ProfileResetPW
-          email={this.props.user.email}
+          email={user.email}
           state={this.state}
           handleChange={this.handleChange}
           resetPassword={this.resetPassword}
@@ -126,21 +160,22 @@ class Profile extends Component {
     } else if (this.state.delete) {
       return (
         <ProfileDelete
-          email={this.props.user.email}
-          password={this.state.oldPassword}
-          error={this.state.error}
+          email={user.email}
+          state={this.state}
           handleChange={this.handleChange}
           confirmDelete={this.confirmDelete}
           cancel={this.cancel}
+          toggleDeleteItems={this.toggleDeleteItems}
         />
       );
     }
     return (
       <ProfileView
-        email={this.props.user.email}
+        user={user}
         logout={this.logout}
         updatePassword={this.updatePassword}
         deleteAccount={this.deleteAccount}
+        resendVerificationEmail={this.resendVerificationEmail}
       />
     );
   }

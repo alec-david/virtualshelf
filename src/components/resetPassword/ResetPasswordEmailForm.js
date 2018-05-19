@@ -12,6 +12,7 @@ const ResetPasswordEmailForm = props => {
         name="email"
         value={formVals.email}
         onChange={handleChange}
+        autoFocus={true}
         required
       />
       <Button type="submit">Send Password Reset Email</Button>

@@ -12,6 +12,7 @@ const LoginForm = props => {
         name="email"
         value={formVals.email}
         onChange={handleChange}
+        autoFocus={true}
         required
       />
       <Form.Input
