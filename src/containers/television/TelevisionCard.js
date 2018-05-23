@@ -5,7 +5,8 @@ import {
   editTelevision,
   updateTelevision,
   hideTelevision,
-  flagTelevision
+  flagTelevision,
+  removeImage
 } from '../../actions/television';
 import { toastr } from 'react-redux-toastr';
 
@@ -39,8 +40,10 @@ class TelevisionCard extends Component {
       case 'Flag':
         this.flag();
         return;
+      case 'Incorrect Image':
+        this.removeImage();
+        return;
       default:
-        console.log('Uh oh');
         return;
     }
   };
@@ -65,6 +68,10 @@ class TelevisionCard extends Component {
       ...this.props.television
     });
     this.props.dispatch(editTelevision(this.state.id));
+  };
+
+  removeImage = () => {
+    this.props.dispatch(removeImage(this.state));
   };
 
   saveEdit = () => {

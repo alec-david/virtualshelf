@@ -93,7 +93,7 @@ class FilterMain extends Component {
       user.hydratedBooks &&
       user.hydratedMovies &&
       user.hydratedTelevision &&
-      (books.size || movies.size || television.size)
+      (books.bookCount || movies.movieCount || television.televisionCount)
     );
   };
 

@@ -9,7 +9,7 @@ import NewMovie from '../../components/movies/NewMovie';
 
 const imageStyle = {
   cursor: 'pointer'
-}
+};
 
 const defaultState = {
   addMovie: false,
@@ -17,24 +17,23 @@ const defaultState = {
   director: '',
   description: '',
   date: '',
-  rating: 3,
-}
+  rating: 3
+};
 
 class NewMovieCard extends Component {
-
   state = defaultState;
 
   addNewMovie = () => {
     this.setState({
       addMovie: true
-    })
-  }
+    });
+  };
 
   cancel = () => {
     this.setState({
       addMovie: false
-    })
-  }
+    });
+  };
 
   handleSubmit = () => {
     if (!this.validateForm({ ...this.state })) {
@@ -43,7 +42,7 @@ class NewMovieCard extends Component {
     const movieObj = {
       ...this.state,
       email: this.props.state.user.email
-    }
+    };
 
     addMovie(movieObj).then(result => {
       this.props.dispatch(result);
@@ -51,16 +50,16 @@ class NewMovieCard extends Component {
       this.setState({
         ...defaultState
       });
-    })
-  }
+    });
+  };
 
-  validateForm = (movie) => {
+  validateForm = movie => {
     if (!movie.title || !movie.date) {
       toastr.error('Invalid Movie', 'Please fill out all required fields.');
       return false;
     }
     return true;
-  }
+  };
 
   handleChange = (e, { name, value }) => {
     if (!value.length || value.length <= 255) {
@@ -68,24 +67,18 @@ class NewMovieCard extends Component {
         [name]: value
       });
     }
-  }
+  };
 
   render() {
     if (!this.state.addMovie) {
       return (
         <Card>
-          <Image
-            src={plusImg}
-            onClick={this.addNewMovie}
-            style={imageStyle}
-          />
+          <Image src={plusImg} onClick={this.addNewMovie} style={imageStyle} centered />
           <Card.Content>
-            <Card.Header>
-              Add a new movie.
-            </Card.Header>
+            <Card.Header>Add a new movie.</Card.Header>
           </Card.Content>
         </Card>
-      )
+      );
     } else {
       return (
         <NewMovie
@@ -94,7 +87,7 @@ class NewMovieCard extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
-      )
+      );
     }
   }
 }

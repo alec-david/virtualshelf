@@ -1,45 +1,66 @@
 import React from 'react';
-import { Form, Button, Container, Header, Message } from 'semantic-ui-react';
+import { Form, Button, Header, Message, Segment, Grid } from 'semantic-ui-react';
 
 const ProfileDelete = props => {
   const { email, state, handleChange, confirmDelete, cancel, toggleDeleteItems } = props;
 
   const inputs = (
-    <div>
-      <Form.Input
-        label="Password"
-        type="password"
-        name="oldPassword"
-        value={state.password}
-        onChange={handleChange}
-        autoFocus={true}
-        required
-      />
-      <Form.Checkbox label="Delete all of your items?" onChange={toggleDeleteItems} />
-      <Button type="submit" negative>
-        Delete
-      </Button>
-      <Button type="button" onClick={cancel.bind(this, 'delete')}>
-        Cancel
-      </Button>
-    </div>
+    <Segment.Group raised>
+      <Segment>
+        <Header as="h4">
+          Please enter your password to delete the account associated with {email}.
+        </Header>
+        <Form.Input
+          fluid
+          icon="lock"
+          iconPosition="left"
+          placeholder="Password"
+          type="password"
+          name="oldPassword"
+          value={state.password}
+          onChange={handleChange}
+          autoFocus={true}
+          required
+        />
+        <Form.Checkbox label="Delete all of your items?" onChange={toggleDeleteItems} />
+      </Segment>
+      <Segment attached="top" clearing basic>
+        <Button type="submit" color="red" floated="left" size="medium">
+          Delete
+        </Button>
+        <Button
+          onClick={cancel.bind(this, 'delete')}
+          color="blue"
+          floated="right"
+          size="medium"
+          basic
+        >
+          Cancel
+        </Button>
+      </Segment>
+    </Segment.Group>
   );
 
   const form = !state.error ? (
     <Form onSubmit={confirmDelete}>{inputs}</Form>
   ) : (
     <Form onSubmit={confirmDelete} error>
-      <Message error header={state.error} />
+      <Message error>{state.error}</Message>
       {inputs}
     </Form>
   );
 
   return (
-    <Container text>
-      <Header as="h2">Confirm Account Deletion</Header>
-      <p>Please enter your password to delete the account associated with {email}.</p>
-      {form}
-    </Container>
+    <div>
+      <Grid textAlign="center" style={{ height: '100%' }} verticalAlign="middle">
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Header as="h2" color="blue" textAlign="center">
+            Confirm Account Deletion
+          </Header>
+          {form}
+        </Grid.Column>
+      </Grid>
+    </div>
   );
 };
 

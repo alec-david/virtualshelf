@@ -2,39 +2,48 @@
 
 * Break up long strings in description (on card) (get card width, insert line break every x character?)
 * switch getBooks/getUserBooks so they return JSON object w/ type...
+* for NewItemCard - move into components
 
 # TODO
 
-* Add some type of time limit on password reset token
+* maybe add fixed nav bar. Have to create nav bar store (has activeItem, visibilty, etc)
+* set active item on start in nav bar
+* add nav bar active item set to store. Set that when doing router.history.replace/push
+* reduce toast duration
 * Look into not sending password to backend. (Encrypt first)
-* Add Dynamic resizing of nav bar -> Should turn into hamburger menu for small screens.
 * Lazy loading of items (client side) (should I pull all books down and then lazily display -- research)
-* Display useful links in errors (ex: if registering and email exists, link to login page. If logging in and email does not exist, link to register.)
 * Unit testing
 * tweak movie and tv searching. Not very accurate
-* add search to main screen when not logged in
-* add title tag to images for books/tv
 
 # Front End Stuff
 
-* Style password validation o RegisterForm, ResetPasswordForm, ProfileResetPW
-* Look at https://codepen.io/voltron2112/pen/gpNopN for styling tips
+* Add Dynamic resizing of nav bar -> Should turn into hamburger menu for small screens.
+* Style password validation of RegisterForm, ResetPasswordForm, ProfileResetPW
+  * Look at https://codepen.io/voltron2112/pen/gpNopN for styling tips
 * add padding to everything (cards, search, filter - make everything pop more)
 * Item on right of screen has dropdown menu cut off on settings click
 * Get rid of inline styles
 * Styling...
 
-# Stretch TODOs
+# Stretch TODOs (ordered from most to least likely to implement)
 
 * add option to browse all items when logged in
 * Switch add item to pop up in center and have larger text boxes
 * add option to upload own image
+* switch to downloading images off wikipedia. Use jimp or sharp.js to resize them all to standard size/form. Display that image
+* Add some type of time limit on password reset token
 * oAuth login with google/fb/twitter/github etc logins
 * Switch async promise hydrate stuff to use redux-thunk
 * Realllllly strech -> use brain.js to train neural network on books/ratings/users. Have that recommend other books
 
 # Completed
 
+* ~~find better method to route between pages then router.history.replace - breaks back button~~
+* ~~Cancel button on reset password page~~
+* ~~Update settings so it doesn't say incorrect image when null image shown~~
+* ~~add option to mark image incorrect (removes it, sets to default null image)~~
+* ~~add search to main screen when not logged in~~
+* ~~add title tag to images for books/tv~~
 * ~~When deleting account, add option to delete all items as well~~
 * ~~Add password/email validation (password should be at least x chars). Validate that passwords match and meet criteria client side~~
 * ~~refactor registerForm, ProfileDelete, ProfileResetPW (DRY) (look at ResetPasswordForm)~~

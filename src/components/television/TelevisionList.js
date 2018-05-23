@@ -19,7 +19,7 @@ const TelevisionList = props => {
   return (
     <div>
       <div style={{ fontSize: 10 + 'px' }}>{imgSrcText}</div>
-      <Card.Group itemsPerRow={props.colNum}>
+      <Card.Group centered doubling stackable>
         {addNewTelevision}
 
         {television.map(television => {

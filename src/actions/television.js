@@ -125,3 +125,12 @@ export const flagTelevision = id => {
       });
   });
 };
+
+export const removeImage = television => {
+  updateResource(`${televisionURL}/image`, { id: television.id });
+  return {
+    ...television,
+    image_url: null,
+    type: UPDATE_TELEVISION
+  };
+};
