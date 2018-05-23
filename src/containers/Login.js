@@ -51,7 +51,11 @@ class Login extends Component {
   };
 
   forgotPassword = () => {
-    this.props.router.history.replace('/reset_password');
+    this.props.router.history.push('/reset_password');
+  };
+
+  linkToRegisterPage = () => {
+    this.props.router.history.push('/register');
   };
 
   render() {
@@ -60,6 +64,7 @@ class Login extends Component {
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         forgotPassword={this.forgotPassword}
+        registerLink={this.linkToRegisterPage}
         formVals={this.state}
       />
     );

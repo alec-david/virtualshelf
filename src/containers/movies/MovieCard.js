@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteMovie, editMovie, updateMovie, hideMovie, flagMovie } from '../../actions/movie';
+import {
+  deleteMovie,
+  editMovie,
+  updateMovie,
+  hideMovie,
+  flagMovie,
+  removeImage
+} from '../../actions/movie';
 import { toastr } from 'react-redux-toastr';
 
 import Movie from '../../components/movies/Movie';
@@ -33,8 +40,10 @@ class MovieCard extends Component {
       case 'Flag':
         this.flag();
         return;
+      case 'Incorrect Image':
+        this.removeImage();
+        return;
       default:
-        console.log('Uh oh');
         return;
     }
   };
@@ -59,6 +68,10 @@ class MovieCard extends Component {
       ...this.props.movie
     });
     this.props.dispatch(editMovie(this.state.id));
+  };
+
+  removeImage = () => {
+    this.props.dispatch(removeImage(this.state));
   };
 
   saveEdit = () => {

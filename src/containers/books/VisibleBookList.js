@@ -61,35 +61,8 @@ class VisibleBookList extends Component {
       });
   }
 
-  getNumberOfColumns = () => {
-    const { width } = this.state;
-
-    if (width > 1600) {
-      return 7;
-    } else if (width > 1400 && width <= 1600) {
-      return 6;
-    } else if (width > 1200 && width <= 1400) {
-      return 5;
-    } else if (width > 1000 && width <= 1200) {
-      return 4;
-    } else if (width > 800 && width <= 1000) {
-      return 3;
-    } else if (width > 600 && width <= 800) {
-      return 2;
-    } else {
-      //Mobile width
-      return 1;
-    }
-  };
-
   render() {
-    return (
-      <BookList
-        books={this.props.state.books.list}
-        colNum={this.getNumberOfColumns()}
-        user={this.props.state.user}
-      />
-    );
+    return <BookList books={this.props.state.books.list} user={this.props.state.user} />;
   }
 }
 

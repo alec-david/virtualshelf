@@ -9,7 +9,7 @@ import NewTelevision from '../../components/television/NewTelevision';
 
 const imageStyle = {
   cursor: 'pointer'
-}
+};
 
 const defaultState = {
   addTelevision: false,
@@ -18,24 +18,23 @@ const defaultState = {
   episode: '',
   description: '',
   date: '',
-  rating: 3,
-}
+  rating: 3
+};
 
 class NewTelevisionCard extends Component {
-
   state = defaultState;
 
   addNewTelevision = () => {
     this.setState({
       addTelevision: true
-    })
-  }
+    });
+  };
 
   cancel = () => {
     this.setState({
       addTelevision: false
-    })
-  }
+    });
+  };
 
   handleSubmit = () => {
     if (!this.validateForm({ ...this.state })) {
@@ -44,7 +43,7 @@ class NewTelevisionCard extends Component {
     const televisionObj = {
       ...this.state,
       email: this.props.state.user.email
-    }
+    };
 
     addTelevision(televisionObj).then(result => {
       this.props.dispatch(result);
@@ -52,16 +51,16 @@ class NewTelevisionCard extends Component {
       this.setState({
         ...defaultState
       });
-    })
-  }
+    });
+  };
 
-  validateForm = (television) => {
+  validateForm = television => {
     if (!television.title || !television.date) {
       toastr.error('Invalid Television', 'Please fill out all required fields.');
       return false;
     }
     return true;
-  }
+  };
 
   handleChange = (e, { name, value }) => {
     if (!value.length || value.length <= 255) {
@@ -69,24 +68,18 @@ class NewTelevisionCard extends Component {
         [name]: value
       });
     }
-  }
+  };
 
   render() {
     if (!this.state.addTelevision) {
       return (
         <Card>
-          <Image
-            src={plusImg}
-            onClick={this.addNewTelevision}
-            style={imageStyle}
-          />
+          <Image src={plusImg} onClick={this.addNewTelevision} style={imageStyle} centered />
           <Card.Content>
-            <Card.Header>
-              Add a new television show.
-            </Card.Header>
+            <Card.Header>Add a new television show.</Card.Header>
           </Card.Content>
         </Card>
-      )
+      );
     } else {
       return (
         <NewTelevision
@@ -95,7 +88,7 @@ class NewTelevisionCard extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
-      )
+      );
     }
   }
 }

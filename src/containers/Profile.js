@@ -46,7 +46,7 @@ class Profile extends Component {
   };
 
   resetPassword = () => {
-    if (this.state.password.newPassword < 8) {
+    if (this.state.newPassword < 8) {
       this.setState({
         errorMsg: 'New password must be at least 8 characters',
         newPassword: '',

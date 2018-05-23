@@ -12,7 +12,7 @@ const ItemList = props => {
   return (
     <div>
       <div style={{ fontSize: 10 + 'px' }}>All images sourced from https://www.wikipedia.org/</div>
-      <Card.Group itemsPerRow={props.colNum}>
+      <Card.Group centered doubling stackable>
         {items.map(item => {
           if (item.author !== undefined) {
             return <BookCard key={cardId++} book={item} />;

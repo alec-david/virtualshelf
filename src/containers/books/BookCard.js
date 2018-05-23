@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { deleteBook, editBook, updateBook, hideBook, flagBook } from '../../actions/book';
+import {
+  deleteBook,
+  editBook,
+  updateBook,
+  hideBook,
+  flagBook,
+  removeImage
+} from '../../actions/book';
 import { toastr } from 'react-redux-toastr';
 
 import Book from '../../components/books/Book';
@@ -33,8 +40,10 @@ class BookCard extends Component {
       case 'Flag':
         this.flag();
         return;
+      case 'Incorrect Image':
+        this.removeImage();
+        return;
       default:
-        console.log('Uh oh');
         return;
     }
   };
@@ -59,6 +68,10 @@ class BookCard extends Component {
       ...this.props.book
     });
     this.props.dispatch(editBook(this.state.id));
+  };
+
+  removeImage = () => {
+    this.props.dispatch(removeImage(this.state));
   };
 
   saveEdit = () => {

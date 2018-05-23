@@ -82,6 +82,10 @@ class ResetPassword extends Component {
       });
   };
 
+  cancel = () => {
+    this.props.router.history.goBack();
+  };
+
   componentDidMount() {
     const { user } = this.props.state;
     if (!user.loggingIn && user.email) {
@@ -96,6 +100,7 @@ class ResetPassword extends Component {
         <ResetPasswordEmailForm
           handleChange={this.handleChange}
           handleSubmit={this.handleEmailSubmit}
+          cancel={this.cancel}
           formVals={this.state}
         />
       );

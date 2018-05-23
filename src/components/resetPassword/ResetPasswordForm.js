@@ -1,58 +1,14 @@
 import React from 'react';
-import { Button, Form, Message, Container, Grid, Icon } from 'semantic-ui-react';
+import { Button, Form, Message, Grid, Icon, Segment, Header } from 'semantic-ui-react';
 
 const ResetPasswordForm = props => {
   const { handleSubmit, handleChange, formVals } = props;
 
-  const inputs = (
-    <div>
-      <Form.Input
-        label="New Password"
-        type="password"
-        name="newPassword"
-        value={formVals.newPassword}
-        onChange={handleChange}
-        autoFocus={true}
-        required
-      />
-      <Form.Input
-        label="Re-enter New Password"
-        type="password"
-        name="reEnterPassword"
-        value={formVals.reEnterPassword}
-        onChange={handleChange}
-        required
-      />
-      <Button type="submit">Reset Password</Button>
-    </div>
-  );
-
-  const form = !formVals.errorMsg ? (
-    <Form
-      onSubmit={() => {
-        handleSubmit();
-      }}
-    >
-      {inputs}
-    </Form>
-  ) : (
-    <Form
-      onSubmit={() => {
-        handleSubmit();
-      }}
-      error
-    >
-      <Message error header={formVals.errorMsg} />
-      {inputs}
-    </Form>
-  );
-
   const criteriaIcon =
-    formVals.newPassword.length < 8 ? (
-      <div>
-        <Icon name="x" color="red" />
-        <span>Password must be at least 8 characters</span>
-      </div>
+    formVals.newPassword.length === 0 ? (
+      <div />
+    ) : formVals.newPassword.length < 8 ? (
+      <Icon name="x" color="red" />
     ) : (
       <Icon name="check circle" color="green" />
     );
@@ -60,24 +16,83 @@ const ResetPasswordForm = props => {
   const pwMatchIcon =
     formVals.reEnterPassword.length < 8 ? (
       <div />
-    ) : formVals.password === formVals.reEnterPassword ? (
+    ) : formVals.newPassword === formVals.reEnterPassword ? (
       <Icon name="check circle" color="green" />
     ) : (
       <Icon name="x" color="red" />
     );
 
+  const inputs = (
+    <Segment.Group raised>
+      <Segment>
+        <Grid>
+          <Grid.Row columns={2}>
+            <Grid.Column width={14}>
+              <Form.Input
+                icon="lock"
+                iconPosition="left"
+                placeholder="Password (minimum 8 characters)"
+                type="password"
+                name="newPassword"
+                value={formVals.newPassword}
+                onChange={handleChange}
+                required
+              />
+            </Grid.Column>
+            <Grid.Column width={1} floated="left" verticalAlign="middle">
+              {criteriaIcon}
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns={2}>
+            <Grid.Column width={14}>
+              <Form.Input
+                fluid
+                icon="lock"
+                iconPosition="left"
+                placeholder="Re-enter Password"
+                type="password"
+                name="reEnterPassword"
+                value={formVals.reEnterPassword}
+                onChange={handleChange}
+                required
+              />
+            </Grid.Column>
+            <Grid.Column width={1} floated="left" verticalAlign="middle">
+              {pwMatchIcon}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
+      <Segment attached="top" clearing basic>
+        <Button type="submit" color="blue" size="medium">
+          Register
+        </Button>
+      </Segment>
+    </Segment.Group>
+  );
+
+  const form = !formVals.errorMsg ? (
+    <Form size="large" onSubmit={handleSubmit}>
+      {inputs}
+    </Form>
+  ) : (
+    <Form size="large" onSubmit={handleSubmit} error>
+      <Message error>{formVals.errorMsg}</Message>
+      {inputs}
+    </Form>
+  );
+
   return (
-    <Container>
-      <Grid>
-        <Grid.Row centered>
-          <Grid.Column width={6}>{form}</Grid.Column>
-          <Grid.Column width={2}>
-            <div>{criteriaIcon}</div>
-            <div>{pwMatchIcon}</div>
-          </Grid.Column>
-        </Grid.Row>
+    <div>
+      <Grid textAlign="center" style={{ height: '100%' }} verticalAlign="middle">
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Header as="h2" color="blue" textAlign="center">
+            Reset Password
+          </Header>
+          {form}
+        </Grid.Column>
       </Grid>
-    </Container>
+    </div>
   );
 };
 

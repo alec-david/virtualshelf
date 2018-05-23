@@ -1,67 +1,14 @@
 import React from 'react';
-import { Button, Form, Message, Container, Grid, Icon } from 'semantic-ui-react';
+import { Button, Form, Message, Grid, Segment, Header, Icon } from 'semantic-ui-react';
 
 const RegisterForm = props => {
-  const { handleChange, handleSubmit, formVals } = props;
-
-  const inputs = (
-    <div>
-      <Form.Input
-        label="Email"
-        type="email"
-        name="email"
-        value={formVals.email}
-        onChange={handleChange}
-        autoFocus={!formVals.errorMsg}
-        required
-      />
-      <Form.Input
-        label="Password"
-        type="password"
-        name="password"
-        value={formVals.password}
-        onChange={handleChange}
-        autoFocus={!!formVals.errorMsg}
-        required
-      />
-      <Form.Input
-        label="Re-enter Password"
-        type="password"
-        name="reEnterPassword"
-        value={formVals.reEnterPassword}
-        onChange={handleChange}
-        required
-      />
-      <Button type="submit">Register</Button>
-    </div>
-  );
-
-  const form = !formVals.errorMsg ? (
-    <Form
-      onSubmit={() => {
-        handleSubmit();
-      }}
-    >
-      {inputs}
-    </Form>
-  ) : (
-    <Form
-      onSubmit={() => {
-        handleSubmit();
-      }}
-      error
-    >
-      <Message error header={formVals.errorMsg} content={formVals.errorBody} />
-      {inputs}
-    </Form>
-  );
+  const { handleSubmit, handleChange, formVals } = props;
 
   const criteriaIcon =
-    formVals.password.length < 8 ? (
-      <div>
-        <Icon name="x" color="red" />
-        <span>Password must be at least 8 characters</span>
-      </div>
+    formVals.password.length === 0 ? (
+      <div />
+    ) : formVals.password.length < 8 ? (
+      <Icon name="x" color="red" />
     ) : (
       <Icon name="check circle" color="green" />
     );
@@ -75,18 +22,99 @@ const RegisterForm = props => {
       <Icon name="x" color="red" />
     );
 
+  const inputs = (
+    <Segment.Group raised>
+      <Segment>
+        <Grid>
+          <Grid.Row columns={2}>
+            <Grid.Column width={14}>
+              <Form.Input
+                icon="user"
+                iconPosition="left"
+                placeholder="E-mail address"
+                type="email"
+                name="email"
+                value={formVals.email}
+                onChange={handleChange}
+                autoFocus
+                required
+              />
+            </Grid.Column>
+            <Grid.Column width={1} />
+          </Grid.Row>
+          <Grid.Row columns={2}>
+            <Grid.Column width={14}>
+              <Form.Input
+                icon="lock"
+                iconPosition="left"
+                placeholder="Password (minimum 8 characters)"
+                type="password"
+                name="password"
+                value={formVals.password}
+                onChange={handleChange}
+                required
+              />
+            </Grid.Column>
+            <Grid.Column width={1} floated="left" verticalAlign="middle">
+              {criteriaIcon}
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row columns={2}>
+            <Grid.Column width={14}>
+              <Form.Input
+                fluid
+                icon="lock"
+                iconPosition="left"
+                placeholder="Re-enter Password"
+                type="password"
+                name="reEnterPassword"
+                value={formVals.reEnterPassword}
+                onChange={handleChange}
+                required
+              />
+            </Grid.Column>
+            <Grid.Column width={1} floated="left" verticalAlign="middle">
+              {pwMatchIcon}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
+      <Segment attached="top" clearing basic>
+        <Button type="submit" color="blue" size="medium">
+          Register
+        </Button>
+      </Segment>
+    </Segment.Group>
+  );
+
+  const form = !formVals.errorMsg ? (
+    <Form size="large" onSubmit={handleSubmit}>
+      {inputs}
+    </Form>
+  ) : (
+    <Form size="large" onSubmit={handleSubmit} error>
+      <Message error>
+        <span>
+          <b>{formVals.errorMsg}</b>
+        </span>
+        <br />
+        <span>{formVals.errorBody}</span>
+      </Message>
+      {inputs}
+    </Form>
+  );
+
   return (
-    <Container>
-      <Grid>
-        <Grid.Row centered>
-          <Grid.Column width={6}>{form}</Grid.Column>
-          <Grid.Column width={2}>
-            <div>{criteriaIcon}</div>
-            <div>{pwMatchIcon}</div>
-          </Grid.Column>
-        </Grid.Row>
+    <div>
+      <Grid textAlign="center" style={{ height: '100%' }} verticalAlign="middle">
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Header as="h2" color="blue" textAlign="center">
+            Register
+          </Header>
+          {form}
+        </Grid.Column>
       </Grid>
-    </Container>
+    </div>
   );
 };
 

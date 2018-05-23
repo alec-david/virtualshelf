@@ -10,7 +10,7 @@ import NewBook from '../../components/books/NewBook';
 const imageStyle = {
   cursor: 'pointer',
   height: 300 + 'px'
-}
+};
 
 const defaultState = {
   addBook: false,
@@ -18,24 +18,23 @@ const defaultState = {
   author: '',
   description: '',
   date: '',
-  rating: 3,
-}
+  rating: 3
+};
 
 class NewBookCard extends Component {
-
   state = defaultState;
 
   addNewBook = () => {
     this.setState({
       addBook: true
-    })
-  }
+    });
+  };
 
   cancel = () => {
     this.setState({
       addBook: false
-    })
-  }
+    });
+  };
 
   handleSubmit = () => {
     if (!this.validateForm({ ...this.state })) {
@@ -44,7 +43,7 @@ class NewBookCard extends Component {
     const bookObj = {
       ...this.state,
       email: this.props.state.user.email
-    }
+    };
 
     addBook(bookObj).then(result => {
       this.props.dispatch(result);
@@ -52,16 +51,16 @@ class NewBookCard extends Component {
       this.setState({
         ...defaultState
       });
-    })
-  }
+    });
+  };
 
-  validateForm = (book) => {
+  validateForm = book => {
     if (!book.author || !book.title || !book.date) {
       toastr.error('Invalid Book', 'Please fill out all required fields.');
       return false;
     }
     return true;
-  }
+  };
 
   handleChange = (e, { name, value }) => {
     if (!value.length || value.length <= 255) {
@@ -69,24 +68,18 @@ class NewBookCard extends Component {
         [name]: value
       });
     }
-  }
+  };
 
   render() {
     if (!this.state.addBook) {
       return (
         <Card>
-          <Image
-            src={plusImg}
-            onClick={this.addNewBook}
-            style={imageStyle}
-          />
+          <Image src={plusImg} onClick={this.addNewBook} style={imageStyle} centered />
           <Card.Content>
-            <Card.Header>
-              Add a new book.
-            </Card.Header>
+            <Card.Header>Add a new book.</Card.Header>
           </Card.Content>
         </Card>
-      )
+      );
     } else {
       return (
         <NewBook
@@ -95,7 +88,7 @@ class NewBookCard extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
         />
-      )
+      );
     }
   }
 }
