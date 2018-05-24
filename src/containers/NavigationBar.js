@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 
-import NavBarNoUser from '../components/NavBar/NavBarNoUser';
-import NavBarLoggedIn from '../components/NavBar/NavBarLoggedIn';
-
-import HomePageLayout from '../components/NavBar/HomePageLayout';
+import LoggedInNavBar from '../components/NavBar/LoggedInNavBar';
+import LoggedOutNavBar from '../components/NavBar/LoggedOutNavBar';
 
 class NavigationBar extends Component {
   render() {
-    return <HomePageLayout />;
-    // const { user } = this.props;
-    // if (!user.token) {
-    //   return <NavBarNoUser />;
-    // } else {
-    //   return <NavBarLoggedIn />;
-    // }
+    const { user } = this.props;
+
+    if (user.token) {
+      return <LoggedInNavBar />;
+    }
+    return <LoggedOutNavBar />;
   }
 }
 

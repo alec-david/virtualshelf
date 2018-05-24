@@ -62,9 +62,11 @@ class VisibleTelevisionList extends Component {
   }
 
   render() {
-    return (
-      <TelevisionList television={this.props.state.television.list} user={this.props.state.user} />
-    );
+    const { user, television } = this.props.state;
+    if (user.hydratedTelevision) {
+      return <TelevisionList television={television} user={user} />;
+    }
+    return <div />;
   }
 }
 

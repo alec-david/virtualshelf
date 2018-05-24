@@ -6,26 +6,21 @@ import NewBookCard from '../../containers/books/NewBookCard';
 
 const BookList = props => {
   const { user, books } = props;
-  let addNewBook;
-  if (user.email) {
-    addNewBook = <NewBookCard />;
-  }
 
-  let imgSrcText;
-  if (books && books.size) {
-    imgSrcText = 'All images sourced from https://www.wikipedia.org/';
-  }
+  const addNewBook = user.email ? <NewBookCard /> : '';
+  const srcText = books.bookCount ? 'All images sourced from https://www.wikipedia.org/' : '';
 
   return (
     <div>
-      <div style={{ fontSize: 10 + 'px' }}>{imgSrcText}</div>
-      <Card.Group centered doubling stackable>
+      <Card.Group centered stackable>
         {addNewBook}
 
-        {books.map(book => {
+        {books.list.map(book => {
           return <BookCard key={book.id} book={book} />;
         })}
       </Card.Group>
+      <br />
+      <span className="srcText">{srcText}</span>
     </div>
   );
 };

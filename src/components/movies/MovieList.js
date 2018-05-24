@@ -6,26 +6,21 @@ import NewMovieCard from '../../containers/movies/NewMovieCard';
 
 const MovieList = props => {
   const { user, movies } = props;
-  let addNewMovie;
-  if (user.email) {
-    addNewMovie = <NewMovieCard />;
-  }
 
-  let imgSrcText;
-  if (movies && movies.size) {
-    imgSrcText = 'All images sourced from https://www.wikipedia.org/';
-  }
+  const addNewMovie = user.email ? <NewMovieCard /> : '';
+  const srcText = movies.movieCount ? 'All images sourced from https://www.wikipedia.org/' : '';
 
   return (
     <div>
-      <div style={{ fontSize: 10 + 'px' }}>{imgSrcText}</div>
-      <Card.Group centered doubling stackable>
+      <Card.Group centered stackable>
         {addNewMovie}
 
-        {movies.map(movie => {
+        {movies.list.map(movie => {
           return <MovieCard key={movie.id} movie={movie} />;
         })}
       </Card.Group>
+      <br />
+      <span className="srcText">{srcText}</span>
     </div>
   );
 };

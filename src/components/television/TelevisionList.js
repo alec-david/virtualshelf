@@ -6,26 +6,23 @@ import NewTelevisionCard from '../../containers/television/NewTelevisionCard';
 
 const TelevisionList = props => {
   const { user, television } = props;
-  let addNewTelevision;
-  if (user.email) {
-    addNewTelevision = <NewTelevisionCard />;
-  }
 
-  let imgSrcText;
-  if (television && television.size) {
-    imgSrcText = 'All images sourced from https://www.wikipedia.org/';
-  }
+  const addNewTelevision = user.email ? <NewTelevisionCard /> : '';
+  const srcText = television.televisionCount
+    ? 'All images sourced from https://www.wikipedia.org/'
+    : '';
 
   return (
     <div>
-      <div style={{ fontSize: 10 + 'px' }}>{imgSrcText}</div>
-      <Card.Group centered doubling stackable>
+      <Card.Group centered stackable>
         {addNewTelevision}
 
-        {television.map(television => {
+        {television.list.map(television => {
           return <TelevisionCard key={television.id} television={television} />;
         })}
       </Card.Group>
+      <br />
+      <span className="srcText">{srcText}</span>
     </div>
   );
 };
