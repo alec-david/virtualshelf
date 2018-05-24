@@ -62,7 +62,11 @@ class VisibleBookList extends Component {
   }
 
   render() {
-    return <BookList books={this.props.state.books.list} user={this.props.state.user} />;
+    const { user, books } = this.props.state;
+    if (user.hydratedBooks) {
+      return <BookList books={books} user={user} />;
+    }
+    return <div />;
   }
 }
 

@@ -62,7 +62,11 @@ class VisibleMovieList extends Component {
   }
 
   render() {
-    return <MovieList movies={this.props.state.movies.list} user={this.props.state.user} />;
+    const { user, movies } = this.props.state;
+    if (user.hydratedMovies) {
+      return <MovieList movies={movies} user={user} />;
+    }
+    return <div />;
   }
 }
 

@@ -9,7 +9,6 @@
 * maybe add fixed nav bar. Have to create nav bar store (has activeItem, visibilty, etc)
 * set active item on start in nav bar
 * add nav bar active item set to store. Set that when doing router.history.replace/push
-* reduce toast duration
 * Look into not sending password to backend. (Encrypt first)
 * Lazy loading of items (client side) (should I pull all books down and then lazily display -- research)
 * Unit testing
@@ -17,9 +16,6 @@
 
 # Front End Stuff
 
-* Add Dynamic resizing of nav bar -> Should turn into hamburger menu for small screens.
-* Style password validation of RegisterForm, ResetPasswordForm, ProfileResetPW
-  * Look at https://codepen.io/voltron2112/pen/gpNopN for styling tips
 * add padding to everything (cards, search, filter - make everything pop more)
 * Item on right of screen has dropdown menu cut off on settings click
 * Get rid of inline styles
@@ -38,6 +34,9 @@
 
 # Completed
 
+* ~~Style password validation of RegisterForm, ResetPasswordForm, ProfileResetPW~~
+* ~~Add Dynamic resizing of nav bar -> Should turn into hamburger menu for small screens.~~
+* ~~reduce toast duration~~
 * ~~find better method to route between pages then router.history.replace - breaks back button~~
 * ~~Cancel button on reset password page~~
 * ~~Update settings so it doesn't say incorrect image when null image shown~~

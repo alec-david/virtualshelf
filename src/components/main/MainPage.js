@@ -4,12 +4,18 @@ import { Header } from 'semantic-ui-react';
 import FilterMain from '../../containers/main/FilterMain';
 import VisibleItemList from '../../containers/main/VisibleItemList';
 
+const filterPadding = {
+  paddingLeft: '50px'
+};
+
 const Main = () => (
   <div>
-    <Header as="h1">
-      <Header.Content>Remembr</Header.Content>
-    </Header>
-    <FilterMain />
+    <div style={filterPadding}>
+      <Header as="h1">
+        <Header.Content>Remembr</Header.Content>
+      </Header>
+      <FilterMain />
+    </div>
     <br />
     <VisibleItemList />
   </div>

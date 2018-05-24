@@ -9,18 +9,19 @@ import { loginToken, logout } from '../actions/user';
 const history = createHistory();
 
 class App extends Component {
-
   //Check localStorage to see if user has already created an
   //account. If so, log that user in.
   componentWillMount() {
     if (localStorage.token) {
-      loginToken(localStorage.token).then(result => {
-        this.props.dispatch(result);
-        //Eventually hydrate app here.
-        //Load most recent books, movies, tv, to show on main page
-      }).catch(err => {
-        console.log(err);
-      })
+      loginToken(localStorage.token)
+        .then(result => {
+          this.props.dispatch(result);
+          //Eventually hydrate app here.
+          //Load most recent books, movies, tv, to show on main page
+        })
+        .catch(err => {
+          console.log(err);
+        });
     } else {
       this.props.dispatch(logout());
     }
@@ -31,7 +32,7 @@ class App extends Component {
       <ConnectedRouter history={history}>
         <NavigationBar user={this.props.state.user} />
       </ConnectedRouter>
-    )
+    );
   }
 }
 

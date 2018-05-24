@@ -9,10 +9,11 @@ const ItemList = props => {
   const { items } = props;
   let cardId = 0;
 
+  const srcText = items.size ? 'All images sourced from https://www.wikipedia.org/' : '';
+
   return (
     <div>
-      <div style={{ fontSize: 10 + 'px' }}>All images sourced from https://www.wikipedia.org/</div>
-      <Card.Group centered doubling stackable>
+      <Card.Group centered stackable>
         {items.map(item => {
           if (item.author !== undefined) {
             return <BookCard key={cardId++} book={item} />;
@@ -23,6 +24,8 @@ const ItemList = props => {
           }
         })}
       </Card.Group>
+      <br />
+      <span className="srcText">{srcText}</span>
     </div>
   );
 };
