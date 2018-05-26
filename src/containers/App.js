@@ -16,8 +16,6 @@ class App extends Component {
       loginToken(localStorage.token)
         .then(result => {
           this.props.dispatch(result);
-          //Eventually hydrate app here.
-          //Load most recent books, movies, tv, to show on main page
         })
         .catch(err => {
           console.log(err);
@@ -30,7 +28,7 @@ class App extends Component {
   render() {
     return (
       <ConnectedRouter history={history}>
-        <NavigationBar user={this.props.state.user} />
+        <NavigationBar />
       </ConnectedRouter>
     );
   }

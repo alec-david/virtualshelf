@@ -35,7 +35,12 @@ const CardSettings = props => {
   }
 
   return (
-    <Dropdown icon="ellipsis vertical" className="icon right floated" style={ellipsisStyle}>
+    <Dropdown
+      icon="ellipsis vertical"
+      className="icon right floated"
+      pointing="top"
+      style={ellipsisStyle}
+    >
       <Dropdown.Menu>
         {options.map(option => (
           <Dropdown.Item key={option.value} onClick={handleSettings} {...option} />
