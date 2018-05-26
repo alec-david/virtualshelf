@@ -23,32 +23,27 @@ const loggedInRoutes = (
 );
 
 class DesktopContainer extends Component {
-  state = {};
-
-  hideFixedMenu = () => this.setState({ fixed: false });
-  showFixedMenu = () => this.setState({ fixed: true });
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-
   render() {
-    const { activeItem } = this.state;
+    const { nav, setActiveItem } = this.props;
+    const { activeItem } = nav;
 
     return (
       <Responsive {...Responsive.onlyComputer}>
-        <Menu size="large">
+        <Menu size="large" className="menuPadding">
           <Container fluid>
             <Menu.Item
               as={Link}
               to="/"
               name="home"
               active={activeItem === 'home'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
             >
               Home
             </Menu.Item>
             <Menu.Item
               name="books"
               active={activeItem === 'books'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
               as={Link}
               to="/books"
             >
@@ -57,7 +52,7 @@ class DesktopContainer extends Component {
             <Menu.Item
               name="movies"
               active={activeItem === 'movies'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
               as={Link}
               to="/movies"
             >
@@ -66,7 +61,7 @@ class DesktopContainer extends Component {
             <Menu.Item
               name="television"
               active={activeItem === 'television'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
               as={Link}
               to="/television"
             >
@@ -76,7 +71,7 @@ class DesktopContainer extends Component {
               <Menu.Item
                 name="profile"
                 active={activeItem === 'profile'}
-                onClick={this.handleItemClick}
+                onClick={setActiveItem}
                 as={Link}
                 to="/profile"
               >
@@ -92,32 +87,27 @@ class DesktopContainer extends Component {
 }
 
 class TabletContainer extends Component {
-  state = {};
-
-  hideFixedMenu = () => this.setState({ fixed: false });
-  showFixedMenu = () => this.setState({ fixed: true });
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-
   render() {
-    const { activeItem } = this.state;
+    const { nav, setActiveItem } = this.props;
+    const { activeItem } = nav;
 
     return (
       <Responsive {...Responsive.onlyTablet}>
-        <Menu size="large">
+        <Menu size="large" className="menuPadding">
           <Container fluid>
             <Menu.Item
               as={Link}
               to="/"
               name="home"
               active={activeItem === 'home'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
             >
               Home
             </Menu.Item>
             <Menu.Item
               name="books"
               active={activeItem === 'books'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
               as={Link}
               to="/books"
             >
@@ -126,7 +116,7 @@ class TabletContainer extends Component {
             <Menu.Item
               name="movies"
               active={activeItem === 'movies'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
               as={Link}
               to="/movies"
             >
@@ -135,7 +125,7 @@ class TabletContainer extends Component {
             <Menu.Item
               name="television"
               active={activeItem === 'television'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
               as={Link}
               to="/television"
             >
@@ -145,7 +135,7 @@ class TabletContainer extends Component {
               <Menu.Item
                 name="profile"
                 active={activeItem === 'profile'}
-                onClick={this.handleItemClick}
+                onClick={setActiveItem}
                 as={Link}
                 to="/profile"
               >
@@ -161,22 +151,9 @@ class TabletContainer extends Component {
 }
 
 class MobileContainer extends Component {
-  state = {
-    visible: false
-  };
-
-  handlePusher = () => {
-    const { visible } = this.state;
-
-    if (visible) this.setState({ visible: false });
-  };
-
-  handleToggle = () => this.setState({ visible: !this.state.visible });
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name });
-
   render() {
-    const { activeItem, visible } = this.state;
+    const { nav, setActiveItem, handlePusher, handleToggle } = this.props;
+    const { activeItem, visible } = nav;
 
     return (
       <Responsive {...Responsive.onlyMobile}>
@@ -187,14 +164,14 @@ class MobileContainer extends Component {
               to="/"
               name="home"
               active={activeItem === 'home'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
             >
               Home
             </Menu.Item>
             <Menu.Item
               name="books"
               active={activeItem === 'books'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
               as={Link}
               to="/books"
             >
@@ -203,7 +180,7 @@ class MobileContainer extends Component {
             <Menu.Item
               name="movies"
               active={activeItem === 'movies'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
               as={Link}
               to="/movies"
             >
@@ -212,7 +189,7 @@ class MobileContainer extends Component {
             <Menu.Item
               name="television"
               active={activeItem === 'television'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
               as={Link}
               to="/television"
             >
@@ -221,20 +198,16 @@ class MobileContainer extends Component {
             <Menu.Item
               name="profile"
               active={activeItem === 'profile'}
-              onClick={this.handleItemClick}
+              onClick={setActiveItem}
               as={Link}
               to="/profile"
             >
               Profile
             </Menu.Item>
           </Sidebar>
-          <Sidebar.Pusher
-            dimmed={visible}
-            onClick={this.handlePusher}
-            style={{ minHeight: '100vh' }}
-          >
+          <Sidebar.Pusher dimmed={visible} onClick={handlePusher} style={{ minHeight: '100vh' }}>
             <Menu fixed="top" inverted>
-              <Menu.Item onClick={this.handleToggle}>
+              <Menu.Item onClick={handleToggle}>
                 <Icon name="sidebar" />
               </Menu.Item>
             </Menu>
@@ -246,13 +219,27 @@ class MobileContainer extends Component {
   }
 }
 
-const ResponsiveContainer = () => (
-  <div>
-    <DesktopContainer />
-    <TabletContainer />
-    <MobileContainer />
-  </div>
-);
+const ResponsiveContainer = props => {
+  return (
+    <div>
+      <DesktopContainer nav={props.nav} setActiveItem={props.setActiveItem} />
+      <TabletContainer nav={props.nav} setActiveItem={props.setActiveItem} />
+      <MobileContainer
+        nav={props.nav}
+        setActiveItem={props.setActiveItem}
+        handlePusher={props.handlePusher}
+        handleToggle={props.handleToggle}
+      />
+    </div>
+  );
+};
 
-const HomepageLayout = () => <ResponsiveContainer />;
-export default HomepageLayout;
+const LoggedInNavBar = props => (
+  <ResponsiveContainer
+    nav={props.nav}
+    setActiveItem={props.setActiveItem}
+    handlePusher={props.handlePusher}
+    handleToggle={props.handleToggle}
+  />
+);
+export default LoggedInNavBar;

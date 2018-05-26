@@ -17,7 +17,6 @@
 # Front End Stuff
 
 * add padding to everything (cards, search, filter - make everything pop more)
-* Item on right of screen has dropdown menu cut off on settings click
 * Get rid of inline styles
 * Styling...
 
@@ -34,6 +33,7 @@
 
 # Completed
 
+* ~~Item on right of screen has dropdown menu cut off on settings click~~
 * ~~Style password validation of RegisterForm, ResetPasswordForm, ProfileResetPW~~
 * ~~Add Dynamic resizing of nav bar -> Should turn into hamburger menu for small screens.~~
 * ~~reduce toast duration~~
