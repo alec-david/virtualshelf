@@ -7,6 +7,7 @@ import ProfileDelete from '../components/profile/ProfileDelete';
 import ProfileResetPW from '../components/profile/ProfileResetPW';
 
 import { logout, deleteAccount, resetPassword, resendVerifyEmail } from '../actions/user';
+import { updateActiveItem } from '../actions/nav';
 
 class Profile extends Component {
   state = {
@@ -34,6 +35,7 @@ class Profile extends Component {
   logout = () => {
     this.props.dispatch(logout());
     this.props.router.history.replace('/');
+    this.props.dispatch(updateActiveItem('home'));
     toastr.info('Logged out.');
   };
 
@@ -108,6 +110,7 @@ class Profile extends Component {
       .then(result => {
         this.props.dispatch(result);
         this.props.router.history.replace('/');
+        this.props.dispatch(updateActiveItem('home'));
         toastr.error('Success', 'Deleted Account');
       })
       .catch(err => {

@@ -1,4 +1,3 @@
-import { LOGIN, LOGOUT } from '../actions/user';
 import { SET_ACTIVE_ITEM, TOGGLE_VISIBLE } from '../actions/nav';
 
 const defaultState = {
@@ -9,10 +8,6 @@ const defaultState = {
 
 const nav = (state = defaultState, action) => {
   switch (action.type) {
-    case LOGIN:
-      return Object.assign({}, state, defaultState);
-    case LOGOUT:
-      return Object.assign({}, state, defaultState);
     case SET_ACTIVE_ITEM:
       return Object.assign({}, state, {
         ...state,

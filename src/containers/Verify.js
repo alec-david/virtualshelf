@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { toastr } from 'react-redux-toastr';
 
 import { verifyEmailWithToken } from '../actions/user';
+import { updateActiveItem } from '../actions/nav';
 
 class Verify extends Component {
   componentDidMount() {
@@ -15,10 +16,12 @@ class Verify extends Component {
         .then(result => {
           toastr.success('Success!', result);
           this.props.router.history.replace('/');
+          this.props.dispatch(updateActiveItem('home'));
         })
         .catch(err => {
           toastr.error('Failed to Verify', err);
           this.props.router.history.replace('/');
+          this.props.dispatch(updateActiveItem('home'));
         });
     }
   }
