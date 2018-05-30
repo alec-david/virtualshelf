@@ -6,6 +6,7 @@ import ResetPasswordForm from '../components/resetPassword/ResetPasswordForm';
 import ResetPasswordEmailForm from '../components/resetPassword/ResetPasswordEmailForm';
 
 import { logout, resetPasswordEmail, resetPassword } from '../actions/user';
+import { updateActiveItem } from '../actions/nav';
 
 class ResetPassword extends Component {
   state = {
@@ -29,6 +30,7 @@ class ResetPassword extends Component {
           'An email has been set to your address with instructions on how to reset your password'
         );
         this.props.router.history.replace('/');
+        this.props.dispatch(updateActiveItem('home'));
       })
       .catch(err => {
         this.setState({
@@ -72,6 +74,7 @@ class ResetPassword extends Component {
         });
         toastr.success('Success', 'Updated Password');
         this.props.router.history.replace('/');
+        this.props.dispatch(updateActiveItem('home'));
       })
       .catch(err => {
         this.setState({
@@ -83,7 +86,8 @@ class ResetPassword extends Component {
   };
 
   cancel = () => {
-    this.props.router.history.goBack();
+    this.props.router.history.replace('/login');
+    this.props.dispatch(updateActiveItem('login'));
   };
 
   componentDidMount() {

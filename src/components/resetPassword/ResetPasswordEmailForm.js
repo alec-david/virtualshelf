@@ -24,7 +24,7 @@ const ResetPasswordEmailForm = props => {
         <Button type="submit" color="blue" floated="left" size="medium">
           Send Password Reset Email
         </Button>
-        <Button onClick={cancel} color="blue" floated="right" size="medium" basic>
+        <Button type="button" onClick={cancel} color="blue" floated="right" size="medium" basic>
           Cancel
         </Button>
       </Segment>
@@ -32,9 +32,11 @@ const ResetPasswordEmailForm = props => {
   );
 
   const form = !formVals.errorMsg ? (
-    <Form onSubmit={handleSubmit}>{inputs}</Form>
+    <Form size="large" onSubmit={handleSubmit}>
+      {inputs}
+    </Form>
   ) : (
-    <Form onSubmit={handleSubmit} error>
+    <Form size="large" onSubmit={handleSubmit} error>
       <Message error>{formVals.errorMsg}</Message>
       {inputs}
     </Form>

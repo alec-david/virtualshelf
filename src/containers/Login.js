@@ -4,6 +4,7 @@ import { toastr } from 'react-redux-toastr';
 
 import LoginForm from '../components/login/LoginForm';
 import { login } from '../actions/user';
+import { updateActiveItem } from '../actions/nav';
 
 class Login extends Component {
   state = {
@@ -29,6 +30,7 @@ class Login extends Component {
         //If successful, set user state and navigate back to home page.
         this.props.dispatch(token);
         this.props.router.history.replace('/');
+        this.props.dispatch(updateActiveItem('home'));
         toastr.info('Logged in!');
       })
       .catch(err => {
@@ -52,10 +54,12 @@ class Login extends Component {
 
   forgotPassword = () => {
     this.props.router.history.push('/reset_password');
+    this.props.dispatch(updateActiveItem('login'));
   };
 
   linkToRegisterPage = () => {
     this.props.router.history.push('/register');
+    this.props.dispatch(updateActiveItem('register'));
   };
 
   render() {
