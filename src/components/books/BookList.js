@@ -12,7 +12,7 @@ const BookList = props => {
 
   return (
     <div>
-      <Card.Group centered stackable>
+      <Card.Group centered>
         {addNewBook}
 
         {books.list.map(book => {

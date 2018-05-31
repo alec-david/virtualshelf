@@ -1,24 +1,26 @@
 import React from 'react';
 import { Button, Card, Form, Rating } from 'semantic-ui-react';
+import DatePicker from '../util/DatePicker';
 
 const textAreaStyle = {
   fontSize: '.78571429em'
 };
 
 const BookEdit = props => {
-  const { book, saveEdit, cancelEdit, handleChange } = props;
-  let formDate;
-  try {
-    formDate = new Date(book.date).toISOString().split('T')[0];
-  } catch (e) {
-    formDate = '';
-  }
-  const currentDate = new Date().toISOString().split('T')[0];
+  const {
+    book,
+    saveEdit,
+    cancelEdit,
+    handleChange,
+    handleDateChange,
+    toggleFocus,
+    disableFutureDays
+  } = props;
 
   return (
     <Card>
       <Card.Content>
-        <Form>
+        <Form size="large">
           <Form.Input
             label="Title"
             type="text"
@@ -45,15 +47,13 @@ const BookEdit = props => {
             value={book.description}
             onChange={handleChange}
           />
-          <Form.Input
+          <DatePicker
+            date={book.editDate}
+            focus={book.focus}
+            handleDateChange={handleDateChange}
+            toggleFocus={toggleFocus}
+            disableFutureDays={disableFutureDays}
             label="Date Read"
-            type="date"
-            name="date"
-            size="mini"
-            max={currentDate}
-            value={formDate}
-            onChange={handleChange}
-            required
           />
           <Rating
             maxRating={5}
@@ -70,7 +70,7 @@ const BookEdit = props => {
         <Button
           basic
           compact
-          size="mini"
+          size="medium"
           floated="left"
           color="red"
           onClick={cancelEdit.bind(this)}
@@ -80,7 +80,7 @@ const BookEdit = props => {
         <Button
           basic
           compact
-          size="mini"
+          size="medium"
           floated="right"
           color="green"
           onClick={saveEdit.bind(this)}

@@ -9,13 +9,16 @@ import {
   removeImage
 } from '../../actions/book';
 import { toastr } from 'react-redux-toastr';
+import moment from 'moment';
 
 import Book from '../../components/books/Book';
 import BookEdit from '../../components/books/BookEdit';
 
 class BookCard extends Component {
   state = {
-    ...this.props.book
+    ...this.props.book,
+    editDate: moment(this.props.book.date),
+    focus: false
   };
 
   handleChange = (e, { name, value }) => {
@@ -84,6 +87,7 @@ class BookCard extends Component {
       ...this.state,
       token
     };
+    editObj.date = this.state.editDate;
 
     updateBook(editObj)
       .then(result => {
@@ -113,6 +117,21 @@ class BookCard extends Component {
       });
   };
 
+  handleDateChange = value => {
+    this.setState({
+      editDate: value,
+      focus: false
+    });
+  };
+
+  toggleFocus = focused => {
+    this.setState({
+      focus: focused
+    });
+  };
+
+  disableFutureDays = day => moment().diff(day) < 0;
+
   render() {
     const { book } = this.props;
     if (!book.edit) {
@@ -124,6 +143,9 @@ class BookCard extends Component {
           saveEdit={this.saveEdit}
           cancelEdit={this.edit}
           handleChange={this.handleChange}
+          handleDateChange={this.handleDateChange}
+          toggleFocus={this.toggleFocus}
+          disableFutureDays={this.disableFutureDays}
         />
       );
     }

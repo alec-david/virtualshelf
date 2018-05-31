@@ -12,13 +12,9 @@ import 'semantic-ui-css/semantic.min.css';
 
 const store = createStore(remembrApp);
 
-const containerStyle = {
-  backgroundColor: '#F8F8F8'
-};
-
 render(
   <Provider store={store}>
-    <div style={containerStyle}>
+    <div>
       <ReduxToastr
         position="top-center"
         timeOut={3000}

@@ -6,7 +6,6 @@
 
 # TODO
 
-* see if i can get rid of redux-form and maybe others
 * work on mobile view
 * maybe add fixed nav bar. Have to create nav bar store (has activeItem, visibilty, etc)
 * Look into not sending password to backend. (Encrypt first)
@@ -16,9 +15,7 @@
 
 # Front End Stuff
 
-* add padding to everything (cards, search, filter - make everything pop more)
-* Get rid of inline styles
-* Styling...
+* Get rid of inline styles (or at least pull them into vars.)
 
 # Stretch TODOs (ordered from most to least likely to implement)
 
@@ -33,6 +30,7 @@
 
 # Completed
 
+* ~~better date picker~~
 * ~~set active item on start in nav bar~~
 * ~~add nav bar active item set to store. Set that when doing router.history.replace/push~~
 * ~~Item on right of screen has dropdown menu cut off on settings click~~

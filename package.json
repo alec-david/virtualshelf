@@ -7,7 +7,9 @@
   },
   "dependencies": {
     "immutable": "^3.8.2",
+    "moment": "^2.22.1",
     "react": "^16.0.0",
+    "react-dates": "^16.7.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "react-redux-toastr": "^7.2.3",
@@ -15,10 +17,9 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "next",
     "redux": "^3.7.2",
-    "redux-form": "^7.1.1",
     "redux-thunk": "^2.2.0",
     "request": "^2.83.0",
-    "semantic-ui-css": "^2.2.14",
+    "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.78.2"
   },
   "scripts": {

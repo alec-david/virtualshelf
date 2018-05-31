@@ -1,18 +1,26 @@
 import React from 'react';
 import { Button, Card, Form, Rating } from 'semantic-ui-react';
+import DatePicker from '../util/DatePicker';
 
 const textAreaStyle = {
   fontSize: '.78571429em'
 };
 
 const NewTelevision = props => {
-  const { television, cancel, handleChange, handleSubmit } = props;
-  const currentDate = new Date().toISOString().split('T')[0];
+  const {
+    television,
+    cancel,
+    handleChange,
+    handleSubmit,
+    handleDateChange,
+    toggleFocus,
+    disableFutureDays
+  } = props;
 
   return (
     <Card>
       <Card.Content>
-        <Form>
+        <Form size="large">
           <Form.Input
             label="Title"
             type="text"
@@ -51,15 +59,13 @@ const NewTelevision = props => {
             value={television.description}
             onChange={handleChange}
           />
-          <Form.Input
+          <DatePicker
+            date={television.date}
+            focus={television.focus}
+            handleDateChange={handleDateChange}
+            toggleFocus={toggleFocus}
+            disableFutureDays={disableFutureDays}
             label="Date Watched"
-            type="date"
-            name="date"
-            size="mini"
-            max={currentDate}
-            value={television.date}
-            onChange={handleChange}
-            required
           />
           <Rating
             maxRating={5}
@@ -73,10 +79,10 @@ const NewTelevision = props => {
         </Form>
       </Card.Content>
       <Card.Content extra>
-        <Button basic compact size="mini" floated="left" color="red" onClick={cancel}>
+        <Button basic compact size="medium" floated="left" color="red" onClick={cancel}>
           Cancel
         </Button>
-        <Button basic compact size="mini" floated="right" color="green" onClick={handleSubmit}>
+        <Button basic compact size="medium" floated="right" color="green" onClick={handleSubmit}>
           Add
         </Button>
       </Card.Content>
