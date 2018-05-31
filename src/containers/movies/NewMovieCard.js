@@ -4,11 +4,13 @@ import { Card, Image } from 'semantic-ui-react';
 import { addMovie } from '../../actions/movie';
 import { toastr } from 'react-redux-toastr';
 import plusImg from '../../imgs/plus.svg';
+import moment from 'moment';
 
 import NewMovie from '../../components/movies/NewMovie';
 
 const imageStyle = {
-  cursor: 'pointer'
+  cursor: 'pointer',
+  height: 300 + 'px'
 };
 
 const defaultState = {
@@ -16,8 +18,9 @@ const defaultState = {
   title: '',
   director: '',
   description: '',
-  date: '',
-  rating: 3
+  date: moment(),
+  rating: 3,
+  focus: false
 };
 
 class NewMovieCard extends Component {
@@ -69,11 +72,26 @@ class NewMovieCard extends Component {
     }
   };
 
+  handleDateChange = value => {
+    this.setState({
+      date: value,
+      focus: false
+    });
+  };
+
+  toggleFocus = focused => {
+    this.setState({
+      focus: focused
+    });
+  };
+
+  disableFutureDays = day => moment().diff(day) < 0;
+
   render() {
     if (!this.state.addMovie) {
       return (
         <Card>
-          <Image src={plusImg} onClick={this.addNewMovie} style={imageStyle} centered />
+          <Image src={plusImg} onClick={this.addNewMovie} style={imageStyle} fluid centered />
           <Card.Content>
             <Card.Header>Add a new movie.</Card.Header>
           </Card.Content>
@@ -86,6 +104,9 @@ class NewMovieCard extends Component {
           cancel={this.cancel}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          handleDateChange={this.handleDateChange}
+          toggleFocus={this.toggleFocus}
+          disableFutureDays={this.disableFutureDays}
         />
       );
     }

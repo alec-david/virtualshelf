@@ -4,6 +4,7 @@ import { Card, Image } from 'semantic-ui-react';
 import { addBook } from '../../actions/book';
 import { toastr } from 'react-redux-toastr';
 import plusImg from '../../imgs/plus.svg';
+import moment from 'moment';
 
 import NewBook from '../../components/books/NewBook';
 
@@ -17,8 +18,9 @@ const defaultState = {
   title: '',
   author: '',
   description: '',
-  date: '',
-  rating: 3
+  date: moment(),
+  rating: 3,
+  focus: false
 };
 
 class NewBookCard extends Component {
@@ -70,11 +72,26 @@ class NewBookCard extends Component {
     }
   };
 
+  handleDateChange = value => {
+    this.setState({
+      date: value,
+      focus: false
+    });
+  };
+
+  toggleFocus = focused => {
+    this.setState({
+      focus: focused
+    });
+  };
+
+  disableFutureDays = day => moment().diff(day) < 0;
+
   render() {
     if (!this.state.addBook) {
       return (
         <Card>
-          <Image src={plusImg} onClick={this.addNewBook} style={imageStyle} centered />
+          <Image src={plusImg} onClick={this.addNewBook} style={imageStyle} fluid centered />
           <Card.Content>
             <Card.Header>Add a new book.</Card.Header>
           </Card.Content>
@@ -87,6 +104,9 @@ class NewBookCard extends Component {
           cancel={this.cancel}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          handleDateChange={this.handleDateChange}
+          toggleFocus={this.toggleFocus}
+          disableFutureDays={this.disableFutureDays}
         />
       );
     }

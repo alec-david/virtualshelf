@@ -1,24 +1,26 @@
 import React from 'react';
 import { Button, Card, Form, Rating } from 'semantic-ui-react';
+import DatePicker from '../util/DatePicker';
 
 const textAreaStyle = {
   fontSize: '.78571429em'
 };
 
 const MovieEdit = props => {
-  const { movie, saveEdit, cancelEdit, handleChange } = props;
-  let formDate;
-  try {
-    formDate = new Date(movie.date).toISOString().split('T')[0];
-  } catch (e) {
-    formDate = '';
-  }
-  const currentDate = new Date().toISOString().split('T')[0];
+  const {
+    movie,
+    saveEdit,
+    cancelEdit,
+    handleChange,
+    handleDateChange,
+    toggleFocus,
+    disableFutureDays
+  } = props;
 
   return (
     <Card>
       <Card.Content>
-        <Form>
+        <Form size="large">
           <Form.Input
             label="Title"
             type="text"
@@ -36,7 +38,6 @@ const MovieEdit = props => {
             size="mini"
             value={movie.director}
             onChange={handleChange}
-            required
           />
           <Form.TextArea
             label="Brief Review/Description"
@@ -45,15 +46,13 @@ const MovieEdit = props => {
             value={movie.description}
             onChange={handleChange}
           />
-          <Form.Input
+          <DatePicker
+            date={movie.editDate}
+            focus={movie.focus}
+            handleDateChange={handleDateChange}
+            toggleFocus={toggleFocus}
+            disableFutureDays={disableFutureDays}
             label="Date Watched"
-            type="date"
-            name="date"
-            size="mini"
-            max={currentDate}
-            value={formDate}
-            onChange={handleChange}
-            required
           />
           <Rating
             maxRating={5}
@@ -70,7 +69,7 @@ const MovieEdit = props => {
         <Button
           basic
           compact
-          size="mini"
+          size="medium"
           floated="left"
           color="red"
           onClick={cancelEdit.bind(this)}
@@ -80,7 +79,7 @@ const MovieEdit = props => {
         <Button
           basic
           compact
-          size="mini"
+          size="medium"
           floated="right"
           color="green"
           onClick={saveEdit.bind(this)}

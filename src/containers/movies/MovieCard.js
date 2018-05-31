@@ -9,13 +9,16 @@ import {
   removeImage
 } from '../../actions/movie';
 import { toastr } from 'react-redux-toastr';
+import moment from 'moment';
 
 import Movie from '../../components/movies/Movie';
 import MovieEdit from '../../components/movies/MovieEdit';
 
 class MovieCard extends Component {
   state = {
-    ...this.props.movie
+    ...this.props.movie,
+    editDate: moment(this.props.movie.date),
+    focus: false
   };
 
   handleChange = (e, { name, value }) => {
@@ -84,6 +87,7 @@ class MovieCard extends Component {
       ...this.state,
       token
     };
+    editObj.date = this.state.editDate;
 
     updateMovie(editObj)
       .then(result => {
@@ -113,6 +117,21 @@ class MovieCard extends Component {
       });
   };
 
+  handleDateChange = value => {
+    this.setState({
+      editDate: value,
+      focus: false
+    });
+  };
+
+  toggleFocus = focused => {
+    this.setState({
+      focus: focused
+    });
+  };
+
+  disableFutureDays = day => moment().diff(day) < 0;
+
   render() {
     const { movie } = this.props;
 
@@ -127,6 +146,9 @@ class MovieCard extends Component {
           saveEdit={this.saveEdit}
           cancelEdit={this.edit}
           handleChange={this.handleChange}
+          handleDateChange={this.handleDateChange}
+          toggleFocus={this.toggleFocus}
+          disableFutureDays={this.disableFutureDays}
         />
       );
     }

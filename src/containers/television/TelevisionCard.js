@@ -9,13 +9,16 @@ import {
   removeImage
 } from '../../actions/television';
 import { toastr } from 'react-redux-toastr';
+import moment from 'moment';
 
 import Television from '../../components/television/Television';
 import TelevisionEdit from '../../components/television/TelevisionEdit';
 
 class TelevisionCard extends Component {
   state = {
-    ...this.props.television
+    ...this.props.television,
+    editDate: moment(this.props.television.date),
+    focus: false
   };
 
   handleChange = (e, { name, value }) => {
@@ -84,6 +87,7 @@ class TelevisionCard extends Component {
       ...this.state,
       token
     };
+    editObj.date = this.state.editDate;
 
     updateTelevision(editObj)
       .then(result => {
@@ -113,6 +117,21 @@ class TelevisionCard extends Component {
       });
   };
 
+  handleDateChange = value => {
+    this.setState({
+      editDate: value,
+      focus: false
+    });
+  };
+
+  toggleFocus = focused => {
+    this.setState({
+      focus: focused
+    });
+  };
+
+  disableFutureDays = day => moment().diff(day) < 0;
+
   render() {
     const { television } = this.props;
     if (!television.edit) {
@@ -130,6 +149,9 @@ class TelevisionCard extends Component {
           saveEdit={this.saveEdit}
           cancelEdit={this.edit}
           handleChange={this.handleChange}
+          handleDateChange={this.handleDateChange}
+          toggleFocus={this.toggleFocus}
+          disableFutureDays={this.disableFutureDays}
         />
       );
     }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import RegisterForm from '../components/register/RegisterForm';
 import { register } from '../actions/user';
+import { updateActiveItem } from '../actions/nav';
 
 class Register extends Component {
   state = {
@@ -66,12 +67,18 @@ class Register extends Component {
       });
   };
 
+  loginLink = () => {
+    this.props.router.history.push('/login');
+    this.props.dispatch(updateActiveItem('login'));
+  };
+
   render() {
     return (
       <RegisterForm
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
         formVals={this.state}
+        loginLink={this.loginLink}
       />
     );
   }

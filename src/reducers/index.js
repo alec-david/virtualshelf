@@ -5,7 +5,6 @@ import television from './television';
 import items from './items';
 import user from './user';
 import nav from './nav';
-import { reducer as reduxFormReducer } from 'redux-form';
 import { reducer as toastrReducer } from 'react-redux-toastr';
 
 const remembrApp = combineReducers({
@@ -15,7 +14,6 @@ const remembrApp = combineReducers({
   items,
   user,
   nav,
-  form: reduxFormReducer,
   toastr: toastrReducer
 });
 

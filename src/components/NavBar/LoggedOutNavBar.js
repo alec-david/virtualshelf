@@ -235,7 +235,7 @@ class MobileContainer extends Component {
             </Menu.Item>
           </Sidebar>
           <Sidebar.Pusher dimmed={visible} onClick={handlePusher} style={{ minHeight: '100vh' }}>
-            <Menu fixed="top" inverted>
+            <Menu inverted>
               <Menu.Item onClick={handleToggle}>
                 <Icon name="sidebar" />
               </Menu.Item>

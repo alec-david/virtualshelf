@@ -1,27 +1,29 @@
 import React from 'react';
 import { Button, Card, Form, Rating } from 'semantic-ui-react';
+import DatePicker from '../util/DatePicker';
 
 const textAreaStyle = {
   fontSize: '.78571429em'
 };
 
 const TelevisionEdit = props => {
-  const { television, saveEdit, cancelEdit, handleChange } = props;
-  let formDate;
-  try {
-    formDate = new Date(television.date).toISOString().split('T')[0];
-  } catch (e) {
-    formDate = '';
-  }
+  const {
+    television,
+    saveEdit,
+    cancelEdit,
+    handleChange,
+    handleDateChange,
+    toggleFocus,
+    disableFutureDays
+  } = props;
   if (!television.episode) {
     television.episode = '';
   }
-  const currentDate = new Date().toISOString().split('T')[0];
 
   return (
     <Card>
       <Card.Content>
-        <Form>
+        <Form size="large">
           <Form.Input
             label="Title"
             type="text"
@@ -60,15 +62,13 @@ const TelevisionEdit = props => {
             value={television.description}
             onChange={handleChange}
           />
-          <Form.Input
+          <DatePicker
+            date={television.editDate}
+            focus={television.focus}
+            handleDateChange={handleDateChange}
+            toggleFocus={toggleFocus}
+            disableFutureDays={disableFutureDays}
             label="Date Watched"
-            type="date"
-            name="date"
-            size="mini"
-            max={currentDate}
-            value={formDate}
-            onChange={handleChange}
-            required
           />
           <Rating
             maxRating={5}
@@ -85,7 +85,7 @@ const TelevisionEdit = props => {
         <Button
           basic
           compact
-          size="mini"
+          size="medium"
           floated="left"
           color="red"
           onClick={cancelEdit.bind(this)}
@@ -95,7 +95,7 @@ const TelevisionEdit = props => {
         <Button
           basic
           compact
-          size="mini"
+          size="medium"
           floated="right"
           color="green"
           onClick={saveEdit.bind(this)}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Form, Message, Grid, Segment, Header, Icon } from 'semantic-ui-react';
 
 const RegisterForm = props => {
-  const { handleSubmit, handleChange, formVals } = props;
+  const { handleSubmit, handleChange, formVals, loginLink } = props;
 
   const criteriaIcon =
     formVals.password.length === 0 ? (
@@ -112,6 +112,12 @@ const RegisterForm = props => {
             Register
           </Header>
           {form}
+          <Message>
+            Already have an account?{' '}
+            <a onClick={loginLink} style={{ cursor: 'pointer' }}>
+              Login
+            </a>
+          </Message>
         </Grid.Column>
       </Grid>
     </div>

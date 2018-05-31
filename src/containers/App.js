@@ -34,7 +34,6 @@ class App extends Component {
   setActiveItemNav = () => {
     const currentURL = window.location.href;
     const currentRoute = currentURL.substring(currentURL.lastIndexOf('/') + 1);
-    console.log(currentRoute ? currentRoute : 'home');
     this.props.dispatch(updateActiveItem(currentRoute ? currentRoute : 'home'));
   };
 
