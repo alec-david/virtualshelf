@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toastr } from 'react-redux-toastr';
+import * as pbkdf2Password from 'pbkdf2-password';
 
 import ResetPasswordForm from '../components/resetPassword/ResetPasswordForm';
 import ResetPasswordEmailForm from '../components/resetPassword/ResetPasswordEmailForm';
 
 import { logout, resetPasswordEmail, resetPassword } from '../actions/user';
 import { updateActiveItem } from '../actions/nav';
+
+const hash = pbkdf2Password();
 
 class ResetPassword extends Component {
   state = {
@@ -54,35 +57,38 @@ class ResetPassword extends Component {
       });
       return;
     }
-    const params = this.props.router.location.search;
-    const token = params.split('=')[1];
 
-    const userObj = {
-      token,
-      oldPassword: this.state.oldPassword,
-      newPassword: this.state.newPassword
-    };
+    const params = this.props.router.location.search.split('&');
+    const token = params[0].split('=')[1];
+    const email = params[1].split('=')[1];
 
-    resetPassword(userObj)
-      .then(result => {
-        this.props.dispatch(result);
-        this.setState({
-          email: '',
-          errorMsg: '',
-          newPassword: '',
-          reEnterPassword: ''
+    hash({ password: this.state.newPassword, salt: email }, (err, pass, salt, hash) => {
+      const userObj = {
+        token,
+        newPassword: hash
+      };
+
+      resetPassword(userObj)
+        .then(result => {
+          this.setState({
+            email: '',
+            errorMsg: '',
+            newPassword: '',
+            reEnterPassword: ''
+          });
+          this.props.dispatch(result);
+          toastr.success('Success', 'Updated Password');
+          this.props.router.history.replace('/');
+          this.props.dispatch(updateActiveItem('home'));
+        })
+        .catch(err => {
+          this.setState({
+            errorMsg: err,
+            newPassword: '',
+            reEnterPassword: ''
+          });
         });
-        toastr.success('Success', 'Updated Password');
-        this.props.router.history.replace('/');
-        this.props.dispatch(updateActiveItem('home'));
-      })
-      .catch(err => {
-        this.setState({
-          errorMsg: err,
-          newPassword: '',
-          reEnterPassword: ''
-        });
-      });
+    });
   };
 
   cancel = () => {

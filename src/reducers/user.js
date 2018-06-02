@@ -4,7 +4,8 @@ import {
   HYDRATED_ALL,
   HYDRATED_BOOKS,
   HYDRATED_MOVIES,
-  HYDRATED_TELEVISION
+  HYDRATED_TELEVISION,
+  SET_VERIFIED
 } from '../actions/user';
 
 const defaultState = {
@@ -38,6 +39,10 @@ const user = (state = defaultState, action) => {
         hydratedBooks: false,
         hydratedMovies: false,
         hydratedTelevision: false
+      });
+    case SET_VERIFIED:
+      return Object.assign({}, state, {
+        verified: true
       });
     case HYDRATED_ALL:
       return Object.assign({}, state, {

@@ -45,9 +45,11 @@ export const deleteResourceWithBody = (resourceURL, jsonObj) => {
         json: true,
         body: jsonObj
       },
-      (error, response) => {
+      (error, response, body) => {
         if (error) {
           reject(error);
+        } else if (response.statusCode === 400) {
+          reject(body);
         }
         resolve(response);
       }

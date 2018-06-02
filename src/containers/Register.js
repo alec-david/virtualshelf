@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as pbkdf2Password from 'pbkdf2-password';
 
 import RegisterForm from '../components/register/RegisterForm';
 import { register } from '../actions/user';
 import { updateActiveItem } from '../actions/nav';
+
+const hash = pbkdf2Password();
 
 class Register extends Component {
   state = {
@@ -36,35 +39,39 @@ class Register extends Component {
       });
       return;
     }
-    const userObj = {
-      username: this.state.email,
-      password: this.state.password
-    };
-    //If passwords match, call register action
-    register(userObj)
-      .then(token => {
-        //If register successful in DB, dispatch action
-        //to update user state with token and navigate to homepage
-        this.props.dispatch(token);
-        this.props.router.history.replace('/');
-      })
-      .catch(err => {
-        if (err.indexOf('.') !== -1) {
-          let errSplit = err.split('.');
-          this.setState({
-            errorMsg: errSplit[0],
-            errorBody: errSplit[1],
-            password: '',
-            reEnterPassword: ''
-          });
-        } else {
-          this.setState({
-            errorMsg: err,
-            password: '',
-            reEnterPassword: ''
-          });
-        }
-      });
+
+    hash({ password: this.state.password, salt: this.state.email }, (err, pass, salt, hash) => {
+      const userObj = {
+        username: this.state.email,
+        password: hash
+      };
+      //If passwords match, call register action
+      register(userObj)
+        .then(token => {
+          //If register successful in DB, dispatch action
+          //to update user state with token and navigate to homepage
+          this.props.dispatch(token);
+          this.props.router.history.replace('/');
+          this.props.dispatch(updateActiveItem('home'));
+        })
+        .catch(err => {
+          if (err.indexOf('.') !== -1) {
+            let errSplit = err.split('.');
+            this.setState({
+              errorMsg: errSplit[0],
+              errorBody: errSplit[1],
+              password: '',
+              reEnterPassword: ''
+            });
+          } else {
+            this.setState({
+              errorMsg: err,
+              password: '',
+              reEnterPassword: ''
+            });
+          }
+        });
+    });
   };
 
   loginLink = () => {

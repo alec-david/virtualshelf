@@ -2,10 +2,6 @@ import React from 'react';
 import { Button, Card, Form, Rating } from 'semantic-ui-react';
 import DatePicker from '../util/DatePicker';
 
-const textAreaStyle = {
-  fontSize: '.78571429em'
-};
-
 const TelevisionEdit = props => {
   const {
     television,
@@ -28,7 +24,7 @@ const TelevisionEdit = props => {
             label="Title"
             type="text"
             name="title"
-            size="mini"
+            size="tiny"
             value={television.title}
             onChange={handleChange}
             autoFocus={true}
@@ -39,7 +35,7 @@ const TelevisionEdit = props => {
               label="Season"
               type="number"
               name="season"
-              size="mini"
+              size="tiny"
               value={television.season}
               onChange={handleChange}
               required
@@ -49,7 +45,7 @@ const TelevisionEdit = props => {
               label="Episode"
               type="number"
               name="episode"
-              size="mini"
+              size="tiny"
               value={television.episode}
               onChange={handleChange}
               fluid
@@ -58,7 +54,6 @@ const TelevisionEdit = props => {
           <Form.TextArea
             label="Brief Review/Description"
             name="description"
-            style={textAreaStyle}
             value={television.description}
             onChange={handleChange}
           />

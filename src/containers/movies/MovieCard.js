@@ -100,7 +100,7 @@ class MovieCard extends Component {
   };
 
   validateForm = movie => {
-    if (!movie.director || !movie.title || !movie.date) {
+    if (!movie.title || !movie.date) {
       toastr.error('Invalid Movie', 'Please fill out all required fields.');
       return false;
     }

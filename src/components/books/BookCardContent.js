@@ -16,9 +16,9 @@ const BookCardContent = props => {
       <Card.Meta>
         {book.author} <br />
         {formattedDate} -{' '}
-        <Rating maxRating={5} icon="star" rating={book.rating} disabled size="mini" />
+        <Rating maxRating={5} icon="star" rating={book.rating} disabled size="small" />
       </Card.Meta>
-      <Card.Description>{book.description}</Card.Description>
+      <Card.Description style={{ wordWrap: 'break-word' }}>{book.description}</Card.Description>
     </Card.Content>
   );
 };

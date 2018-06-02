@@ -24,3 +24,7 @@ button:disabled {
   padding-left: 50px;
   padding-right: 50px;
 }
+
+.srcText {
+  font-size: 10px;
+}

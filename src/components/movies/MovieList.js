@@ -12,7 +12,7 @@ const MovieList = props => {
 
   return (
     <div>
-      <Card.Group centered stackable>
+      <Card.Group centered>
         {addNewMovie}
 
         {movies.list.map(movie => {

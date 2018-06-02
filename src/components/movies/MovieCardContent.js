@@ -16,9 +16,9 @@ const MovieCardContent = props => {
       <Card.Meta>
         {movie.director} <br />
         {formattedDate} -{' '}
-        <Rating maxRating={5} icon="star" rating={movie.rating} disabled size="mini" />
+        <Rating maxRating={5} icon="star" rating={movie.rating} disabled size="small" />
       </Card.Meta>
-      <Card.Description>{movie.description}</Card.Description>
+      <Card.Description style={{ wordWrap: 'break-word' }}>{movie.description}</Card.Description>
     </Card.Content>
   );
 };

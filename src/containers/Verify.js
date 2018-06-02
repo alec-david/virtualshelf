@@ -17,6 +17,7 @@ class Verify extends Component {
           toastr.success('Success!', result);
           this.props.router.history.replace('/');
           this.props.dispatch(updateActiveItem('home'));
+          this.props.dispatch(result);
         })
         .catch(err => {
           toastr.error('Failed to Verify', err);

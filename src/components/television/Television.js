@@ -4,19 +4,19 @@ import televisionImg from '../../imgs/television.svg';
 
 import TelevisionCardContent from './TelevisionCardContent';
 
+const imgStyle = {
+  height: 175 + 'px'
+};
+
 const Television = props => {
   const { television, user, handleSettings } = props;
 
-  const bleh = {
-    height: 150 + 'px'
-  };
-
   return (
-    <Card raised={true}>
+    <Card raised>
       <Image
         src={television.image_url ? television.image_url : televisionImg}
-        style={bleh}
-        centered={true}
+        style={imgStyle}
+        centered
         title={television.image_url}
       />
       <TelevisionCardContent

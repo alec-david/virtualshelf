@@ -5,7 +5,7 @@ import FilterBook from '../../containers/books/FilterBook';
 import VisibleBookList from '../../containers/books/VisibleBookList';
 
 const filterPadding = {
-  paddingLeft: '50px'
+  paddingLeft: window.innerWidth * 0.025 + 'px'
 };
 
 const BookPage = props => {

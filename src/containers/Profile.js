@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { toastr } from 'react-redux-toastr';
+import * as pbkdf2Password from 'pbkdf2-password';
 
 import ProfileView from '../components/profile/ProfileView';
 import ProfileDelete from '../components/profile/ProfileDelete';
@@ -8,6 +9,8 @@ import ProfileResetPW from '../components/profile/ProfileResetPW';
 
 import { logout, deleteAccount, resetPassword, resendVerifyEmail } from '../actions/user';
 import { updateActiveItem } from '../actions/nav';
+
+const hash = pbkdf2Password();
 
 class Profile extends Component {
   state = {
@@ -63,33 +66,44 @@ class Profile extends Component {
       });
       return;
     }
-    const userObj = {
-      token: this.props.user.token,
-      oldPassword: this.state.oldPassword,
-      newPassword: this.state.newPassword
-    };
 
-    resetPassword(userObj)
-      .then(result => {
-        this.props.dispatch(result);
-        this.setState({
-          reset: false,
-          delete: false,
-          oldPassword: '',
-          newPassword: '',
-          reEnterNewPassword: '',
-          error: ''
-        });
-        toastr.success('Success', 'Updated Password');
-      })
-      .catch(err => {
-        this.setState({
-          error: err,
-          oldPassword: '',
-          newPassword: '',
-          reEnterNewPassword: ''
-        });
-      });
+    hash(
+      { password: this.state.oldPassword, salt: this.props.user.email },
+      (oldErr, oldPass, oldSalt, oldHash) => {
+        hash(
+          { password: this.state.newPassword, salt: this.props.user.email },
+          (newErr, newPass, newSalt, newHash) => {
+            const userObj = {
+              token: this.props.user.token,
+              oldPassword: oldHash,
+              newPassword: newHash
+            };
+
+            resetPassword(userObj)
+              .then(result => {
+                this.props.dispatch({ ...result, verified: this.props.user.verified });
+                this.setState({
+                  reset: false,
+                  delete: false,
+                  oldPassword: '',
+                  newPassword: '',
+                  reEnterNewPassword: '',
+                  error: ''
+                });
+                toastr.success('Success', 'Updated Password');
+              })
+              .catch(err => {
+                this.setState({
+                  error: err,
+                  oldPassword: '',
+                  newPassword: '',
+                  reEnterNewPassword: ''
+                });
+              });
+          }
+        );
+      }
+    );
   };
 
   deleteAccount = () => {
@@ -100,25 +114,30 @@ class Profile extends Component {
   };
 
   confirmDelete = e => {
-    const userObj = {
-      email: this.props.user.email,
-      password: this.state.oldPassword,
-      deleteItems: this.state.deleteItems
-    };
+    hash(
+      { password: this.state.oldPassword, salt: this.props.user.email },
+      (err, pass, salt, hash) => {
+        const userObj = {
+          email: this.props.user.email,
+          password: hash,
+          deleteItems: this.state.deleteItems
+        };
 
-    deleteAccount(userObj)
-      .then(result => {
-        this.props.dispatch(result);
-        this.props.router.history.replace('/');
-        this.props.dispatch(updateActiveItem('home'));
-        toastr.error('Success', 'Deleted Account');
-      })
-      .catch(err => {
-        this.setState({
-          error: err,
-          oldPassword: ''
-        });
-      });
+        deleteAccount(userObj)
+          .then(result => {
+            this.props.dispatch(result);
+            this.props.router.history.replace('/');
+            this.props.dispatch(updateActiveItem('home'));
+            toastr.error('Success', 'Deleted Account');
+          })
+          .catch(err => {
+            this.setState({
+              error: err,
+              oldPassword: ''
+            });
+          });
+      }
+    );
   };
 
   cancel = name => {

@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, Image } from 'semantic-ui-react';
 import { addBook } from '../../actions/book';
 import { toastr } from 'react-redux-toastr';
-import plusImg from '../../imgs/plus.svg';
 import moment from 'moment';
 
 import NewBook from '../../components/books/NewBook';
-
-const imageStyle = {
-  cursor: 'pointer',
-  height: 300 + 'px'
-};
+import AddNewBook from '../../components/books/AddNewBook';
 
 const defaultState = {
   addBook: false,
@@ -89,27 +83,19 @@ class NewBookCard extends Component {
 
   render() {
     if (!this.state.addBook) {
-      return (
-        <Card>
-          <Image src={plusImg} onClick={this.addNewBook} style={imageStyle} fluid centered />
-          <Card.Content>
-            <Card.Header>Add a new book.</Card.Header>
-          </Card.Content>
-        </Card>
-      );
-    } else {
-      return (
-        <NewBook
-          book={this.state}
-          cancel={this.cancel}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-          handleDateChange={this.handleDateChange}
-          toggleFocus={this.toggleFocus}
-          disableFutureDays={this.disableFutureDays}
-        />
-      );
+      return <AddNewBook addNewBook={this.addNewBook} />;
     }
+    return (
+      <NewBook
+        book={this.state}
+        cancel={this.cancel}
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+        handleDateChange={this.handleDateChange}
+        toggleFocus={this.toggleFocus}
+        disableFutureDays={this.disableFutureDays}
+      />
+    );
   }
 }
 

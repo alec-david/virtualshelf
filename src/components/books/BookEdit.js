@@ -2,10 +2,6 @@ import React from 'react';
 import { Button, Card, Form, Rating } from 'semantic-ui-react';
 import DatePicker from '../util/DatePicker';
 
-const textAreaStyle = {
-  fontSize: '.78571429em'
-};
-
 const BookEdit = props => {
   const {
     book,
@@ -25,7 +21,7 @@ const BookEdit = props => {
             label="Title"
             type="text"
             name="title"
-            size="mini"
+            size="tiny"
             value={book.title}
             onChange={handleChange}
             autoFocus={true}
@@ -35,7 +31,7 @@ const BookEdit = props => {
             label="Author"
             type="text"
             name="author"
-            size="mini"
+            size="tiny"
             value={book.author}
             onChange={handleChange}
             required
@@ -43,7 +39,6 @@ const BookEdit = props => {
           <Form.TextArea
             label="Brief Review/Description"
             name="description"
-            style={textAreaStyle}
             value={book.description}
             onChange={handleChange}
           />

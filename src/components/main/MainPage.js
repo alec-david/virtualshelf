@@ -5,7 +5,7 @@ import FilterMain from '../../containers/main/FilterMain';
 import VisibleItemList from '../../containers/main/VisibleItemList';
 
 const filterPadding = {
-  paddingLeft: '50px'
+  paddingLeft: window.innerWidth * 0.025 + 'px'
 };
 
 const Main = () => (

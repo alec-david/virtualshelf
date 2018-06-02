@@ -4,18 +4,19 @@ import bookImg from '../../imgs/book.svg';
 
 import BookCardContent from './BookCardContent';
 
+const imgStyle = {
+  height: 300 + 'px'
+};
+
 const Book = props => {
   const { book, user, handleSettings } = props;
 
-  const bleh = {
-    height: 300 + 'px'
-  };
   return (
-    <Card raised={true}>
+    <Card raised>
       <Image
         src={book.image_url ? book.image_url : bookImg}
-        style={bleh}
-        centered={true}
+        style={imgStyle}
+        centered
         title={book.image_url}
       />
       <BookCardContent book={book} handleSettings={handleSettings} email={user.email} />
