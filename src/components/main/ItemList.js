@@ -6,7 +6,7 @@ import MovieCard from '../../containers/movies/MovieCard';
 import TelevisionCard from '../../containers/television/TelevisionCard';
 
 const ItemList = props => {
-  const { items } = props;
+  const { items, loadedItems } = props;
   let cardId = 0;
 
   const srcText = items.size ? 'All images sourced from https://www.wikipedia.org/' : '';
@@ -14,7 +14,7 @@ const ItemList = props => {
   return (
     <div>
       <Card.Group centered>
-        {items.map(item => {
+        {items.slice(0, loadedItems).map(item => {
           if (item.author !== undefined) {
             return <BookCard key={cardId++} book={item} />;
           } else if (item.director !== undefined) {

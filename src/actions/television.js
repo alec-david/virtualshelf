@@ -2,6 +2,7 @@ import { getResource, postResource, updateResource, deleteResource } from './ind
 
 export const ADD_NEW_TELEVISION = 'ADD_NEW_TELEVISION';
 export const ADD_EXISTING_TELEVISION = 'ADD_EXISTING_TELEVISION';
+export const LOAD_MORE_TELEVISION = 'LOAD_MORE_TELEVISION';
 export const DELETE_TELEVISION = 'DELETE_TELEVISION';
 export const EDIT_TELEVISION = 'EDIT_TELEVISION';
 export const UPDATE_TELEVISION = 'UPDATE_TELEVISION';
@@ -45,6 +46,12 @@ export const hydrateTelevision = television => {
   return {
     television,
     type: ADD_EXISTING_TELEVISION
+  };
+};
+
+export const loadMoreTelevision = () => {
+  return {
+    type: LOAD_MORE_TELEVISION
   };
 };
 

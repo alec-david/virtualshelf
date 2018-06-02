@@ -1,31 +1,45 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getMovies, getUserMovies, hydrateMovies } from '../../actions/movie';
+import { getMovies, getUserMovies, hydrateMovies, loadMoreMovies } from '../../actions/movie';
 import { setHydratedMoviesFlag } from '../../actions/user';
 
 import MovieList from '../../components/movies/MovieList';
 
-class VisibleMovieList extends Component {
-  state = {
-    width: window.innerWidth
+const debounce = (func, wait) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
   };
+};
 
+class VisibleMovieList extends Component {
   componentWillMount() {
     const { movies, user } = this.props.state;
     //If movies haven't been hydrated yet
     if (!user.loggingIn && !user.hydratedMovies) {
       this.checkUserLoggedIn(movies, user);
     }
+  }
 
-    window.addEventListener('resize', this.handleWindowSizeChange);
+  componentDidMount() {
+    window.addEventListener('scroll', debounce(this.handleScroll, 250, true));
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
+    window.removeEventListener('scroll', debounce(this.handleScroll, 250, true));
   }
 
-  handleWindowSizeChange = () => {
-    this.setState({ width: window.innerWidth });
+  handleScroll = e => {
+    const { movies } = this.props.state;
+    const element = e.target.scrollingElement;
+
+    if (
+      element.scrollHeight - element.scrollTop < element.clientHeight + 150 &&
+      movies.list.size > movies.loadedMovies
+    ) {
+      this.props.dispatch(loadMoreMovies());
+    }
   };
 
   checkUserLoggedIn(movies, user) {

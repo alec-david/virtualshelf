@@ -1,16 +1,11 @@
-import {
-  LOGIN,
-  LOGOUT
-} from '../actions/user';
-import {
-  FILTER_ITEM,
-  SEARCH_ITEM
-} from '../actions/item';
+import { LOGIN, LOGOUT } from '../actions/user';
+import { FILTER_ITEM, SEARCH_ITEM, LOAD_MORE_ITEMS } from '../actions/item';
 
 const defaultState = {
   filter: 'date',
   direction: 'DESC',
-  search: ''
+  search: '',
+  loadedItems: 50
 };
 
 const items = (state = defaultState, action) => {
@@ -27,9 +22,13 @@ const items = (state = defaultState, action) => {
       return Object.assign({}, state, {
         search: action.search
       });
+    case LOAD_MORE_ITEMS:
+      return Object.assign({}, state, {
+        loadedItems: state.loadedItems + 50
+      });
     default:
       return state;
   }
-}
+};
 
 export default items;

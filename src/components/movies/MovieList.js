@@ -15,7 +15,7 @@ const MovieList = props => {
       <Card.Group centered>
         {addNewMovie}
 
-        {movies.list.map(movie => {
+        {movies.list.slice(0, movies.loadedMovies).map(movie => {
           return <MovieCard key={movie.id} movie={movie} />;
         })}
       </Card.Group>

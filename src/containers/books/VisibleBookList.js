@@ -1,31 +1,45 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getBooks, getUserBooks, hydrateBooks } from '../../actions/book';
+import { getBooks, getUserBooks, hydrateBooks, loadMoreBooks } from '../../actions/book';
 import { setHydratedBooksFlag } from '../../actions/user';
 
 import BookList from '../../components/books/BookList';
 
-class VisibleBookList extends Component {
-  state = {
-    width: window.innerWidth
+const debounce = (func, wait) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
   };
+};
 
+class VisibleBookList extends Component {
   componentWillMount() {
     const { books, user } = this.props.state;
     //If books haven't been hydrated yet
     if (!user.loggingIn && !user.hydratedBooks) {
       this.checkUserLoggedIn(books, user);
     }
+  }
 
-    window.addEventListener('resize', this.handleWindowSizeChange);
+  componentDidMount() {
+    window.addEventListener('scroll', debounce(this.handleScroll, 250, true));
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
+    window.removeEventListener('scroll', debounce(this.handleScroll, 250, true));
   }
 
-  handleWindowSizeChange = () => {
-    this.setState({ width: window.innerWidth });
+  handleScroll = e => {
+    const { books } = this.props.state;
+    const element = e.target.scrollingElement;
+
+    if (
+      element.scrollHeight - element.scrollTop < element.clientHeight + 150 &&
+      books.list.size > books.loadedBooks
+    ) {
+      this.props.dispatch(loadMoreBooks());
+    }
   };
 
   checkUserLoggedIn(books, user) {

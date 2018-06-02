@@ -5,16 +5,20 @@ import { getBooks, getUserBooks, hydrateBooks } from '../../actions/book';
 import { getMovies, getUserMovies, hydrateMovies } from '../../actions/movie';
 import { getTelevision, getUserTelevision, hydrateTelevision } from '../../actions/television';
 import { setHydratedAllFlag } from '../../actions/user';
+import { loadMoreItems } from '../../actions/item';
 
 import ItemList from '../../components/main/ItemList';
 import NoItemMessage from '../../components/main/NoItemMessage';
 
-class VisibleItemList extends Component {
-  state = {
-    width: window.innerWidth,
-    allItems: List()
+const debounce = (func, wait) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
   };
+};
 
+class VisibleItemList extends Component {
   componentWillMount() {
     const { user } = this.props.state;
     if (
@@ -23,16 +27,28 @@ class VisibleItemList extends Component {
     ) {
       this.checkUserLoggedIn(user);
     }
+  }
 
-    window.addEventListener('resize', this.handleWindowSizeChange);
+  componentDidMount() {
+    window.addEventListener('scroll', debounce(this.handleScroll, 250, true));
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
+    window.removeEventListener('scroll', debounce(this.handleScroll, 250, true));
   }
 
-  handleWindowSizeChange = () => {
-    this.setState({ width: window.innerWidth });
+  handleScroll = e => {
+    const { books, movies, television, items } = this.props.state;
+    const element = e.target.scrollingElement;
+
+    const totalItems = books.list.size + movies.list.size + television.list.size;
+
+    if (
+      element.scrollHeight - element.scrollTop < element.clientHeight + 150 &&
+      totalItems > items.loadedItems
+    ) {
+      this.props.dispatch(loadMoreItems());
+    }
   };
 
   checkUserLoggedIn(user) {
@@ -159,41 +175,15 @@ class VisibleItemList extends Component {
     return index;
   };
 
-  getNumberOfColumns = () => {
-    const { width } = this.state;
-
-    if (width > 1600) {
-      return 7;
-    } else if (width > 1400 && width <= 1600) {
-      return 6;
-    } else if (width > 1200 && width <= 1400) {
-      return 5;
-    } else if (width > 1000 && width <= 1200) {
-      return 4;
-    } else if (width > 800 && width <= 1000) {
-      return 3;
-    } else if (width > 600 && width <= 800) {
-      return 2;
-    } else {
-      //Mobile width
-      return 1;
-    }
-  };
-
   render() {
-    const items = this.combineItems();
-    const { user } = this.props.state;
+    const allItems = this.combineItems();
+    const { user, items } = this.props.state;
+
     if (user.hydratedBooks && user.hydratedMovies && user.hydratedTelevision) {
-      if (items === undefined || items.size === 0) {
+      if (allItems === undefined || allItems.size === 0) {
         return <NoItemMessage />;
       }
-      return (
-        <ItemList
-          items={this.combineItems()}
-          colNum={this.getNumberOfColumns()}
-          user={this.props.state.user}
-        />
-      );
+      return <ItemList items={allItems} loadedItems={items.loadedItems} />;
     }
     return <div />;
   }

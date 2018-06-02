@@ -2,6 +2,7 @@ import { List } from 'immutable';
 import {
   ADD_NEW_MOVIE,
   ADD_EXISTING_MOVIES,
+  LOAD_MORE_MOVIES,
   DELETE_MOVIE,
   EDIT_MOVIE,
   UPDATE_MOVIE,
@@ -21,7 +22,8 @@ const defaultState = {
   option: 'date',
   optionText: 'Date Watched',
   filterDirection: DESC,
-  search: ''
+  search: '',
+  loadedMovies: 50
 };
 
 const movies = (state = defaultState, action) => {
@@ -42,6 +44,10 @@ const movies = (state = defaultState, action) => {
       return Object.assign({}, state, {
         list: state.list.concat(movieList.sort(sortObject(filterStr))),
         movieCount: movieList.length
+      });
+    case LOAD_MORE_MOVIES:
+      return Object.assign({}, state, {
+        loadedMovies: state.loadedMovies + 50
       });
     case DELETE_MOVIE:
       return Object.assign({}, state, {

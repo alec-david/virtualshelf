@@ -38,6 +38,10 @@ class App extends Component {
   };
 
   render() {
+    const { user } = this.props.state;
+    if (user.loggingIn) {
+      return <div />;
+    }
     return (
       <ConnectedRouter history={history}>
         <NavigationBar />
