@@ -13,7 +13,7 @@ const ItemList = props => {
 
   return (
     <div>
-      <Card.Group centered stackable>
+      <Card.Group centered>
         {items.map(item => {
           if (item.author !== undefined) {
             return <BookCard key={cardId++} book={item} />;

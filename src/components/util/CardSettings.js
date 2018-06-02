@@ -1,6 +1,10 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 
+const textSize = {
+  fontSize: '16px'
+};
+
 const optionsLoggedInWithImage = [
   { key: 1, text: 'Edit', value: 'Edit' },
   { key: 2, text: 'Hide', value: 'Hide' },
@@ -43,7 +47,7 @@ const CardSettings = props => {
     >
       <Dropdown.Menu>
         {options.map(option => (
-          <Dropdown.Item key={option.value} onClick={handleSettings} {...option} />
+          <Dropdown.Item key={option.value} onClick={handleSettings} style={textSize} {...option} />
         ))}
       </Dropdown.Menu>
     </Dropdown>

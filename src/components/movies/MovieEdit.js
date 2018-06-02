@@ -2,10 +2,6 @@ import React from 'react';
 import { Button, Card, Form, Rating } from 'semantic-ui-react';
 import DatePicker from '../util/DatePicker';
 
-const textAreaStyle = {
-  fontSize: '.78571429em'
-};
-
 const MovieEdit = props => {
   const {
     movie,
@@ -25,7 +21,7 @@ const MovieEdit = props => {
             label="Title"
             type="text"
             name="title"
-            size="mini"
+            size="tiny"
             value={movie.title}
             onChange={handleChange}
             autoFocus={true}
@@ -35,14 +31,13 @@ const MovieEdit = props => {
             label="Director"
             type="text"
             name="director"
-            size="mini"
+            size="tiny"
             value={movie.director}
             onChange={handleChange}
           />
           <Form.TextArea
             label="Brief Review/Description"
             name="description"
-            style={textAreaStyle}
             value={movie.description}
             onChange={handleChange}
           />

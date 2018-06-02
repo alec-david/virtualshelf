@@ -3,6 +3,7 @@ import { getResource, postResource, updateResource, deleteResourceWithBody } fro
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
+export const SET_VERIFIED = 'SET_VERIFIED';
 export const HYDRATED_ALL = 'HYDRATED_ALL';
 export const HYDRATED_BOOKS = 'HYDRATED_BOOKS';
 export const HYDRATED_MOVIES = 'HYDRATED_MOVIES';
@@ -94,20 +95,6 @@ export const resetPasswordEmail = email => {
   return getResource(resetURL);
 };
 
-export const resetPasswordFromEmail = (token, password) => {
-  const resetURL = userURL + 'resetEmail';
-
-  return new Promise((resolve, reject) => {
-    updateResource(resetURL, { token, password })
-      .then(result => {
-        resolve(result);
-      })
-      .catch(err => {
-        reject(err);
-      });
-  });
-};
-
 export const deleteAccount = user => {
   const deleteURL = userURL + 'delete';
 
@@ -132,7 +119,7 @@ export const verifyEmailWithToken = token => {
   return new Promise((resolve, reject) => {
     postResource(verifyURL, { token })
       .then(result => {
-        resolve(result);
+        resolve({ type: SET_VERIFIED });
       })
       .catch(err => {
         reject(err);

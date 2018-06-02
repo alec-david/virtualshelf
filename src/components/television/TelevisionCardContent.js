@@ -18,9 +18,11 @@ const TelevisionCardContent = props => {
         Season {television.season} {episodeStr}
         <br />
         {formattedDate} -{' '}
-        <Rating maxRating={5} icon="star" rating={television.rating} disabled size="mini" />
+        <Rating maxRating={5} icon="star" rating={television.rating} disabled size="small" />
       </Card.Meta>
-      <Card.Description>{television.description}</Card.Description>
+      <Card.Description style={{ wordWrap: 'break-word' }}>
+        {television.description}
+      </Card.Description>
     </Card.Content>
   );
 };

@@ -5,7 +5,7 @@ import FilterTelevision from '../../containers/television/FilterTelevision';
 import VisibleTelevisionList from '../../containers/television/VisibleTelevisionList';
 
 const filterPadding = {
-  paddingLeft: '50px'
+  paddingLeft: window.innerWidth * 0.025 + 'px'
 };
 
 const MoviePage = props => {

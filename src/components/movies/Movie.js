@@ -4,18 +4,19 @@ import movieImg from '../../imgs/movie.svg';
 
 import MovieCardContent from './MovieCardContent';
 
+const imgStyle = {
+  height: 300 + 'px'
+};
+
 const Movie = props => {
   const { movie, user, handleSettings } = props;
 
-  const bleh = {
-    height: 300 + 'px'
-  };
   return (
-    <Card raised={true}>
+    <Card raised>
       <Image
         src={movie.image_url ? movie.image_url : movieImg}
-        style={bleh}
-        centered={true}
+        style={imgStyle}
+        centered
         title={movie.image_url}
       />
       <MovieCardContent movie={movie} handleSettings={handleSettings} email={user.email} />

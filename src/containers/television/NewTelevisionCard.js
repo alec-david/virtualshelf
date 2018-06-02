@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, Image } from 'semantic-ui-react';
 import { addTelevision } from '../../actions/television';
 import { toastr } from 'react-redux-toastr';
-import plusImg from '../../imgs/plus.svg';
 import moment from 'moment';
 
 import NewTelevision from '../../components/television/NewTelevision';
-
-const imageStyle = {
-  cursor: 'pointer',
-  height: 150 + 'px'
-};
+import AddNewTelevision from '../../components/television/AddNewTelevision';
 
 const defaultState = {
   addTelevision: false,
@@ -90,14 +84,7 @@ class NewTelevisionCard extends Component {
 
   render() {
     if (!this.state.addTelevision) {
-      return (
-        <Card>
-          <Image src={plusImg} onClick={this.addNewTelevision} style={imageStyle} fluid centered />
-          <Card.Content>
-            <Card.Header>Add a new television show.</Card.Header>
-          </Card.Content>
-        </Card>
-      );
+      return <AddNewTelevision addNewTelevision={this.addNewTelevision} />;
     } else {
       return (
         <NewTelevision

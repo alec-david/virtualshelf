@@ -1,17 +1,11 @@
 # Refactor TODO:
 
-* Break up long strings in description (on card) (get card width, insert line break every x character?)
 * switch getBooks/getUserBooks so they return JSON object w/ type...
-* for NewItemCard - move into components
 
 # TODO
 
-* work on mobile view
-* maybe add fixed nav bar. Have to create nav bar store (has activeItem, visibilty, etc)
-* Look into not sending password to backend. (Encrypt first)
 * Lazy loading of items (client side) (should I pull all books down and then lazily display -- research)
 * Unit testing
-* tweak movie and tv searching. Not very accurate
 
 # Front End Stuff
 
@@ -19,8 +13,11 @@
 
 # Stretch TODOs (ordered from most to least likely to implement)
 
+* work on mobile view
+* tweak movie and tv searching. Not very accurate
+* add nav bar dissappears on scroll down and reappers on scroll up
 * add option to browse all items when logged in
-* Switch add item to pop up in center and have larger text boxes
+* Switch add item to pop up in center and have larger text boxes (Maybe. Increased size of form on cards so not as necessary)
 * add option to upload own image
 * switch to downloading images off wikipedia. Use jimp or sharp.js to resize them all to standard size/form. Display that image
 * Add some type of time limit on password reset token
@@ -30,6 +27,9 @@
 
 # Completed
 
+* ~~Encrypt password before sending to backend~~
+* ~~for NewItemCard - move into components~~
+* ~~Break up long strings in description (on card) (get card width, insert line break every x character?)~~
 * ~~better date picker~~
 * ~~set active item on start in nav bar~~
 * ~~add nav bar active item set to store. Set that when doing router.history.replace/push~~

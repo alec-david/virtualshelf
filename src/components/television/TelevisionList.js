@@ -14,7 +14,7 @@ const TelevisionList = props => {
 
   return (
     <div>
-      <Card.Group centered stackable>
+      <Card.Group centered>
         {addNewTelevision}
 
         {television.list.map(television => {
