@@ -2,6 +2,7 @@ import { getResource, postResource, updateResource, deleteResource } from './ind
 
 export const ADD_NEW_BOOK = 'ADD_NEW_BOOK';
 export const ADD_EXISTING_BOOKS = 'ADD_EXISTING_BOOKS';
+export const LOAD_MORE_BOOKS = 'LOAD_MORE_BOOKS';
 export const DELETE_BOOK = 'DELETE_BOOK';
 export const EDIT_BOOK = 'EDIT_BOOK';
 export const UPDATE_BOOK = 'UPDATE_BOOK';
@@ -48,6 +49,12 @@ export const hydrateBooks = books => {
   return {
     type: ADD_EXISTING_BOOKS,
     books
+  };
+};
+
+export const loadMoreBooks = () => {
+  return {
+    type: LOAD_MORE_BOOKS
   };
 };
 

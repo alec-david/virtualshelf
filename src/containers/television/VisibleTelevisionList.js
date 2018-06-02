@@ -1,31 +1,50 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getTelevision, getUserTelevision, hydrateTelevision } from '../../actions/television';
+import {
+  getTelevision,
+  getUserTelevision,
+  hydrateTelevision,
+  loadMoreTelevision
+} from '../../actions/television';
 import { setHydratedTelevisionFlag } from '../../actions/user';
 
 import TelevisionList from '../../components/television/TelevisionList';
 
-class VisibleTelevisionList extends Component {
-  state = {
-    width: window.innerWidth
+const debounce = (func, wait) => {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(this, args), wait);
   };
+};
 
+class VisibleTelevisionList extends Component {
   componentWillMount() {
     const { television, user } = this.props.state;
     //If television haven't been hydrated yet
     if (!user.loggingIn && !user.hydratedTelevision) {
       this.checkUserLoggedIn(television, user);
     }
+  }
 
-    window.addEventListener('resize', this.handleWindowSizeChange);
+  componentDidMount() {
+    window.addEventListener('scroll', debounce(this.handleScroll, 250, true));
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowSizeChange);
+    window.removeEventListener('scroll', debounce(this.handleScroll, 250, true));
   }
 
-  handleWindowSizeChange = () => {
-    this.setState({ width: window.innerWidth });
+  handleScroll = e => {
+    const { television } = this.props.state;
+    const element = e.target.scrollingElement;
+
+    if (
+      element.scrollHeight - element.scrollTop < element.clientHeight + 150 &&
+      television.list.size > television.loadedTelevision
+    ) {
+      this.props.dispatch(loadMoreTelevision());
+    }
   };
 
   checkUserLoggedIn(television, user) {

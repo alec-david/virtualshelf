@@ -2,6 +2,7 @@ import { List } from 'immutable';
 import {
   ADD_NEW_BOOK,
   ADD_EXISTING_BOOKS,
+  LOAD_MORE_BOOKS,
   DELETE_BOOK,
   EDIT_BOOK,
   UPDATE_BOOK,
@@ -21,7 +22,8 @@ const defaultState = {
   option: 'date',
   optionText: 'Date Read',
   filterDirection: DESC,
-  search: ''
+  search: '',
+  loadedBooks: 50
 };
 
 const books = (state = defaultState, action) => {
@@ -42,6 +44,10 @@ const books = (state = defaultState, action) => {
       return Object.assign({}, state, {
         list: state.list.concat(bookList.sort(sortObject(filterStr))),
         bookCount: bookList.length
+      });
+    case LOAD_MORE_BOOKS:
+      return Object.assign({}, state, {
+        loadedBooks: state.loadedBooks + 50
       });
     case DELETE_BOOK:
       return Object.assign({}, state, {

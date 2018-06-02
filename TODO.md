@@ -4,7 +4,6 @@
 
 # TODO
 
-* Lazy loading of items (client side) (should I pull all books down and then lazily display -- research)
 * Unit testing
 
 # Front End Stuff
@@ -27,6 +26,7 @@
 
 # Completed
 
+* ~~Lazy loading of items (client side) (should I pull all books down and then lazily display -- research)~~
 * ~~Encrypt password before sending to backend~~
 * ~~for NewItemCard - move into components~~
 * ~~Break up long strings in description (on card) (get card width, insert line break every x character?)~~

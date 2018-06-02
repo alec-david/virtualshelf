@@ -17,7 +17,7 @@ const TelevisionList = props => {
       <Card.Group centered>
         {addNewTelevision}
 
-        {television.list.map(television => {
+        {television.list.slice(0, television.loadedTelevision).map(television => {
           return <TelevisionCard key={television.id} television={television} />;
         })}
       </Card.Group>

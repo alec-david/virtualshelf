@@ -15,7 +15,7 @@ const BookList = props => {
       <Card.Group centered>
         {addNewBook}
 
-        {books.list.map(book => {
+        {books.list.slice(0, books.loadedBooks).map(book => {
           return <BookCard key={book.id} book={book} />;
         })}
       </Card.Group>

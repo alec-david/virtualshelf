@@ -2,6 +2,7 @@ import { getResource, postResource, updateResource, deleteResource } from './ind
 
 export const ADD_NEW_MOVIE = 'ADD_NEW_MOVIE';
 export const ADD_EXISTING_MOVIES = 'ADD_EXISTING_MOVIES';
+export const LOAD_MORE_MOVIES = 'LOAD_MORE_MOVIES';
 export const DELETE_MOVIE = 'DELETE_MOVIE';
 export const EDIT_MOVIE = 'EDIT_MOVIE';
 export const UPDATE_MOVIE = 'UPDATE_MOVIE';
@@ -48,6 +49,12 @@ export const hydrateMovies = movies => {
   return {
     type: ADD_EXISTING_MOVIES,
     movies
+  };
+};
+
+export const loadMoreMovies = () => {
+  return {
+    type: LOAD_MORE_MOVIES
   };
 };
 

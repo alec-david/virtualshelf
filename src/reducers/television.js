@@ -2,6 +2,7 @@ import { List } from 'immutable';
 import {
   ADD_NEW_TELEVISION,
   ADD_EXISTING_TELEVISION,
+  LOAD_MORE_TELEVISION,
   DELETE_TELEVISION,
   EDIT_TELEVISION,
   UPDATE_TELEVISION,
@@ -21,7 +22,8 @@ const defaultState = {
   option: 'date',
   optionText: 'Date Watched',
   filterDirection: DESC,
-  search: ''
+  search: '',
+  loadedTelevision: 50
 };
 
 const television = (state = defaultState, action) => {
@@ -42,6 +44,10 @@ const television = (state = defaultState, action) => {
       return Object.assign({}, state, {
         list: state.list.concat(televisionList.sort(sortObject(filterStr))),
         televisionCount: televisionList.length
+      });
+    case LOAD_MORE_TELEVISION:
+      return Object.assign({}, state, {
+        loadedTelevision: state.loadedTelevision + 50
       });
     case DELETE_TELEVISION:
       return Object.assign({}, state, {
