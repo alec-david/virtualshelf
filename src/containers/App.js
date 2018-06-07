@@ -24,7 +24,7 @@ class App extends Component {
           this.props.dispatch(result);
         })
         .catch(err => {
-          console.log(err);
+          this.props.dispatch(logout());
         });
     } else {
       this.props.dispatch(logout());

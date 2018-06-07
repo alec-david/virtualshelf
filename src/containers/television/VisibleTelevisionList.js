@@ -70,7 +70,7 @@ class VisibleTelevisionList extends Component {
       .then(television => {
         if (!JSON.parse(television.body).length) {
           //Show this message on screen at some point
-          console.log('No television entered yet!');
+          //console.log('No television entered yet!');
           return;
         }
         this.props.dispatch(hydrateTelevision(television.body));

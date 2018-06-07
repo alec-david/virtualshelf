@@ -1,4 +1,10 @@
-import { getResource, postResource, updateResource, deleteResourceWithBody } from './index';
+import {
+  getResource,
+  postResource,
+  updateResource,
+  deleteResourceWithBody,
+  expressURL
+} from './index';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -9,7 +15,6 @@ export const HYDRATED_BOOKS = 'HYDRATED_BOOKS';
 export const HYDRATED_MOVIES = 'HYDRATED_MOVIES';
 export const HYDRATED_TELEVISION = 'HYDRATED_TELEVISION';
 
-const expressURL = 'http://localhost:3030/remembr';
 const userURL = `${expressURL}/users/`;
 
 export const login = user => {

@@ -9,9 +9,12 @@ const filterPadding = {
 };
 
 const MoviePage = props => {
-  const pageHeader = props.loggedIn
-    ? `Television You've Watched:`
-    : `Television Others Have Watched:`;
+  const pageHeader = props.itemCount
+    ? props.loggedIn
+      ? `Television You've Watched:`
+      : `Television Others Have Watched:`
+    : `Get Started by Adding a TV Show!`;
+
   return (
     <div>
       <div style={filterPadding}>
