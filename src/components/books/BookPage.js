@@ -9,7 +9,12 @@ const filterPadding = {
 };
 
 const BookPage = props => {
-  const pageHeader = props.loggedIn ? `Books You've Read:` : `Books Others Have Read:`;
+  const pageHeader = props.itemCount
+    ? props.loggedIn
+      ? `Books You've Read:`
+      : `Books Others Have Read:`
+    : `Get Started by Adding a Book!`;
+
   return (
     <div>
       <div style={filterPadding}>

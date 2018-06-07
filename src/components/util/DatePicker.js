@@ -30,6 +30,7 @@ const DatePicker = props => {
         isOutsideRange={disableFutureDays}
         focused={focus}
         numberOfMonths={1}
+        openDirection="up"
         showDefaultInputIcon
       />
     </div>

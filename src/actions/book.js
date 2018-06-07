@@ -1,4 +1,4 @@
-import { getResource, postResource, updateResource, deleteResource } from './index';
+import { getResource, postResource, updateResource, deleteResource, expressURL } from './index';
 
 export const ADD_NEW_BOOK = 'ADD_NEW_BOOK';
 export const ADD_EXISTING_BOOKS = 'ADD_EXISTING_BOOKS';
@@ -9,7 +9,6 @@ export const UPDATE_BOOK = 'UPDATE_BOOK';
 export const FILTER_BOOK = 'FILTER_BOOK';
 export const SEARCH_BOOK = 'SEARCH_BOOK';
 
-const expressURL = 'http://localhost:3030/remembr';
 const bookURL = `${expressURL}/books`;
 
 export const addBook = book => {

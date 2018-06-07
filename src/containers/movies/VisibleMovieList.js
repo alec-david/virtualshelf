@@ -65,7 +65,7 @@ class VisibleMovieList extends Component {
       .then(movies => {
         if (!JSON.parse(movies.body).length) {
           //Show this message on screen at some point
-          console.log('No movies entered yet!');
+          //console.log('No movies entered yet!');
           return;
         }
         this.props.dispatch(hydrateMovies(movies.body));

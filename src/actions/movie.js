@@ -1,4 +1,4 @@
-import { getResource, postResource, updateResource, deleteResource } from './index';
+import { getResource, postResource, updateResource, deleteResource, expressURL } from './index';
 
 export const ADD_NEW_MOVIE = 'ADD_NEW_MOVIE';
 export const ADD_EXISTING_MOVIES = 'ADD_EXISTING_MOVIES';
@@ -9,7 +9,6 @@ export const UPDATE_MOVIE = 'UPDATE_MOVIE';
 export const FILTER_MOVIE = 'FILTER_MOVIE';
 export const SEARCH_MOVIE = 'SEARCH_MOVIE';
 
-const expressURL = 'http://localhost:3030/remembr';
 const movieURL = `${expressURL}/movies`;
 
 export const addMovie = movie => {

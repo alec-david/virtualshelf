@@ -65,7 +65,7 @@ class VisibleBookList extends Component {
       .then(books => {
         if (!JSON.parse(books.body).length) {
           //Show this message on screen at some point
-          console.log('No books entered yet!');
+          //console.log('No books entered yet!');
           return;
         }
         this.props.dispatch(hydrateBooks(books.body));

@@ -8,6 +8,7 @@ import LoggedOutNavBar from '../components/NavBar/LoggedOutNavBar';
 class NavigationBar extends Component {
   setActiveItem = (e, { name }) => {
     this.props.dispatch(updateActiveItem(name));
+    this.props.dispatch(toggleVisible());
   };
 
   handlePusher = () => {
@@ -18,10 +19,12 @@ class NavigationBar extends Component {
     }
   };
 
-  handleToggle = () => this.props.dispatch(toggleVisible());
+  handleToggle = () => {
+    this.props.dispatch(toggleVisible());
+  };
 
   render() {
-    const { user, nav } = this.props.state;
+    const { user, nav, books, movies, television } = this.props.state;
 
     if (user.token) {
       return (
@@ -30,6 +33,9 @@ class NavigationBar extends Component {
           setActiveItem={this.setActiveItem}
           handlePusher={this.handlePusher}
           handleToggle={this.handleToggle}
+          bookCount={books.bookCount}
+          movieCount={movies.movieCount}
+          televisionCount={television.televisionCount}
         />
       );
     }
@@ -39,6 +45,9 @@ class NavigationBar extends Component {
         setActiveItem={this.setActiveItem}
         handlePusher={this.handlePusher}
         handleToggle={this.handleToggle}
+        bookCount={books.bookCount}
+        movieCount={movies.movieCount}
+        televisionCount={television.televisionCount}
       />
     );
   }

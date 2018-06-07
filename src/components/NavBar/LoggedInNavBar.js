@@ -10,12 +10,24 @@ import ProfilePage from '../profile/ProfilePage';
 import VerifyPage from '../VerifyPage';
 import ResetPasswordPage from '../resetPassword/ResetPasswordPage';
 
-const loggedInRoutes = (
+const loggedInRoutes = props => (
   <div className="routes">
     <Route exact path="/" component={MainPage} />
-    <Route exact path="/books" render={() => <BookPage loggedIn={true} />} />
-    <Route exact path="/movies" render={() => <MoviePage loggedIn={true} />} />
-    <Route exact path="/television" render={() => <TelevisionPage loggedIn={true} />} />
+    <Route
+      exact
+      path="/books"
+      render={() => <BookPage loggedIn={true} itemCount={props.bookCount} />}
+    />
+    <Route
+      exact
+      path="/movies"
+      render={() => <MoviePage loggedIn={true} itemCount={props.movieCount} />}
+    />
+    <Route
+      exact
+      path="/television"
+      render={() => <TelevisionPage loggedIn={true} itemCount={props.televisionCount} />}
+    />
     <Route exact path="/profile" component={ProfilePage} />
     <Route exact path="/verify" component={VerifyPage} />
     <Route exact path="/reset_password" component={ResetPasswordPage} />
@@ -80,7 +92,7 @@ class DesktopContainer extends Component {
             </Menu.Menu>
           </Container>
         </Menu>
-        {loggedInRoutes}
+        {loggedInRoutes(this.props)}
       </Responsive>
     );
   }
@@ -144,7 +156,7 @@ class TabletContainer extends Component {
             </Menu.Menu>
           </Container>
         </Menu>
-        {loggedInRoutes}
+        {loggedInRoutes(this.props)}
       </Responsive>
     );
   }
@@ -211,7 +223,7 @@ class MobileContainer extends Component {
                 <Icon name="sidebar" />
               </Menu.Item>
             </Menu>
-            {loggedInRoutes}
+            {loggedInRoutes(this.props)}
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </Responsive>
@@ -222,24 +234,12 @@ class MobileContainer extends Component {
 const ResponsiveContainer = props => {
   return (
     <div>
-      <DesktopContainer nav={props.nav} setActiveItem={props.setActiveItem} />
-      <TabletContainer nav={props.nav} setActiveItem={props.setActiveItem} />
-      <MobileContainer
-        nav={props.nav}
-        setActiveItem={props.setActiveItem}
-        handlePusher={props.handlePusher}
-        handleToggle={props.handleToggle}
-      />
+      <DesktopContainer {...props} />
+      <TabletContainer {...props} />
+      <MobileContainer {...props} />
     </div>
   );
 };
 
-const LoggedInNavBar = props => (
-  <ResponsiveContainer
-    nav={props.nav}
-    setActiveItem={props.setActiveItem}
-    handlePusher={props.handlePusher}
-    handleToggle={props.handleToggle}
-  />
-);
+const LoggedInNavBar = props => <ResponsiveContainer {...props} />;
 export default LoggedInNavBar;

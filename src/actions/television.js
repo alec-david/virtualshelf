@@ -1,4 +1,4 @@
-import { getResource, postResource, updateResource, deleteResource } from './index';
+import { getResource, postResource, updateResource, deleteResource, expressURL } from './index';
 
 export const ADD_NEW_TELEVISION = 'ADD_NEW_TELEVISION';
 export const ADD_EXISTING_TELEVISION = 'ADD_EXISTING_TELEVISION';
@@ -9,7 +9,6 @@ export const UPDATE_TELEVISION = 'UPDATE_TELEVISION';
 export const FILTER_TELEVISION = 'FILTER_TELEVISION';
 export const SEARCH_TELEVISION = 'SEARCH_TELEVISION';
 
-const expressURL = 'http://localhost:3030/remembr';
 const televisionURL = `${expressURL}/television`;
 
 export const addTelevision = television => {
