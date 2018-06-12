@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Image } from 'semantic-ui-react';
-import bookImg from '../../imgs/book.svg';
+import bookImg from '../../imgs/book.png';
 
 import BookCardContent from './BookCardContent';
 

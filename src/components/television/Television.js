@@ -1,11 +1,11 @@
 import React from 'react';
 import { Card, Image } from 'semantic-ui-react';
-import televisionImg from '../../imgs/television.svg';
+import televisionImg from '../../imgs/tv.png';
 
 import TelevisionCardContent from './TelevisionCardContent';
 
 const imgStyle = {
-  height: 175 + 'px'
+  height: 200 + 'px'
 };
 
 const Television = props => {
