@@ -1,12 +1,9 @@
 const request = require('request');
 
-// export const expressURL =
-//   'https://express-remembr.w72r2wp6mj.us-east-2.elasticbeanstalk.com:443/remembr';
-
-export const expressURL = 'http://localhost:3030/remembr';
+export const expressURL =
+  'https://express-remembr.w72r2wp6mj.us-east-2.elasticbeanstalk.com:443/remembr';
 
 export const getResource = resourceURL => {
-  console.log(resourceURL);
   return new Promise((resolve, reject) => {
     request(
       {
