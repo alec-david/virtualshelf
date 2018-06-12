@@ -1,9 +1,12 @@
 const request = require('request');
 
-export const expressURL =
-  'https://express-remembr.w72r2wp6mj.us-east-2.elasticbeanstalk.com:443/remembr';
+// export const expressURL =
+//   'https://www.express-remembr.w72r2wp6mj.us-east-2.elasticbeanstalk.com:443/remembr';
+
+export const expressURL = 'https://api.myremembr.com/remembr';
 
 export const getResource = resourceURL => {
+  console.log(resourceURL);
   return new Promise((resolve, reject) => {
     request(
       {
@@ -12,6 +15,7 @@ export const getResource = resourceURL => {
       },
       (error, response, body) => {
         if (error) {
+          console.log(error);
           reject(error);
         } else if (response.statusCode === 400) {
           reject(body);
