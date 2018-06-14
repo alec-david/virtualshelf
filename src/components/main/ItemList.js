@@ -4,12 +4,11 @@ import { Card } from 'semantic-ui-react';
 import BookCard from '../../containers/books/BookCard';
 import MovieCard from '../../containers/movies/MovieCard';
 import TelevisionCard from '../../containers/television/TelevisionCard';
+import SrcText from '../util/SrcText';
 
 const ItemList = props => {
   const { items, loadedItems } = props;
   let cardId = 0;
-
-  const srcText = items.size ? 'All images sourced from https://www.wikipedia.org/' : '';
 
   return (
     <div>
@@ -24,8 +23,7 @@ const ItemList = props => {
           }
         })}
       </Card.Group>
-      <br />
-      <span className="srcText">{srcText}</span>
+      <SrcText itemCount={items.size} />
     </div>
   );
 };

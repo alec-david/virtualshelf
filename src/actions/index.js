@@ -1,12 +1,8 @@
 const request = require('request');
 
-// export const expressURL =
-//   'https://www.express-remembr.w72r2wp6mj.us-east-2.elasticbeanstalk.com:443/remembr';
-
-export const expressURL = 'https://api.myremembr.com/remembr';
+export const expressURL = 'https://api.virtualshelf.xyz/';
 
 export const getResource = resourceURL => {
-  console.log(resourceURL);
   return new Promise((resolve, reject) => {
     request(
       {
