@@ -3,12 +3,12 @@ import { Card } from 'semantic-ui-react';
 
 import BookCard from '../../containers/books/BookCard';
 import NewBookCard from '../../containers/books/NewBookCard';
+import SrcText from '../util/SrcText';
 
 const BookList = props => {
   const { user, books } = props;
 
   const addNewBook = user.email ? <NewBookCard /> : '';
-  const srcText = books.bookCount ? 'All images sourced from https://www.wikipedia.org/' : '';
 
   return (
     <div>
@@ -19,8 +19,7 @@ const BookList = props => {
           return <BookCard key={book.id} book={book} />;
         })}
       </Card.Group>
-      <br />
-      <span className="srcText">{srcText}</span>
+      <SrcText itemCount={books.bookCount} />
     </div>
   );
 };

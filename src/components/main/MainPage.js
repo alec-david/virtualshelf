@@ -12,7 +12,7 @@ const Main = () => (
   <div>
     <div style={filterPadding}>
       <Header as="h1">
-        <Header.Content>Remembr</Header.Content>
+        <Header.Content>Virtual Shelf</Header.Content>
       </Header>
       <FilterMain />
     </div>
