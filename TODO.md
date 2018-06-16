@@ -1,17 +1,6 @@
-# Refactor TODO:
-
-- switch getBooks/getUserBooks so they return JSON object w/ type...
-
-# TODO
+# TODOs (ordered from simplest to hardest)
 
 - Unit testing
-
-# Front End Stuff
-
-- Get rid of inline styles (or at least pull them into vars.)
-
-# Stretch TODOs (ordered from most to least likely to implement)
-
 - work on mobile view
 - tweak movie and tv searching. Not very accurate
 - add nav bar dissappears on scroll down and reappers on scroll up

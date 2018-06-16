@@ -1,1 +1,40 @@
-Website dedicated to remembering what you've read and watched.
+# Virtual Shelf
+
+Live Version: [virtualshelf.xyz](https://virtualshelf.xyz)
+
+Virtual shelf is a website dedicated to providing a "shelf" of all the books, movies, and TV shows you have watched. It presents them in an appealing, ordered view and allows the user to search through
+
+---
+
+### Built using:
+
+- [React](https://github.com/facebook/react)
+- [Redux](https://github.com/reduxjs/redux)
+- [React-Router](https://github.com/ReactTraining/react-router)
+- [Semantic UI React](https://github.com/Semantic-Org/Semantic-UI-React)
+- [Immutable](https://github.com/facebook/immutable-js/)
+
+---
+
+### [TODOS](./TODO.md)
+
+---
+
+### To Run Locally:
+
+1.  Clone this repo and navigate to directory
+2.  `yarn install` (or `npm install`)
+3.
+
+- Run the app on http: `yarn start` (or `npm start`)
+- Run the app on https: `yarn start_https` (or `npm start_https`)
+
+4.  Go to `localhost:3000` (or `https://localhost:3000/`)
+
+---
+
+### Sample Pictures:
+
+[Books](<(https://raw.githubusercontent.com/alec-david/virtualshelf/ebcd624e479d633f705559a8632ee5cb7c35b291/virtualshelf1.PNG)>)
+
+[Adding a book](https://raw.githubusercontent.com/alec-david/virtualshelf/ebcd624e479d633f705559a8632ee5cb7c35b291/virtualshelf2.PNG)
