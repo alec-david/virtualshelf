@@ -35,6 +35,10 @@ Virtual shelf is a website dedicated to providing a "shelf" of all the books, mo
 
 ### Sample Pictures:
 
+### Book Page:
+
 ![Books Page](../assets/virtualshelf1.PNG)
+
+### Adding a new book:
 
 ![Adding a book](../assets/virtualshelf2.PNG)
