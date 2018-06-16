@@ -2,7 +2,7 @@
 
 Live Version: [virtualshelf.xyz](https://virtualshelf.xyz)
 
-Virtual shelf is a website dedicated to providing a "shelf" of all the books, movies, and TV shows you have watched. It presents them in an appealing, ordered view and allows the user to search through
+Virtual shelf is a website dedicated to providing a "shelf" of all the books, movies, and TV shows you have watched. It presents them in an appealing, ordered view and allows the user to search through and filter the items
 
 ---
 
@@ -35,6 +35,6 @@ Virtual shelf is a website dedicated to providing a "shelf" of all the books, mo
 
 ### Sample Pictures:
 
-[Books](<(https://raw.githubusercontent.com/alec-david/virtualshelf/ebcd624e479d633f705559a8632ee5cb7c35b291/virtualshelf1.PNG)>)
+![Books](<(https://raw.githubusercontent.com/alec-david/virtualshelf/ebcd624e479d633f705559a8632ee5cb7c35b291/virtualshelf1.PNG)>)
 
-[Adding a book](https://raw.githubusercontent.com/alec-david/virtualshelf/ebcd624e479d633f705559a8632ee5cb7c35b291/virtualshelf2.PNG)
+![Adding a book](https://raw.githubusercontent.com/alec-david/virtualshelf/ebcd624e479d633f705559a8632ee5cb7c35b291/virtualshelf2.PNG)
