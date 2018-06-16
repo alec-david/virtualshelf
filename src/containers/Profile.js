@@ -152,6 +152,7 @@ class Profile extends Component {
 
   resendVerificationEmail = () => {
     resendVerifyEmail(this.props.user.token);
+    toastr.success('Success', 'Resent Verification Email');
   };
 
   componentDidUpdate(_, prevState) {

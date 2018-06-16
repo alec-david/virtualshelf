@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react';
+import { filterBook, searchBook } from '../../actions/book';
+import { filterMovie, searchMovie } from '../../actions/movie';
 import { filterTelevision, searchTelevision } from '../../actions/television';
 import { filterItem, searchItem, defaultSearchFilter } from '../../actions/item';
 
@@ -54,11 +56,15 @@ class FilterTelevision extends Component {
   };
 
   dispatchFilterAction = filterObj => {
+    this.props.dispatch(filterBook(filterObj));
+    this.props.dispatch(filterMovie(filterObj));
     this.props.dispatch(filterTelevision(filterObj));
     this.props.dispatch(filterItem(filterObj));
   };
 
   dispatchSearchAction = search => {
+    this.props.dispatch(searchBook({ search }));
+    this.props.dispatch(searchMovie({ search }));
     this.props.dispatch(searchTelevision({ search }));
     this.props.dispatch(searchItem({ search }));
   };
