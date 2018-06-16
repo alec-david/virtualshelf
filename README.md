@@ -35,6 +35,6 @@ Virtual shelf is a website dedicated to providing a "shelf" of all the books, mo
 
 ### Sample Pictures:
 
-![Books](<(https://raw.githubusercontent.com/alec-david/virtualshelf/ebcd624e479d633f705559a8632ee5cb7c35b291/virtualshelf1.PNG)>)
+![Books Page](../assets/virtualshelf1.PNG)
 
-![Adding a book](https://raw.githubusercontent.com/alec-david/virtualshelf/ebcd624e479d633f705559a8632ee5cb7c35b291/virtualshelf2.PNG)
+![Adding a book](../assets/virtualshelf2.PNG)
