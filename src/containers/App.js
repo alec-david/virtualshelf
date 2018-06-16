@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import createHistory from 'history/createBrowserHistory';
 import { connect } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
+import { HashRouter } from 'react-router-dom';
 
 import NavigationBar from './NavigationBar';
 import { loginToken, logout } from '../actions/user';
 import { updateActiveItem } from '../actions/nav';
-
-const history = createHistory();
 
 class App extends Component {
   //Check localStorage to see if user has already created an
@@ -43,9 +40,9 @@ class App extends Component {
       return <div />;
     }
     return (
-      <ConnectedRouter history={history}>
+      <HashRouter>
         <NavigationBar />
-      </ConnectedRouter>
+      </HashRouter>
     );
   }
 }

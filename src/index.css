@@ -27,7 +27,8 @@ button:disabled {
 
 .srcText {
   font-size: 10px;
-  position: fixed;
-  bottom: 0;
+  position: absolute;
   padding-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }

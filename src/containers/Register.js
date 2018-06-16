@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { toastr } from 'react-redux-toastr';
 import * as pbkdf2Password from 'pbkdf2-password';
 
 import RegisterForm from '../components/register/RegisterForm';
@@ -53,6 +54,7 @@ class Register extends Component {
           this.props.dispatch(token);
           this.props.router.history.replace('/');
           this.props.dispatch(updateActiveItem('home'));
+          toastr.success('Success!', 'Created account');
         })
         .catch(err => {
           if (err.indexOf('.') !== -1) {

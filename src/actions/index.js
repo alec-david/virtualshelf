@@ -1,6 +1,6 @@
 const request = require('request');
 
-export const expressURL = 'https://api.virtualshelf.xyz/';
+export const expressURL = 'https://api.virtualshelf.xyz';
 
 export const getResource = resourceURL => {
   return new Promise((resolve, reject) => {
@@ -11,7 +11,6 @@ export const getResource = resourceURL => {
       },
       (error, response, body) => {
         if (error) {
-          console.log(error);
           reject(error);
         } else if (response.statusCode === 400) {
           reject(body);

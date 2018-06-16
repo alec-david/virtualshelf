@@ -27,7 +27,7 @@ export const binarySearch = (state, item) => {
     searchDirection = !searchDirection;
   }
 
-  while (low < high) {
+  while (low <= high) {
     const mid = Math.floor((low + high) / 2);
     let midVal = list.get(mid)[option];
     let itemVal = item[option];
