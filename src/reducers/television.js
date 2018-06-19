@@ -50,9 +50,10 @@ const television = (state = defaultState, action) => {
         loadedTelevision: state.loadedTelevision + 50
       });
     case DELETE_TELEVISION:
+      const updatedList = state.list.filter(television => television.id !== action.id);
       return Object.assign({}, state, {
-        list: state.list.filter(television => television.id !== action.id),
-        televisionCount: state.televisionCount - 1
+        list: updatedList,
+        televisionCount: updatedList.size
       });
     case EDIT_TELEVISION:
       return Object.assign({}, state, {

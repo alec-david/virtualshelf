@@ -50,9 +50,10 @@ const books = (state = defaultState, action) => {
         loadedBooks: state.loadedBooks + 50
       });
     case DELETE_BOOK:
+      const updatedList = state.list.filter(book => book.id !== action.id);
       return Object.assign({}, state, {
-        list: state.list.filter(book => book.id !== action.id),
-        bookCount: state.bookCount - 1
+        list: updatedList,
+        bookCount: updatedList.size
       });
     case EDIT_BOOK:
       return Object.assign({}, state, {

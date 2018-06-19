@@ -50,9 +50,10 @@ const movies = (state = defaultState, action) => {
         loadedMovies: state.loadedMovies + 50
       });
     case DELETE_MOVIE:
+      const updatedList = state.list.filter(movie => movie.id !== action.id);
       return Object.assign({}, state, {
-        list: state.list.filter(movie => movie.id !== action.id),
-        movieCount: state.movieCount - 1
+        list: updatedList,
+        movieCount: updatedList.size
       });
     case EDIT_MOVIE:
       return Object.assign({}, state, {
