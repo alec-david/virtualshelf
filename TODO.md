@@ -1,6 +1,10 @@
 # TODOs (ordered from simplest to hardest)
 
 - Unit testing
+  - reducers/index.test.js
+  - actions
+  - components
+  - containers
 - work on mobile view
 - tweak movie and tv searching. Not very accurate
 - add nav bar dissappears on scroll down and reappers on scroll up
