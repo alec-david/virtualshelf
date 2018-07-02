@@ -24,7 +24,7 @@ const NewBook = props => {
             size="tiny"
             value={book.title}
             onChange={handleChange}
-            autoFocus={true}
+            autoFocus
             required
           />
           <Form.Input
