@@ -24,7 +24,7 @@ const BookEdit = props => {
             size="tiny"
             value={book.title}
             onChange={handleChange}
-            autoFocus={true}
+            autoFocus
             required
           />
           <Form.Input
@@ -43,12 +43,12 @@ const BookEdit = props => {
             onChange={handleChange}
           />
           <DatePicker
+            label="Date Read"
             date={book.editDate}
             focus={book.focus}
             handleDateChange={handleDateChange}
             toggleFocus={toggleFocus}
             disableFutureDays={disableFutureDays}
-            label="Date Read"
           />
           <Rating
             maxRating={5}
