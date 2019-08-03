@@ -1,7 +1,5 @@
 # Virtual Shelf
 
-Live Version: [virtualshelf.xyz](https://virtualshelf.xyz)
-
 Virtual shelf is a website dedicated to providing a "shelf" of all the books, movies, and TV shows you have watched. It presents them in an appealing, ordered view and allows the user to search through and filter the items
 
 ---
