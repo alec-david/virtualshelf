@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "immutable": "^3.8.2",
-    "moment": "^2.22.1",
+    "moment": "^2.29.2",
     "pbkdf2-password": "^1.2.1",
     "react": "^16.0.0",
     "react-dates": "^16.7.0",
